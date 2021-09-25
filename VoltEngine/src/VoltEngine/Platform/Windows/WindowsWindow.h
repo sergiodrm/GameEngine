@@ -2,6 +2,8 @@
 
 #include "VoltEngine/Core/Window.h"
 
+struct GLFWwindow;
+
 namespace Volt
 {
     class CWindowsWindow : public IWindow
@@ -19,13 +21,13 @@ namespace Volt
         /** End IWindow interface */
 
     protected:
-        void Init(const SWindowData& data);
+        void Init();
         void Shutdown();
 
     private:
         SWindowData m_windowData;
 
-        struct GLFWwindow* m_nativeWindow;
+        GLFWwindow* m_nativeWindow;
 
         /**
          * Statics

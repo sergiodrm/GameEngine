@@ -14,6 +14,9 @@ namespace Volt
 
         void Run();
 
+    protected:
+        void OnEvent(class CEvent& e);
+
     private:
         static CApplication* s_instance;
 

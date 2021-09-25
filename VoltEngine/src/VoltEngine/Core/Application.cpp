@@ -19,9 +19,10 @@ namespace Volt
         assert(!s_instance);
         s_instance = this;
 
-
         // Create window
-        m_window = IWindow::Create();
+        SWindowData windowSpec;
+        windowSpec.EventFunction = BIND_FUNCTION(CApplication::OnEvent);
+        m_window = IWindow::Create(windowSpec);
     }
 
     CApplication::~CApplication()
@@ -34,5 +35,12 @@ namespace Volt
     void CApplication::Run()
     {
         VOLT_LOG(Warning, "Run!");
+
+        while (true)
+        {
+            m_window->OnUpdate();
+        }
     }
+
+    void CApplication::OnEvent(CEvent& e) {}
 }
