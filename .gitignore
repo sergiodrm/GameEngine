@@ -1,0 +1,15 @@
+**/bin/
+**/bin-int/
+**/.vs/
+
+**.sln
+**.vcxproj
+**.vcxproj.user
+**.vcxproj.filters
+
+**.png
+**.jpg
+**.jpeg
+**.json
+**.csv
+**.xml
