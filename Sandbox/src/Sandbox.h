@@ -1,4 +1,6 @@
-#include "Core/Application.h"
+#pragma once
+
+#include "VoltEngine/VoltEngine.h"
 
 class CSandboxApplication : public Volt::CApplication
 {

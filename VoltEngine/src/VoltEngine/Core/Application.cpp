@@ -3,6 +3,7 @@
 #include <cassert>
 #include <cstdio>
 
+#include "Log.h"
 #include "Window.h"
 
 namespace Volt
@@ -11,10 +12,13 @@ namespace Volt
 
     CApplication::CApplication()
     {
-        printf("Creating application\n");
+        // Initialize logger
+        CLog::Init();
+        VOLT_LOG(Trace, "Creating application...");
 
         assert(!s_instance);
         s_instance = this;
+
 
         // Create window
         m_window = IWindow::Create();
@@ -24,11 +28,11 @@ namespace Volt
     {
         delete m_window;
 
-        printf("Destroying application\n");
+        VOLT_LOG(Trace, "Creating application...");
     }
 
     void CApplication::Run()
     {
-        printf("Running application\n");
+        VOLT_LOG(Warning, "Run!");
     }
 }

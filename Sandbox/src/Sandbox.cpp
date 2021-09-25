@@ -1,15 +1,14 @@
 #include "Sandbox.h"
 
-#include <cstdio>
 
 CSandboxApplication::CSandboxApplication()
 {
-    printf("Creating Sandbox application\n");
+    VOLT_LOG(Info, "Creating sandbox application");
 }
 
 CSandboxApplication::~CSandboxApplication()
 {
-    printf("Destroying Sandbox application\n");
+    VOLT_LOG(Info, "Destroying sandbox application");
 }
 
 Volt::CApplication* CreateApplication()

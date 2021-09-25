@@ -17,7 +17,8 @@ project "Sandbox"
     {
         "src",
         "%{wks.location}/VoltEngine/src",
-        "%{IncludeDir.glm}"
+        "%{IncludeDir.glm}",
+        "%{IncludeDir.spdlog}"
     }
 
     links
