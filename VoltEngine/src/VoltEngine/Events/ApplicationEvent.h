@@ -4,10 +4,10 @@
 
 namespace Volt
 {
-    class CWindowResizeEvent : public CEvent
+    class CWindowResizedEvent : public CEvent
     {
     public:
-        CWindowResizeEvent(uint32_t width, uint32_t height)
+        CWindowResizedEvent(uint32_t width, uint32_t height)
             : m_width(width), m_height(height) {}
 
         EVENT_CLASS_TYPE(WindowResize);
@@ -19,7 +19,7 @@ namespace Volt
         virtual std::string ToString() const override
         {
             char buffer[32];
-            sprintf_s(buffer, "WindowResizeEvent: [%d, %d]", m_width, m_height);
+            sprintf_s(buffer, "Window resize event: [%d, %d]", m_width, m_height);
 
             std::string info(buffer);
             return info;
@@ -30,7 +30,7 @@ namespace Volt
         uint32_t m_height;
     };
 
-    class CWindowCloseEvent : public CEvent
+    class CWindowClosedEvent : public CEvent
     {
     public:
         EVENT_CLASS_TYPE(WindowClose);

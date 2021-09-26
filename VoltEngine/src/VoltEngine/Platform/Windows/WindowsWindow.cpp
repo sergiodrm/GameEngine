@@ -67,7 +67,7 @@ namespace Volt
         glfwSetWindowCloseCallback(m_nativeWindow, [](GLFWwindow* window)
         {
             GET_WINDOW_USER_POINTER(windowData, window);
-            CWindowCloseEvent e;
+            CWindowClosedEvent e;
             windowData->EventFunction(e);
         });
 
@@ -76,7 +76,7 @@ namespace Volt
             GET_WINDOW_USER_POINTER(windowData, window);
             windowData->Width = static_cast<uint32_t>(width);
             windowData->Height = static_cast<uint32_t>(height);
-            CWindowResizeEvent e(static_cast<uint32_t>(width), static_cast<uint32_t>(height));
+            CWindowResizedEvent e(static_cast<uint32_t>(width), static_cast<uint32_t>(height));
             windowData->EventFunction(e);
         });
     }

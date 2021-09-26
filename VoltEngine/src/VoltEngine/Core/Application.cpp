@@ -44,17 +44,17 @@ namespace Volt
     {
         CEventDispatcher dispatcher(e);
         VOLT_LOG(Info, "Event received! -> {0}", e.ToString());
-        dispatcher.Dispatch<CWindowCloseEvent>(BIND_FUNCTION(CApplication::OnWindowClosed));
-        dispatcher.Dispatch<CWindowResizeEvent>(BIND_FUNCTION(CApplication::OnWindowResized));
+        dispatcher.Dispatch<CWindowClosedEvent>(BIND_FUNCTION(CApplication::OnWindowClosed));
+        dispatcher.Dispatch<CWindowResizedEvent>(BIND_FUNCTION(CApplication::OnWindowResized));
     }
 
-    bool CApplication::OnWindowClosed(CWindowCloseEvent& e)
+    bool CApplication::OnWindowClosed(CWindowClosedEvent& e)
     {
         m_running = false;
         return false;
     }
 
-    bool CApplication::OnWindowResized(CWindowResizeEvent& e)
+    bool CApplication::OnWindowResized(CWindowResizedEvent& e)
     {
         return false;
     }

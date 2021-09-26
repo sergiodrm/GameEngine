@@ -16,8 +16,8 @@ namespace Volt
 
     protected:
         void OnEvent(class CEvent& e);
-        bool OnWindowClosed(class CWindowCloseEvent& e);
-        bool OnWindowResized(class CWindowResizeEvent& e);
+        bool OnWindowClosed(class CWindowClosedEvent& e);
+        bool OnWindowResized(class CWindowResizedEvent& e);
 
         bool IsRunning() const { return m_running; }
 
