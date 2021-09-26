@@ -1,4 +1,5 @@
 #pragma once
+#include "Core.h"
 
 namespace Volt
 {
@@ -14,6 +15,11 @@ namespace Volt
 
         void Run();
 
+        static CApplication* Get() { return s_instance; }
+
+        Ref<class IWindow>& GetWindow() { return m_window; }
+        const Ref<class IWindow>& GetWindow() const { return m_window; }
+
     protected:
         void OnEvent(class CEvent& e);
         bool OnWindowClosed(class CWindowClosedEvent& e);
@@ -24,7 +30,7 @@ namespace Volt
     private:
         static CApplication* s_instance;
 
-        class IWindow* m_window;
+        Ref<class IWindow> m_window;
 
         bool m_running {true};
     };

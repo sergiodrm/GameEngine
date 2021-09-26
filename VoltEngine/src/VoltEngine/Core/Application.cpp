@@ -26,9 +26,7 @@ namespace Volt
     }
 
     CApplication::~CApplication()
-    {
-        delete m_window;
-    }
+    { }
 
     void CApplication::Run()
     {
@@ -39,6 +37,7 @@ namespace Volt
             m_window->OnUpdate();
         }
     }
+
 
     void CApplication::OnEvent(CEvent& e)
     {

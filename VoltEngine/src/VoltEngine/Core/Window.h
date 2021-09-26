@@ -2,6 +2,8 @@
 
 #include <functional>
 
+#include "Core.h"
+
 namespace Volt
 {
     struct SWindowData
@@ -21,7 +23,7 @@ namespace Volt
     class IWindow
     {
     public:
-        static IWindow* Create(const SWindowData& windowProps = SWindowData());
+        static Ref<IWindow> Create(const SWindowData& windowProps = SWindowData());
 
         virtual ~IWindow() = default;
 

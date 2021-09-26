@@ -4,10 +4,10 @@
 
 namespace Volt
 {
-    IWindow* IWindow::Create(const SWindowData& windowProps)
+    Ref<IWindow> IWindow::Create(const SWindowData& windowProps)
     {
 #if VOLT_PLATFORM_WINDOWS
-        return new CWindowsWindow(windowProps);
+        return CreateRef<CWindowsWindow>(windowProps);
 #else
 #error This SO is not available to VoltEngine
 #endif
