@@ -1,10 +1,10 @@
 #include "Application.h"
 
 #include <cassert>
-#include <cstdio>
 
 #include "Log.h"
 #include "Window.h"
+#include "VoltEngine/Events/ApplicationEvent.h"
 
 namespace Volt
 {
@@ -28,19 +28,34 @@ namespace Volt
     CApplication::~CApplication()
     {
         delete m_window;
-
-        VOLT_LOG(Trace, "Creating application...");
     }
 
     void CApplication::Run()
     {
         VOLT_LOG(Warning, "Run!");
 
-        while (true)
+        while (IsRunning())
         {
             m_window->OnUpdate();
         }
     }
 
-    void CApplication::OnEvent(CEvent& e) {}
+    void CApplication::OnEvent(CEvent& e)
+    {
+        CEventDispatcher dispatcher(e);
+        VOLT_LOG(Info, "Event received! -> {0}", e.ToString());
+        dispatcher.Dispatch<CWindowCloseEvent>(BIND_FUNCTION(CApplication::OnWindowClosed));
+        dispatcher.Dispatch<CWindowResizeEvent>(BIND_FUNCTION(CApplication::OnWindowResized));
+    }
+
+    bool CApplication::OnWindowClosed(CWindowCloseEvent& e)
+    {
+        m_running = false;
+        return false;
+    }
+
+    bool CApplication::OnWindowResized(CWindowResizeEvent& e)
+    {
+        return false;
+    }
 }

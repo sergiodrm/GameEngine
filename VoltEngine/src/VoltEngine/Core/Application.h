@@ -16,10 +16,16 @@ namespace Volt
 
     protected:
         void OnEvent(class CEvent& e);
+        bool OnWindowClosed(class CWindowCloseEvent& e);
+        bool OnWindowResized(class CWindowResizeEvent& e);
+
+        bool IsRunning() const { return m_running; }
 
     private:
         static CApplication* s_instance;
 
         class IWindow* m_window;
+
+        bool m_running {true};
     };
 }

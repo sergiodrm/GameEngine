@@ -5,6 +5,11 @@
 
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
+#include "VoltEngine/Events/ApplicationEvent.h"
+
+#define GET_WINDOW_USER_POINTER(var, window) \
+    SWindowData* var = static_cast<SWindowData*>(glfwGetWindowUserPointer(window)); \
+    if (!EXPAND(var)) { VOLT_LOG(Error, "Native window has not set user pointer data!"); return; }
 
 
 namespace Volt
@@ -57,6 +62,23 @@ namespace Volt
         //VOLT_LOG(Trace, "   - Vendor:   {0}", glGetString(GL_VENDOR));
         //VOLT_LOG(Trace, "   - Renderer: {0}", glGetString(GL_RENDERER));
         //VOLT_LOG(Trace, "   - Version:  {0}", glGetString(GL_VERSION));
+
+        // Bind events
+        glfwSetWindowCloseCallback(m_nativeWindow, [](GLFWwindow* window)
+        {
+            GET_WINDOW_USER_POINTER(windowData, window);
+            CWindowCloseEvent e;
+            windowData->EventFunction(e);
+        });
+
+        glfwSetFramebufferSizeCallback(m_nativeWindow, [](GLFWwindow* window, int32_t width, int32_t height)
+        {
+            GET_WINDOW_USER_POINTER(windowData, window);
+            windowData->Width = static_cast<uint32_t>(width);
+            windowData->Height = static_cast<uint32_t>(height);
+            CWindowResizeEvent e(static_cast<uint32_t>(width), static_cast<uint32_t>(height));
+            windowData->EventFunction(e);
+        });
     }
 
     void CWindowsWindow::Shutdown()
@@ -64,3 +86,5 @@ namespace Volt
         glfwDestroyWindow(m_nativeWindow);
     }
 }
+
+//#undef GET_WINDOW_USER_POINTER
