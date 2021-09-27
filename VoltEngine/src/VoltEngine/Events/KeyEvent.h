@@ -20,6 +20,9 @@ namespace Volt
     class CKeyPressedEvent : public CKeyEvent
     {
     public:
+        CKeyPressedEvent(int32_t key)
+            : CKeyEvent(key) {}
+
         EVENT_CLASS_TYPE(KeyPressed);
 
         virtual std::string ToString() const override
@@ -33,6 +36,9 @@ namespace Volt
     class CKeyReleasedEvent : public CKeyEvent
     {
     public:
+        CKeyReleasedEvent(int32_t key)
+            : CKeyEvent(key) {}
+
         EVENT_CLASS_TYPE(KeyReleased);
 
         virtual std::string ToString() const override

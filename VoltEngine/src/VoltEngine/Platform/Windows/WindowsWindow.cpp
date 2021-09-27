@@ -6,6 +6,7 @@
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
 #include "VoltEngine/Events/ApplicationEvent.h"
+#include "VoltEngine/Events/KeyEvent.h"
 #include "VoltEngine/Events/MouseEvent.h"
 
 #define GET_WINDOW_USER_POINTER(var, window) \
@@ -108,6 +109,21 @@ namespace Volt
             GET_WINDOW_USER_POINTER(windowData, window);
             CMouseScrolledEvent e(static_cast<float>(x), static_cast<float>(y));
             windowData->EventFunction(e);
+        });
+
+        glfwSetKeyCallback(m_nativeWindow, [](GLFWwindow* window, int32_t key, int32_t scancode, int32_t action, int32_t mods)
+        {
+            GET_WINDOW_USER_POINTER(windowData, window);
+            if (action == GLFW_PRESS || action == GLFW_REPEAT)
+            {
+                CKeyPressedEvent e(key);
+                windowData->EventFunction(e);
+            }
+            else if (action == GLFW_RELEASE)
+            {
+                CKeyReleasedEvent e(key);
+                windowData->EventFunction(e);
+            }
         });
     }
 

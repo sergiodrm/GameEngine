@@ -18,7 +18,7 @@ namespace Volt
 
         virtual std::string ToString() const override
         {
-            char buffer[32];
+            char buffer[64];
             sprintf_s(buffer, "Window resize event: [%d, %d]", m_width, m_height);
 
             std::string info(buffer);
