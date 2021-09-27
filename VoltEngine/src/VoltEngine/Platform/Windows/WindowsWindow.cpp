@@ -72,7 +72,7 @@ namespace Volt
             windowData->EventFunction(e);
         });
 
-        glfwSetFramebufferSizeCallback(m_nativeWindow, [](GLFWwindow* window, int32_t width, int32_t height)
+        glfwSetWindowSizeCallback(m_nativeWindow, [](GLFWwindow* window, int32_t width, int32_t height)
         {
             GET_WINDOW_USER_POINTER(windowData, window);
             windowData->Width = static_cast<uint32_t>(width);
@@ -101,6 +101,13 @@ namespace Volt
                 CMouseButtonReleasedEvent e(button);
                 windowData->EventFunction(e);
             }
+        });
+
+        glfwSetScrollCallback(m_nativeWindow, [](GLFWwindow* window, double x, double y)
+        {
+            GET_WINDOW_USER_POINTER(windowData, window);
+            CMouseScrolledEvent e(static_cast<float>(x), static_cast<float>(y));
+            windowData->EventFunction(e);
         });
     }
 
