@@ -1,5 +1,6 @@
 #pragma once
 #include "Core.h"
+#include "LayerStack.h"
 
 namespace Volt
 {
@@ -14,6 +15,11 @@ namespace Volt
         virtual ~CApplication();
 
         void Run();
+
+        void PushLayer(CLayer* layer);
+        void PopLayer(CLayer* layer);
+        void PushOverlay(CLayer* overlay);
+        void PopOverlay(CLayer* overlay);
 
         static CApplication* Get() { return s_instance; }
 
@@ -31,7 +37,8 @@ namespace Volt
         static CApplication* s_instance;
 
         Ref<class IWindow> m_window;
-
+        CLayerStack m_layerStack;
         bool m_running {true};
+        bool m_minimized {false};
     };
 }

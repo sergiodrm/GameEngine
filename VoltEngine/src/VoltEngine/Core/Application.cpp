@@ -2,6 +2,7 @@
 
 #include <cassert>
 
+#include "Layer.h"
 #include "Log.h"
 #include "Window.h"
 #include "VoltEngine/Events/ApplicationEvent.h"
@@ -34,17 +35,60 @@ namespace Volt
 
         while (IsRunning())
         {
+            if (!m_minimized)
+            {
+                for (CLayer* it : m_layerStack)
+                {
+                    it->OnUpdate();
+                }
+            }
             m_window->OnUpdate();
         }
     }
 
+    void CApplication::PushLayer(CLayer* layer)
+    {
+        m_layerStack.PushLayer(layer);
+        layer->OnAttach();
+    }
+
+    void CApplication::PopLayer(CLayer* layer)
+    {
+        m_layerStack.PopLayer(layer);
+        layer->OnDetach();
+    }
+
+    void CApplication::PushOverlay(CLayer* overlay)
+    {
+        m_layerStack.PushOverlay(overlay);
+        overlay->OnAttach();
+    }
+
+    void CApplication::PopOverlay(CLayer* overlay)
+    {
+        m_layerStack.PopOverlay(overlay);
+        overlay->OnDetach();
+    }
 
     void CApplication::OnEvent(CEvent& e)
     {
         CEventDispatcher dispatcher(e);
         VOLT_LOG(Info, "Event received! -> {0}", e.ToString());
-        dispatcher.Dispatch<CWindowClosedEvent>(BIND_FUNCTION(CApplication::OnWindowClosed));
-        dispatcher.Dispatch<CWindowResizedEvent>(BIND_FUNCTION(CApplication::OnWindowResized));
+
+        if (!dispatcher.Dispatch<CWindowClosedEvent>(BIND_FUNCTION(CApplication::OnWindowClosed)))
+        {
+            if (!dispatcher.Dispatch<CWindowResizedEvent>(BIND_FUNCTION(CApplication::OnWindowResized)))
+            {
+                // Send event to layers
+                for (CLayer* it : m_layerStack)
+                {
+                    if (it->OnEvent(e))
+                    {
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     bool CApplication::OnWindowClosed(CWindowClosedEvent& e)
@@ -55,6 +99,7 @@ namespace Volt
 
     bool CApplication::OnWindowResized(CWindowResizedEvent& e)
     {
+        m_minimized = e.GetWidth() == 0 || e.GetHeight() == 0;
         return false;
     }
 }
