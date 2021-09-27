@@ -68,6 +68,9 @@ namespace Volt
     class CMouseButtonPressedEvent : public CMouseButtonEvent
     {
     public:
+        CMouseButtonPressedEvent(int32_t button)
+            : CMouseButtonEvent(button) {}
+
         EVENT_CLASS_TYPE(MouseButtonPressed);
 
         virtual std::string ToString() const override
@@ -81,6 +84,9 @@ namespace Volt
     class CMouseButtonReleasedEvent : public CMouseButtonEvent
     {
     public:
+        CMouseButtonReleasedEvent(int32_t button)
+            : CMouseButtonEvent(button) {}
+
         EVENT_CLASS_TYPE(MouseButtonReleased);
 
         virtual std::string ToString() const override

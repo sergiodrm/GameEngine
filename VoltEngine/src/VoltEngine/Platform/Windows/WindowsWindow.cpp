@@ -6,6 +6,7 @@
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
 #include "VoltEngine/Events/ApplicationEvent.h"
+#include "VoltEngine/Events/MouseEvent.h"
 
 #define GET_WINDOW_USER_POINTER(var, window) \
     SWindowData* var = static_cast<SWindowData*>(glfwGetWindowUserPointer(window)); \
@@ -78,6 +79,28 @@ namespace Volt
             windowData->Height = static_cast<uint32_t>(height);
             CWindowResizedEvent e(static_cast<uint32_t>(width), static_cast<uint32_t>(height));
             windowData->EventFunction(e);
+        });
+
+        glfwSetCursorPosCallback(m_nativeWindow, [](GLFWwindow* window, double x, double y)
+        {
+            GET_WINDOW_USER_POINTER(windowData, window);
+            CMouseMovedEvent e(static_cast<float>(x), static_cast<float>(y));
+            windowData->EventFunction(e);
+        });
+
+        glfwSetMouseButtonCallback(m_nativeWindow, [](GLFWwindow* window, int32_t button, int32_t action, int32_t)
+        {
+            GET_WINDOW_USER_POINTER(windowData, window);
+            if (action == GLFW_PRESS || action == GLFW_REPEAT)
+            {
+                CMouseButtonPressedEvent e(button);
+                windowData->EventFunction(e);
+            }
+            else if (action == GLFW_RELEASE)
+            {
+                CMouseButtonReleasedEvent e(button);
+                windowData->EventFunction(e);
+            }
         });
     }
 
