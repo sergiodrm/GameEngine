@@ -6,6 +6,10 @@
 #endif
 #endif
 #include <memory>
+#include <vector>
+#include <string>
+#include <functional>
+#include <cassert>
 
 #define EXPAND(x) (x)
 #define BIT(x)  1 << (x)
