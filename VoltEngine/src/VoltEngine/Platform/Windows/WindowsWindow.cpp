@@ -17,6 +17,7 @@
 namespace Volt
 {
     bool CWindowsWindow::s_GLFWInitialized = false;
+    uint32_t CWindowsWindow::s_activeWindows = 0;
 
     static void GLFWErrorCallback(int32_t error, const char* description)
     {
@@ -44,6 +45,7 @@ namespace Volt
     {
         VOLT_LOG(Info, "Creating window! {0}, {1}", m_windowData.Width, m_windowData.Height);
 
+        ++s_activeWindows;
         if (!s_GLFWInitialized)
         {
             const int32_t success = glfwInit();
@@ -130,6 +132,12 @@ namespace Volt
     void CWindowsWindow::Shutdown()
     {
         glfwDestroyWindow(m_nativeWindow);
+        --s_activeWindows;
+        if (s_activeWindows == 0)
+        {
+            glfwTerminate();
+            s_GLFWInitialized = false;
+        }
     }
 }
 

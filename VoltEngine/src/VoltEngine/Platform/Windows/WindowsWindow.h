@@ -33,5 +33,6 @@ namespace Volt
          * Statics
          */
         static bool s_GLFWInitialized;
+        static uint32_t s_activeWindows;
     };
 }
