@@ -61,3 +61,4 @@ namespace Volt
 // Core log macros
 
 #define VOLT_LOG(type, ...) ::Volt::CLog::Log(Volt::CLog::##type, __VA_ARGS__);
+#define VOLT_ASSERT(assertion, msg, ...) if (!EXPAND(assertion)) {VOLT_LOG(Fatal, msg, __VA_ARGS__); assert(false);}
