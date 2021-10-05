@@ -8,6 +8,7 @@
 #include "VoltEngine/Events/ApplicationEvent.h"
 #include "VoltEngine/Events/KeyEvent.h"
 #include "VoltEngine/Events/MouseEvent.h"
+#include "VoltEngine/Renderer/GraphicsContext.h"
 
 #define GET_WINDOW_USER_POINTER(var, window) \
     SWindowData* var = static_cast<SWindowData*>(glfwGetWindowUserPointer(window)); \
@@ -38,7 +39,7 @@ namespace Volt
     void CWindowsWindow::OnUpdate()
     {
         glfwPollEvents();
-        glfwSwapBuffers(m_nativeWindow);
+        m_graphicsContext->SwapBuffers();
     }
 
     void CWindowsWindow::Init()
@@ -49,7 +50,7 @@ namespace Volt
         if (!s_GLFWInitialized)
         {
             const int32_t success = glfwInit();
-            assert(success);
+            VOLT_ASSERT(success, "GLFW library couldn't be initialized!");
             s_GLFWInitialized = true;
 
             glfwSetErrorCallback(&GLFWErrorCallback);
@@ -57,15 +58,13 @@ namespace Volt
 
         // Create window
         m_nativeWindow = glfwCreateWindow(m_windowData.Width, m_windowData.Height, m_windowData.Title.c_str(), nullptr, nullptr);
-        assert(m_nativeWindow);
+        VOLT_ASSERT(m_nativeWindow, "GLFW library couldn't create native window!");
 
         glfwSetWindowUserPointer(m_nativeWindow, &m_windowData);
 
-        glfwMakeContextCurrent(m_nativeWindow);
-        VOLT_LOG(Trace, "OpenGL info:");
-        //VOLT_LOG(Trace, "   - Vendor:   {0}", glGetString(GL_VENDOR));
-        //VOLT_LOG(Trace, "   - Renderer: {0}", glGetString(GL_RENDERER));
-        //VOLT_LOG(Trace, "   - Version:  {0}", glGetString(GL_VERSION));
+        m_graphicsContext = IGraphicsContext::Create();
+        m_graphicsContext->Init(m_nativeWindow);
+
 
         // Bind events
         glfwSetWindowCloseCallback(m_nativeWindow, [](GLFWwindow* window)

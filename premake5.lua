@@ -93,6 +93,7 @@ project "Sandbox"
     {
         "Sandbox/src/**.h",
         "Sandbox/src/**.cpp",
+        "Sandbox/assets/**.glsl",
     }
 
     includedirs

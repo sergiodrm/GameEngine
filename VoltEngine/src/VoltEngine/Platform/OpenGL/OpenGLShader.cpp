@@ -129,7 +129,7 @@ namespace Volt
             std::string type = rawSource.substr(begin, eol - begin);
             VOLT_ASSERT(type == "vertex" || type == "fragment", "Unknown type of shader.");
 
-            const size_t nextLinePos = rawSource.find_first_not_of("\r\n");
+            const size_t nextLinePos = rawSource.find_first_not_of("\r\n", eol);
             pos = rawSource.find(typeToken, nextLinePos);
 
             shaderSources[type == "vertex" ? GL_VERTEX_SHADER : GL_FRAGMENT_SHADER] =

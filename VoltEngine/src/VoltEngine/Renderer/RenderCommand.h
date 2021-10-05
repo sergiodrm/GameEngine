@@ -15,6 +15,8 @@ namespace Volt
 
         static void DrawIndexed(const Ref<class IVertexArray>& vertexArray, uint32_t indexCount = 0);
 
+        static void SetViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height);
+
     private:
         static class IRendererAPI* s_rendererAPI;
     };

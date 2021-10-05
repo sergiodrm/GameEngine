@@ -49,6 +49,7 @@ namespace Volt
 
     void COpenGLVertexArray::AddVertexBuffer(const Ref<IVertexBuffer>& vertexBuffer)
     {
+        VOLT_ASSERT(!vertexBuffer->GetLayout().GetElements().empty(), "Vertex buffer has no layout set.")
         glBindVertexArray(m_rendererID);
         vertexBuffer->Bind();
         uint32_t index = 0;
@@ -60,7 +61,7 @@ namespace Volt
                                   GetEnumOfShaderDataType(element.Type),
                                   element.Normalized ? GL_TRUE : GL_FALSE,
                                   vertexBuffer->GetLayout().GetStride(),
-                                  &element.Offset);
+                                  reinterpret_cast<const void*>(&element.Offset));
             ++index;
         }
         m_vertexBuffers.push_back(vertexBuffer);
@@ -69,6 +70,7 @@ namespace Volt
     void COpenGLVertexArray::SetIndexBuffer(const Ref<IIndexBuffer>& indexBuffer)
     {
         glBindVertexArray(m_rendererID);
+        indexBuffer->Bind();
         m_indexBuffer = indexBuffer;
     }
 }

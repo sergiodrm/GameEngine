@@ -26,6 +26,6 @@ namespace Volt
 
     private:
         std::vector<class CLayer*> m_layers;
-        uint32_t m_layerIndex;
+        uint32_t m_layerIndex {0};
     };
 }

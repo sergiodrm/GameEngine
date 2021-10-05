@@ -7,8 +7,8 @@ namespace Volt
     {
         glCreateBuffers(1, &m_rendererID);
         glBindBuffer(GL_ARRAY_BUFFER, m_rendererID);
-        glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_DYNAMIC_DRAW);
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
+        //glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
 
     COpenGLVertexBuffer::COpenGLVertexBuffer(uint32_t size)
@@ -16,7 +16,7 @@ namespace Volt
         glCreateBuffers(1, &m_rendererID);
         glBindBuffer(GL_ARRAY_BUFFER, m_rendererID);
         glBufferData(GL_ARRAY_BUFFER, size, nullptr, GL_DYNAMIC_DRAW);
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        //glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
 
     COpenGLVertexBuffer::~COpenGLVertexBuffer()
@@ -38,7 +38,7 @@ namespace Volt
     {
         glBindBuffer(GL_ARRAY_BUFFER, m_rendererID);
         glBufferData(GL_ARRAY_BUFFER, size, data, GL_DYNAMIC_DRAW);
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        //glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
 
     COpenGLIndexBuffer::COpenGLIndexBuffer(uint32_t* indices, uint32_t count)
@@ -46,8 +46,8 @@ namespace Volt
     {
         glCreateBuffers(1, &m_rendererID);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_rendererID);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(uint8_t), indices, GL_STATIC_DRAW);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(uint32_t), indices, GL_STATIC_DRAW);
+        //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
 
     COpenGLIndexBuffer::~COpenGLIndexBuffer()

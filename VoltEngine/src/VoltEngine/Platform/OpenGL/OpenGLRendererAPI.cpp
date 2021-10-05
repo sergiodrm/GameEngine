@@ -6,11 +6,20 @@
 
 namespace Volt
 {
+    static void OpenGLMessageCallback(GLenum source, GLenum type, GLenum id, GLenum severity,
+                                      GLsizei length, const GLchar* message, const void* userParam)
+    {
+        VOLT_LOG(Error, "GL_CALLBACK: {0} msg : {1}", type == GL_DEBUG_TYPE_ERROR ? "** GL_ERROR **" : "", message);
+    }
+
     void COpenGLRendererAPI::Init()
     {
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glEnable(GL_DEPTH_TEST);
+
+        glEnable(GL_DEBUG_OUTPUT);
+        glDebugMessageCallback(OpenGLMessageCallback, nullptr);
     }
 
     void COpenGLRendererAPI::Clear()

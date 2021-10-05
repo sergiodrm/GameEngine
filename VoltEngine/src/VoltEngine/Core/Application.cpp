@@ -6,6 +6,8 @@
 #include "Log.h"
 #include "Window.h"
 #include "VoltEngine/Events/ApplicationEvent.h"
+#include "VoltEngine/Renderer/RenderCommand.h"
+#include "VoltEngine/Renderer/Renderer.h"
 
 namespace Volt
 {
@@ -24,6 +26,8 @@ namespace Volt
         SWindowData windowSpec;
         windowSpec.EventFunction = BIND_FUNCTION(CApplication::OnEvent);
         m_window = IWindow::Create(windowSpec);
+
+        CRenderer::Init();
     }
 
     CApplication::~CApplication()
@@ -73,7 +77,7 @@ namespace Volt
     void CApplication::OnEvent(CEvent& e)
     {
         CEventDispatcher dispatcher(e);
-        VOLT_LOG(Info, "Event received! -> {0}", e.ToString());
+        //VOLT_LOG(Info, "Event received! -> {0}", e.ToString());
 
         if (!dispatcher.Dispatch<CWindowClosedEvent>(BIND_FUNCTION(CApplication::OnWindowClosed)))
         {
@@ -100,6 +104,7 @@ namespace Volt
     bool CApplication::OnWindowResized(CWindowResizedEvent& e)
     {
         m_minimized = e.GetWidth() == 0 || e.GetHeight() == 0;
+        CRenderer::OnWindowResize(e.GetWidth(), e.GetHeight());
         return false;
     }
 }
