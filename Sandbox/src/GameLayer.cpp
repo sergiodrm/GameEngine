@@ -13,9 +13,9 @@ void CGameLayer::OnAttach()
 
     float vertices[18] =
         {
-            -1.f, 0.f, 0.f, 1.f, 0.f, 0.f,
-            1.f, 0.f, 0.f, 1.f, 0.f, 1.f,
-            0.f, 1.f, 0.f, 0.f, 1.f, 0.f,
+            -0.5f, -0.5f, 0.f, 1.f, 0.f, 0.2f,
+            0.5f, -0.5f, 0.f, 0.1f, 0.3f, 1.f,
+            0.f, 0.5f, 0.f, 0.f, 1.f, 0.5f,
         };
 
     Volt::Ref<Volt::IVertexBuffer> buffer = Volt::IVertexBuffer::Create(vertices, sizeof(vertices));

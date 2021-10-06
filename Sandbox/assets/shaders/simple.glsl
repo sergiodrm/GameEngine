@@ -20,14 +20,9 @@ void main()
 #type fragment
 #version 460 core
 
-layout(location = 0) out vec4 gl_Color;
-
 in vec3 v_Color;
-
-uniform vec4 u_Color;
 
 void main()
 {
-	gl_Color = u_Color;
-//	gl_FragColor = vec4(v_Color, 1.0);
+	gl_FragColor = vec4(v_Color, 1.0);
 }
