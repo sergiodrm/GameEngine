@@ -61,7 +61,7 @@ namespace Volt
                                   GetEnumOfShaderDataType(element.Type),
                                   element.Normalized ? GL_TRUE : GL_FALSE,
                                   vertexBuffer->GetLayout().GetStride(),
-                                  reinterpret_cast<const void*>(&element.Offset));
+                                  reinterpret_cast<const void*>(element.Offset));
             ++index;
         }
         m_vertexBuffers.push_back(vertexBuffer);

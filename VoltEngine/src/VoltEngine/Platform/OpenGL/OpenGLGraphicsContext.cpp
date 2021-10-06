@@ -22,6 +22,7 @@ namespace Volt
         VOLT_LOG(Info, "  - Vendor:   {0}", glGetString(GL_VENDOR));
         VOLT_LOG(Info, "  - Renderer: {0}", glGetString(GL_RENDERER));
         VOLT_LOG(Info, "  - Version:  {0}", glGetString(GL_VERSION));
+        VOLT_LOG(Info, "  - Language:  {0}", glGetString(GL_SHADING_LANGUAGE_VERSION));
     }
 
     void COpenGLGraphicsContext::SwapBuffers()
