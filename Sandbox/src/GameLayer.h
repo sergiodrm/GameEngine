@@ -15,4 +15,5 @@ private:
 
     Volt::Ref<Volt::IShader> m_shader;
     Volt::Ref<Volt::IVertexArray> m_vertexArray;
+    Volt::Ref<Volt::ITexture> m_texture;
 };

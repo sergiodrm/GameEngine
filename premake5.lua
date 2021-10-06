@@ -15,6 +15,7 @@ IncludeDir["GLFW"] = "VoltEngine/lib/GLFW/include"
 IncludeDir["glad"] = "VoltEngine/lib/glad/include"
 IncludeDir["glm"] = "VoltEngine/lib/glm"
 IncludeDir["spdlog"] = "VoltEngine/lib/spdlog/include"
+IncludeDir["stb_image"] = "VoltEngine/lib/stb_image"
 
 group "Dependencies"
 	include "VoltEngine/lib/GLFW"
@@ -39,6 +40,8 @@ project "VoltEngine"
 		"VoltEngine/src/**.cpp",
 		"VoltEngine/lib/glm/glm/**.hpp",
 		"VoltEngine/lib/glm/glm/**.inl",
+        "VoltEngine/lib/stb_image/**.h",
+        "VoltEngine/lib/stb_image/**.cpp"
 	}
 
 	includedirs
@@ -48,7 +51,8 @@ project "VoltEngine"
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.glad}",
 		"%{IncludeDir.glm}",
-		"%{IncludeDir.spdlog}"
+		"%{IncludeDir.spdlog}",
+        "%{IncludeDir.stb_image}"
 	}
 
 	links

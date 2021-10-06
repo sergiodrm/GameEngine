@@ -11,32 +11,39 @@ void CGameLayer::OnAttach()
 {
     CLayer::OnAttach();
 
-    float vertices[18] =
+    float vertices[] =
         {
-            -0.5f, -0.5f, 0.f, 1.f, 0.f, 0.2f,
-            0.5f, -0.5f, 0.f, 0.1f, 0.3f, 1.f,
-            0.f, 0.5f, 0.f, 0.f, 1.f, 0.5f,
+            -0.5f, -0.5f, 0.5f, 1.f, 0.f, 0.f, 0.f, 0.f,
+            0.5f, -0.5f, 0.5f, 1.f, 0.f, 0.f, 1.f, 0.f,
+            0.5f, 0.5f, 0.5f, 1.f, 0.f, 0.f, 1.f, 1.f,
+            -0.5f, 0.5f, 0.5f, 1.f, 0.f, 0.f, 0.f, 1.f
         };
 
     Volt::Ref<Volt::IVertexBuffer> buffer = Volt::IVertexBuffer::Create(vertices, sizeof(vertices));
     buffer->SetLayout({
                           {Volt::EShaderDataType::Float3, "a_Position"},
-                          {Volt::EShaderDataType::Float3, "a_Color"}
+                          {Volt::EShaderDataType::Float3, "a_Color"},
+                          {Volt::EShaderDataType::Float2, "a_TexCoord"}
                       });
 
-    uint32_t indices[3] =
+    uint32_t indices[] =
         {
-            0, 1, 2
+            0, 1, 2,
+            0, 2, 3
         };
-    const Volt::Ref<Volt::IIndexBuffer> indexBuffer = Volt::IIndexBuffer::Create(indices, 3);
+    const Volt::Ref<Volt::IIndexBuffer> indexBuffer = Volt::IIndexBuffer::Create(indices, 6);
 
     m_vertexArray = Volt::IVertexArray::Create();
     m_vertexArray->AddVertexBuffer(buffer);
     m_vertexArray->SetIndexBuffer(indexBuffer);
 
+    m_texture = Volt::ITexture::Create("assets/textures/sample.png");
+
     m_shader = Volt::IShader::Create("assets/shaders/simple.glsl");
     m_shader->Bind();
-    m_shader->SetFloat4("u_Color", {1.f, 0.f, 0.f, 1.f});
+    m_shader->SetMat4("u_ModelTransform", glm::mat4(1.f));
+    m_texture->Bind();
+
 
     m_camera = Volt::CreateRef<Volt::CCamera>();
 
@@ -47,7 +54,20 @@ void CGameLayer::OnUpdate()
 {
     Volt::CRenderCommand::Clear();
 
+    if (Volt::IInput::IsKeyPressed(Volt::KeyCodes::O))
+    {
+        m_camera->SetProjectionType(Volt::CCamera::EProjectionType::Orthographic);
+    }
+    else if (Volt::IInput::IsKeyPressed(Volt::KeyCodes::P))
+    {
+        m_camera->SetProjectionType(Volt::CCamera::EProjectionType::Perspective);
+    }
+
     Volt::CRenderer::BeginScene(m_camera);
-    Volt::CRenderer::Submit(m_shader, m_vertexArray);
+    m_shader->Bind();
+    m_shader->SetMat4("u_ViewProjection", m_camera->GetProjection());
+    m_texture->Bind();
+    m_vertexArray->Bind();
+    Volt::CRenderCommand::DrawIndexed(m_vertexArray);
     Volt::CRenderer::EndScene();
 }

@@ -4,11 +4,13 @@
 #include "Core/Application.h"
 #include "Core/Layer.h"
 #include "Core/Input.h"
+#include "Core/KeyCodes.h"
 
 #include "Renderer/Shader.h"
 #include "Renderer/RenderCommand.h"
 #include "Renderer/VertexArray.h"
 #include "Renderer/Buffer.h"
+#include "Renderer/Texture.h"
 #include "Renderer/Camera.h"
 
 #include "Events/ApplicationEvent.h"

@@ -1,6 +1,7 @@
 #include "VoltEngine/Core/Input.h"
 #include "GLFW/glfw3.h"
 #include "VoltEngine/Core/Application.h"
+#include "VoltEngine/Core/Log.h"
 #include "VoltEngine/Core/Window.h"
 
 namespace Volt
@@ -9,14 +10,14 @@ namespace Volt
     {
         GLFWwindow* window = static_cast<GLFWwindow*>(CApplication::Get()->GetWindow()->GetNativeWindow());
         const int32_t state = glfwGetKey(window, key);
-        return state == GLFW_PRESS || state == GLFW_RELEASE;
+        return state == GLFW_PRESS || state == GLFW_REPEAT;
     }
 
     bool IInput::IsMouseButtonPressed(int32_t button)
     {
         GLFWwindow* window = static_cast<GLFWwindow*>(CApplication::Get()->GetWindow()->GetNativeWindow());
         const int32_t state = glfwGetMouseButton(window, button);
-        return state == GLFW_PRESS || state == GLFW_RELEASE;
+        return state == GLFW_PRESS || state == GLFW_REPEAT;
     }
 
     float IInput::GetMouseX()
