@@ -8,7 +8,7 @@ public:
     CGameLayer(const std::string& name = "GameLayer");
 
     virtual void OnAttach() override;
-    virtual void OnUpdate() override;
+    virtual void OnUpdate(float elapsedSeconds) override;
 
 private:
     Volt::Ref<Volt::CCamera> m_camera;
@@ -16,4 +16,6 @@ private:
     Volt::Ref<Volt::IShader> m_shader;
     Volt::Ref<Volt::IVertexArray> m_vertexArray;
     Volt::Ref<Volt::ITexture> m_texture;
+
+    glm::vec3 m_position;
 };

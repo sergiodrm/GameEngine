@@ -4,6 +4,7 @@
 
 #include "Layer.h"
 #include "Log.h"
+#include "Time.h"
 #include "Window.h"
 #include "VoltEngine/Events/ApplicationEvent.h"
 #include "VoltEngine/Renderer/RenderCommand.h"
@@ -37,13 +38,16 @@ namespace Volt
     {
         VOLT_LOG(Warning, "Run!");
 
+        CTime mainLoopTimer;
+
         while (IsRunning())
         {
+            mainLoopTimer.Update();
             if (!m_minimized)
             {
                 for (CLayer* it : m_layerStack)
                 {
-                    it->OnUpdate();
+                    it->OnUpdate(mainLoopTimer.GetElapsedTimeSeconds());
                 }
             }
             m_window->OnUpdate();

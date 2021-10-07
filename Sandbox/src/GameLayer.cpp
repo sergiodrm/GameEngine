@@ -4,7 +4,7 @@
 #include "VoltEngine/Renderer/Renderer.h"
 
 CGameLayer::CGameLayer(const std::string& name)
-    : CLayer(name)
+    : CLayer(name), m_position(0.f)
 {}
 
 void CGameLayer::OnAttach()
@@ -44,30 +44,56 @@ void CGameLayer::OnAttach()
     m_shader->SetMat4("u_ModelTransform", glm::mat4(1.f));
     m_texture->Bind();
 
-
     m_camera = Volt::CreateRef<Volt::CCamera>();
 
     Volt::CRenderCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1.f});
 }
 
-void CGameLayer::OnUpdate()
+void CGameLayer::OnUpdate(float elapsedSeconds)
 {
+    PROFILE_SCOPE(GameLayer);
     Volt::CRenderCommand::Clear();
 
-    if (Volt::IInput::IsKeyPressed(Volt::KeyCodes::O))
+    glm::mat4 transform(1.f);
     {
-        m_camera->SetProjectionType(Volt::CCamera::EProjectionType::Orthographic);
-    }
-    else if (Volt::IInput::IsKeyPressed(Volt::KeyCodes::P))
-    {
-        m_camera->SetProjectionType(Volt::CCamera::EProjectionType::Perspective);
-    }
+        PROFILE_SCOPE(Logic);
+        if (Volt::IInput::IsKeyPressed(Volt::KeyCodes::O))
+        {
+            m_camera->SetProjectionType(Volt::CCamera::EProjectionType::Orthographic);
+        }
+        else if (Volt::IInput::IsKeyPressed(Volt::KeyCodes::P))
+        {
+            m_camera->SetProjectionType(Volt::CCamera::EProjectionType::Perspective);
+        }
 
-    Volt::CRenderer::BeginScene(m_camera);
-    m_shader->Bind();
-    m_shader->SetMat4("u_ViewProjection", m_camera->GetProjection());
-    m_texture->Bind();
-    m_vertexArray->Bind();
-    Volt::CRenderCommand::DrawIndexed(m_vertexArray);
-    Volt::CRenderer::EndScene();
+        if (Volt::IInput::IsKeyPressed(Volt::KeyCodes::W))
+        {
+            m_position.y += 5.f * elapsedSeconds;
+        }
+        if (Volt::IInput::IsKeyPressed(Volt::KeyCodes::S))
+        {
+            m_position.y -= 5.f * elapsedSeconds;
+        }
+        if (Volt::IInput::IsKeyPressed(Volt::KeyCodes::D))
+        {
+            m_position.x += 5.f * elapsedSeconds;
+        }
+        if (Volt::IInput::IsKeyPressed(Volt::KeyCodes::A))
+        {
+            m_position.x -= 5.f * elapsedSeconds;
+        }
+
+        transform = translate(glm::mat4(1.f), m_position);
+    }
+    {
+        PROFILE_SCOPE(Render);
+        Volt::CRenderer::BeginScene(m_camera);
+        m_shader->Bind();
+        m_shader->SetMat4("u_ViewProjection", m_camera->GetProjection());
+        m_shader->SetMat4("u_ModelTransform", transform);
+        m_texture->Bind();
+        m_vertexArray->Bind();
+        Volt::CRenderCommand::DrawIndexed(m_vertexArray);
+        Volt::CRenderer::EndScene();
+    }
 }

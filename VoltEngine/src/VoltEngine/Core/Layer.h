@@ -13,7 +13,7 @@ namespace Volt
 
         virtual void OnAttach() {}
         virtual void OnDetach() {}
-        virtual void OnUpdate(/*todo*/) {}
+        virtual void OnUpdate(float elapsedSeconds) {}
         virtual void OnUIRender() {}
         virtual bool OnEvent(class CEvent& e) { return false; }
 
