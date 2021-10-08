@@ -2,6 +2,8 @@
 
 #include "VoltEngine/Renderer/Buffer.h"
 #include "VoltEngine/Renderer/Renderer.h"
+#include "imgui.h"
+
 
 CGameLayer::CGameLayer(const std::string& name)
     : CLayer(name), m_position(0.f)
@@ -96,4 +98,12 @@ void CGameLayer::OnUpdate(float elapsedSeconds)
         Volt::CRenderCommand::DrawIndexed(m_vertexArray);
         Volt::CRenderer::EndScene();
     }
+}
+
+void CGameLayer::OnUIRender()
+{
+    ImGui::Begin("VoltEngine");
+    ImGui::Text("Welcome to Volt Engine!!!");
+    ImGui::Separator();
+    ImGui::End();
 }

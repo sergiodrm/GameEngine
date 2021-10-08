@@ -9,6 +9,7 @@ public:
 
     virtual void OnAttach() override;
     virtual void OnUpdate(float elapsedSeconds) override;
+    virtual void OnUIRender() override;
 
 private:
     Volt::Ref<Volt::CCamera> m_camera;

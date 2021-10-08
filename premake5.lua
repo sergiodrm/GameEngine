@@ -16,10 +16,12 @@ IncludeDir["glad"] = "VoltEngine/lib/glad/include"
 IncludeDir["glm"] = "VoltEngine/lib/glm"
 IncludeDir["spdlog"] = "VoltEngine/lib/spdlog/include"
 IncludeDir["stb_image"] = "VoltEngine/lib/stb_image"
+IncludeDir["imgui"] = "VoltEngine/lib/imgui"
 
 group "Dependencies"
 	include "VoltEngine/lib/GLFW"
 	include "VoltEngine/lib/glad"
+	include "VoltEngine/lib/imgui"
 
 group "Engine"
 
@@ -52,13 +54,15 @@ project "VoltEngine"
 		"%{IncludeDir.glad}",
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.spdlog}",
-        "%{IncludeDir.stb_image}"
+        "%{IncludeDir.stb_image}",
+        "%{IncludeDir.imgui}"
 	}
 
 	links
 	{
 		"GLFW",
 		"Glad",
+        "ImGui",
 		"opengl32.lib"
 	}
 	
@@ -105,7 +109,8 @@ project "Sandbox"
         "Sandbox/src",
         "%{wks.location}/VoltEngine/src",
         "%{IncludeDir.glm}",
-        "%{IncludeDir.spdlog}"
+        "%{IncludeDir.spdlog}",
+        "%{IncludeDir.imgui}"
     }
 
     links

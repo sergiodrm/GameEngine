@@ -9,6 +9,7 @@
 #include "VoltEngine/Events/ApplicationEvent.h"
 #include "VoltEngine/Renderer/RenderCommand.h"
 #include "VoltEngine/Renderer/Renderer.h"
+#include "VoltEngine/UI/UICommand.h"
 
 namespace Volt
 {
@@ -29,10 +30,15 @@ namespace Volt
         m_window = IWindow::Create(windowSpec);
 
         CRenderer::Init();
+        CUICommand::Init();
     }
 
     CApplication::~CApplication()
-    { }
+    {
+        CUICommand::Shutdown();
+        CRenderer::Shutdown();
+        s_instance = nullptr;
+    }
 
     void CApplication::Run()
     {
@@ -45,10 +51,19 @@ namespace Volt
             mainLoopTimer.Update();
             if (!m_minimized)
             {
+                // Layers update
                 for (CLayer* it : m_layerStack)
                 {
                     it->OnUpdate(mainLoopTimer.GetElapsedTimeSeconds());
                 }
+
+                // Layers UI
+                CUICommand::BeginFrame();
+                for (CLayer* it : m_layerStack)
+                {
+                    it->OnUIRender();
+                }
+                CUICommand::EndFrame();
             }
             m_window->OnUpdate();
         }

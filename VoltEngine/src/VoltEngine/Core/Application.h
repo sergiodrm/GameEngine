@@ -21,7 +21,7 @@ namespace Volt
         void PushOverlay(CLayer* overlay);
         void PopOverlay(CLayer* overlay);
 
-        static CApplication* Get() { return s_instance; }
+        static CApplication& Get() { return *s_instance; }
 
         Ref<class IWindow>& GetWindow() { return m_window; }
         const Ref<class IWindow>& GetWindow() const { return m_window; }
