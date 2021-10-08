@@ -69,6 +69,11 @@ namespace Volt
         }
     }
 
+    void CApplication::Close()
+    {
+        m_running = false;
+    }
+
     void CApplication::PushLayer(CLayer* layer)
     {
         m_layerStack.PushLayer(layer);

@@ -15,6 +15,7 @@ namespace Volt
         virtual ~CApplication();
 
         void Run();
+        void Close();
 
         void PushLayer(CLayer* layer);
         void PopLayer(CLayer* layer);

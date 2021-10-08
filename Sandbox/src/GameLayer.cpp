@@ -91,8 +91,8 @@ void CGameLayer::OnUpdate(float elapsedSeconds)
         PROFILE_SCOPE(Render);
         Volt::CRenderer::BeginScene(m_camera);
         m_shader->Bind();
-        m_shader->SetMat4("u_ViewProjection", m_camera->GetProjection());
-        m_shader->SetMat4("u_ModelTransform", transform);
+        m_shader->SetMat4("u_ViewProjection", transform * m_camera->GetProjection());
+        //m_shader->SetMat4("u_ModelTransform", transform);
         m_texture->Bind();
         m_vertexArray->Bind();
         Volt::CRenderCommand::DrawIndexed(m_vertexArray);
@@ -102,8 +102,10 @@ void CGameLayer::OnUpdate(float elapsedSeconds)
 
 void CGameLayer::OnUIRender()
 {
-    ImGui::Begin("VoltEngine");
-    ImGui::Text("Welcome to Volt Engine!!!");
-    ImGui::Separator();
-    ImGui::End();
+    {
+        ImGui::Begin("VoltEngine");
+        ImGui::Text("Welcome to Volt Engine!!!");
+        ImGui::Separator();
+        ImGui::End();
+    }
 }
