@@ -48,13 +48,14 @@ void CGameLayer::OnAttach()
 
     m_camera = Volt::CreateRef<Volt::CCamera>();
 
+    m_framebuffer = Volt::IFramebuffer::Create({1280, 720});
+
     Volt::CRenderCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1.f});
 }
 
 void CGameLayer::OnUpdate(float elapsedSeconds)
 {
     PROFILE_SCOPE(GameLayer);
-    Volt::CRenderCommand::Clear();
 
     glm::mat4 transform(1.f);
     {
@@ -89,6 +90,11 @@ void CGameLayer::OnUpdate(float elapsedSeconds)
     }
     {
         PROFILE_SCOPE(Render);
+
+        m_framebuffer->Bind();
+
+        Volt::CRenderCommand::Clear();
+
         Volt::CRenderer::BeginScene(m_camera);
         m_shader->Bind();
         m_shader->SetMat4("u_ViewProjection", transform * m_camera->GetProjection());
@@ -97,6 +103,8 @@ void CGameLayer::OnUpdate(float elapsedSeconds)
         m_vertexArray->Bind();
         Volt::CRenderCommand::DrawIndexed(m_vertexArray);
         Volt::CRenderer::EndScene();
+
+        m_framebuffer->Unbind();
     }
 }
 
@@ -107,5 +115,16 @@ void CGameLayer::OnUIRender()
         ImGui::Text("Welcome to Volt Engine!!!");
         ImGui::Separator();
         ImGui::End();
+    }
+    {
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, {0.f, 0.f});
+        ImGui::Begin("Viewport");
+
+        const ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
+
+        const uint32_t texID = m_framebuffer->GetColorAttachmentRendererID();
+        ImGui::Image(reinterpret_cast<void*>(texID), viewportPanelSize);
+        ImGui::End();
+        ImGui::PopStyleVar();
     }
 }

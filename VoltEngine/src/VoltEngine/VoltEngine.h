@@ -11,6 +11,7 @@
 #include "Renderer/RenderCommand.h"
 #include "Renderer/VertexArray.h"
 #include "Renderer/Buffer.h"
+#include "Renderer/Framebuffer.h"
 #include "Renderer/Texture.h"
 #include "Renderer/Camera.h"
 
