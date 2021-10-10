@@ -133,7 +133,7 @@ namespace Volt
     class IIndexBuffer
     {
     public:
-        static Ref<IIndexBuffer> Create(uint32_t* indices, uint32_t size);
+        static Ref<IIndexBuffer> Create(uint32_t* indices, uint32_t count);
 
         virtual ~IIndexBuffer() = default;
 

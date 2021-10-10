@@ -1,7 +1,5 @@
 #include "GameLayer.h"
 
-#include "VoltEngine/Renderer/Buffer.h"
-#include "VoltEngine/Renderer/Renderer.h"
 #include "imgui.h"
 
 
@@ -55,11 +53,19 @@ void CGameLayer::OnAttach()
 
 void CGameLayer::OnUpdate(float elapsedSeconds)
 {
-    PROFILE_SCOPE(GameLayer);
+    //PROFILE_SCOPE(GameLayer);
+
+    const Volt::SFramebufferSpecification& spec = m_framebuffer->GetSpecification();
+    if (m_viewportSize.x > 0.f && m_viewportSize.y > 0.f &&
+        (spec.Width != static_cast<uint32_t>(m_viewportSize.x) || spec.Height != static_cast<uint32_t>(m_viewportSize.y)))
+    {
+        m_framebuffer->Resize(m_viewportSize);
+        m_camera->SetViewport(spec.Width, spec.Height);
+    }
 
     glm::mat4 transform(1.f);
     {
-        PROFILE_SCOPE(Logic);
+        //PROFILE_SCOPE(Logic);
         if (Volt::IInput::IsKeyPressed(Volt::KeyCodes::O))
         {
             m_camera->SetProjectionType(Volt::CCamera::EProjectionType::Orthographic);
@@ -85,24 +91,17 @@ void CGameLayer::OnUpdate(float elapsedSeconds)
         {
             m_position.x -= 5.f * elapsedSeconds;
         }
-
-        transform = translate(glm::mat4(1.f), m_position);
     }
     {
-        PROFILE_SCOPE(Render);
+        //PROFILE_SCOPE(Render);
 
         m_framebuffer->Bind();
 
         Volt::CRenderCommand::Clear();
 
-        Volt::CRenderer::BeginScene(m_camera);
-        m_shader->Bind();
-        m_shader->SetMat4("u_ViewProjection", transform * m_camera->GetProjection());
-        //m_shader->SetMat4("u_ModelTransform", transform);
-        m_texture->Bind();
-        m_vertexArray->Bind();
-        Volt::CRenderCommand::DrawIndexed(m_vertexArray);
-        Volt::CRenderer::EndScene();
+        Volt::CRenderer2D::BeginScene(*m_camera, glm::mat4(1.f));
+        Volt::CRenderer2D::DrawQuad(m_position, {1.f, 0.f, 0.f, 1.f});
+        Volt::CRenderer2D::EndScene();
 
         m_framebuffer->Unbind();
     }
@@ -114,6 +113,7 @@ void CGameLayer::OnUIRender()
         ImGui::Begin("VoltEngine");
         ImGui::Text("Welcome to Volt Engine!!!");
         ImGui::Separator();
+        ImGui::DragFloat3("Square position", &m_position[0]);
         ImGui::End();
     }
     {
@@ -121,9 +121,13 @@ void CGameLayer::OnUIRender()
         ImGui::Begin("Viewport");
 
         const ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
+        if (glm::vec2(viewportPanelSize.x, viewportPanelSize.y) != m_viewportSize && viewportPanelSize.x > 0 && viewportPanelSize.y > 0)
+        {
+            m_viewportSize = {viewportPanelSize.x, viewportPanelSize.y};
+        }
 
         const uint32_t texID = m_framebuffer->GetColorAttachmentRendererID();
-        ImGui::Image(reinterpret_cast<void*>(texID), viewportPanelSize);
+        ImGui::Image(reinterpret_cast<void*>(texID), viewportPanelSize, {0.f, 1.f}, {1.f, 0.f});
         ImGui::End();
         ImGui::PopStyleVar();
     }

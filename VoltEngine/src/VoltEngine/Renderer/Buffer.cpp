@@ -16,9 +16,9 @@ namespace Volt
         return CreateRef<COpenGLVertexBuffer>(size);
     }
 
-    Ref<IIndexBuffer> IIndexBuffer::Create(uint32_t* indices, uint32_t size)
+    Ref<IIndexBuffer> IIndexBuffer::Create(uint32_t* indices, uint32_t count)
     {
         // @todo rendererAPI
-        return CreateRef<COpenGLIndexBuffer>(indices, size);
+        return CreateRef<COpenGLIndexBuffer>(indices, count);
     }
 }

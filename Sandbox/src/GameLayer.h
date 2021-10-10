@@ -18,6 +18,7 @@ private:
     Volt::Ref<Volt::IVertexArray> m_vertexArray;
     Volt::Ref<Volt::ITexture> m_texture;
     Volt::Ref<Volt::IFramebuffer> m_framebuffer;
+    glm::vec2 m_viewportSize;
 
     glm::vec3 m_position;
 };

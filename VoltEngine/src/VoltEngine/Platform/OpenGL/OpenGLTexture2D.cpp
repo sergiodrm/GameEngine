@@ -58,9 +58,9 @@ namespace Volt
         glDeleteTextures(1, &m_rendererID);
     }
 
-    void COpenGLTexture2D::Bind() const
+    void COpenGLTexture2D::Bind(uint32_t slot) const
     {
-        glBindTexture(GL_TEXTURE_2D, m_rendererID);
+        glBindTextureUnit(slot, m_rendererID);
     }
 
     void COpenGLTexture2D::Unbind() const

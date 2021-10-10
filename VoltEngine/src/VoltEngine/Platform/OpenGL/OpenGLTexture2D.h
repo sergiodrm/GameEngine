@@ -12,7 +12,7 @@ namespace Volt
         COpenGLTexture2D(const std::string& filepath);
         virtual ~COpenGLTexture2D() override;
 
-        virtual void Bind() const override;
+        virtual void Bind(uint32_t slot = 0) const override;
         virtual void Unbind() const override;
 
         virtual uint32_t GetRendererID() const override { return m_rendererID; }
