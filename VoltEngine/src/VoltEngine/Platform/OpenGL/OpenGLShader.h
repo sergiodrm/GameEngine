@@ -26,7 +26,7 @@ namespace Volt
     private:
         static std::string ReadFile(const std::string& filepath);
         static std::unordered_map<uint32_t, std::string> PreprocessSource(const std::string& rawSource);
-        void Compile(const std::unordered_map<uint32_t, std::string>& shaderSources);
+        bool Compile(const std::unordered_map<uint32_t, std::string>& shaderSources);
 
     private:
         uint32_t m_rendererID;

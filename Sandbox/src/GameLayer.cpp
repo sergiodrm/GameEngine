@@ -11,38 +11,7 @@ void CGameLayer::OnAttach()
 {
     CLayer::OnAttach();
 
-    float vertices[] =
-        {
-            -0.5f, -0.5f, 0.5f, 1.f, 0.f, 0.f, 0.f, 0.f,
-            0.5f, -0.5f, 0.5f, 1.f, 0.f, 0.f, 1.f, 0.f,
-            0.5f, 0.5f, 0.5f, 1.f, 0.f, 0.f, 1.f, 1.f,
-            -0.5f, 0.5f, 0.5f, 1.f, 0.f, 0.f, 0.f, 1.f
-        };
-
-    Volt::Ref<Volt::IVertexBuffer> buffer = Volt::IVertexBuffer::Create(vertices, sizeof(vertices));
-    buffer->SetLayout({
-                          {Volt::EShaderDataType::Float3, "a_Position"},
-                          {Volt::EShaderDataType::Float3, "a_Color"},
-                          {Volt::EShaderDataType::Float2, "a_TexCoord"}
-                      });
-
-    uint32_t indices[] =
-        {
-            0, 1, 2,
-            0, 2, 3
-        };
-    const Volt::Ref<Volt::IIndexBuffer> indexBuffer = Volt::IIndexBuffer::Create(indices, 6);
-
-    m_vertexArray = Volt::IVertexArray::Create();
-    m_vertexArray->AddVertexBuffer(buffer);
-    m_vertexArray->SetIndexBuffer(indexBuffer);
-
     m_texture = Volt::ITexture::Create("assets/textures/sample.png");
-
-    m_shader = Volt::IShader::Create("assets/shaders/simple.glsl");
-    m_shader->Bind();
-    m_shader->SetMat4("u_ModelTransform", glm::mat4(1.f));
-    m_texture->Bind();
 
     m_camera = Volt::CreateRef<Volt::CCamera>();
 
@@ -75,32 +44,43 @@ void CGameLayer::OnUpdate(float elapsedSeconds)
             m_camera->SetProjectionType(Volt::CCamera::EProjectionType::Perspective);
         }
 
-        if (Volt::IInput::IsKeyPressed(Volt::KeyCodes::W))
+        if (Volt::IInput::IsKeyPressed(Volt::KeyCodes::S))
         {
             m_position.y += 5.f * elapsedSeconds;
         }
-        if (Volt::IInput::IsKeyPressed(Volt::KeyCodes::S))
+        if (Volt::IInput::IsKeyPressed(Volt::KeyCodes::W))
         {
             m_position.y -= 5.f * elapsedSeconds;
         }
-        if (Volt::IInput::IsKeyPressed(Volt::KeyCodes::D))
+        if (Volt::IInput::IsKeyPressed(Volt::KeyCodes::A))
         {
             m_position.x += 5.f * elapsedSeconds;
         }
-        if (Volt::IInput::IsKeyPressed(Volt::KeyCodes::A))
+        if (Volt::IInput::IsKeyPressed(Volt::KeyCodes::D))
         {
             m_position.x -= 5.f * elapsedSeconds;
         }
     }
     {
         //PROFILE_SCOPE(Render);
+        transform = translate(glm::mat4(1.f), m_position);
 
         m_framebuffer->Bind();
 
         Volt::CRenderCommand::Clear();
 
-        Volt::CRenderer2D::BeginScene(*m_camera, glm::mat4(1.f));
-        Volt::CRenderer2D::DrawQuad(m_position, {1.f, 0.f, 0.f, 1.f});
+        Volt::CRenderer2D::BeginScene(*m_camera, transform);
+
+        const uint32_t width = 20;
+        const uint32_t height = 20;
+        for (float x = 0; x < static_cast<float>(width); ++x)
+        {
+            for (float y = 0; y < static_cast<float>(height); ++y)
+            {
+                const glm::vec3 pos = {x * 1.2f, y * 1.2f, 0.f};
+                Volt::CRenderer2D::DrawQuad(pos, {pos.x / static_cast<float>(width), pos.y / static_cast<float>(height), 0.f, 1.f});
+            }
+        }
         Volt::CRenderer2D::EndScene();
 
         m_framebuffer->Unbind();
@@ -110,10 +90,20 @@ void CGameLayer::OnUpdate(float elapsedSeconds)
 void CGameLayer::OnUIRender()
 {
     {
+        const Volt::SRenderer2DStats& stats = Volt::CRenderer2D::GetStats();
+
         ImGui::Begin("VoltEngine");
         ImGui::Text("Welcome to Volt Engine!!!");
         ImGui::Separator();
-        ImGui::DragFloat3("Square position", &m_position[0]);
+        ImGui::DragFloat3("Camera position", &m_position[0]);
+        ImGui::Checkbox("Draw", &m_draw);
+        ImGui::Separator();
+        ImGui::Text("- Draw calls: %d", stats.DrawCalls);
+        ImGui::Text("- Quad count: %d", stats.QuadCount);
+        ImGui::Text("- Vertices:   %d", stats.GetVerticesCount());
+        ImGui::Text("- Indices:    %d", stats.GetIndicesCount());
+        ImGui::Text("- Triangles:  %d", stats.GetTrianglesCount());
+
         ImGui::End();
     }
     {

@@ -29,7 +29,6 @@ project "VoltEngine"
     location "VoltEngine"
     kind "StaticLib"
     language "C++"
-
     cppdialect "C++17"
 	staticruntime "on"
 
@@ -101,12 +100,10 @@ project "Sandbox"
     {
         "Sandbox/src/**.h",
         "Sandbox/src/**.cpp",
-        "Sandbox/assets/**.glsl",
     }
 
     includedirs
     {
-        "Sandbox/src",
         "%{wks.location}/VoltEngine/src",
         "%{IncludeDir.glm}",
         "%{IncludeDir.spdlog}",

@@ -17,7 +17,10 @@ namespace Volt
     {
         const std::string rawSource = ReadFile(filepath);
         const std::unordered_map<uint32_t, std::string> shaderSources = PreprocessSource(rawSource);
-        Compile(shaderSources);
+        if (!Compile(shaderSources))
+        {
+            VOLT_ASSERT(false, "Couldn't compile {0}", filepath.c_str());
+        }
 
         // Get name
         size_t lastSlash = filepath.find_last_of("/\\");
@@ -30,7 +33,10 @@ namespace Volt
     COpenGLShader::COpenGLShader(const std::string& name, const std::string& vertexSource, const std::string& fragmentSource)
         : m_name(name)
     {
-        Compile({{Vertex, vertexSource}, {Fragment, fragmentSource}});
+        if (!Compile({{Vertex, vertexSource}, {Fragment, fragmentSource}}))
+        {
+            VOLT_ASSERT(false, "Couldn't compile {0}", name.c_str());
+        }
     }
 
     COpenGLShader::~COpenGLShader()
@@ -138,7 +144,7 @@ namespace Volt
         return shaderSources;
     }
 
-    void COpenGLShader::Compile(const std::unordered_map<uint32_t, std::string>& shaderSources)
+    bool COpenGLShader::Compile(const std::unordered_map<uint32_t, std::string>& shaderSources)
     {
         const GLuint program = glCreateProgram();
         VOLT_ASSERT(shaderSources.size() <= 2, "We only support 2 shaders for now");
@@ -175,7 +181,6 @@ namespace Volt
                 }
                 // Use the infoLog as you see fit.
                 VOLT_LOG(Error, "{0}", infoLog.data());
-                VOLT_ASSERT(false, "Shader compilation failed");
                 break;
             }
 
@@ -207,10 +212,9 @@ namespace Volt
             }
             // Use the infoLog as you see fit.
             VOLT_LOG(Error, "{0}", infoLog.data());
-            VOLT_ASSERT(false, "Shader compilation failed");
 
             // In this simple program, we'll just leave
-            return;
+            return false;
         }
 
         // Always detach shaders after a successful link.
@@ -221,5 +225,6 @@ namespace Volt
 
         // Save the program id
         m_rendererID = program;
+        return true;
     }
 }

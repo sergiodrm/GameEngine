@@ -17,6 +17,15 @@ namespace Volt
         glm::vec2 TexCoords;
         float TexIndex;
         float TilingFactor;
+
+        void Print()
+        {
+            VOLT_LOG(Trace, "- Position   : {0}, {1}, {2}", Position.x, Position.y, Position.z);
+            VOLT_LOG(Trace, "- Color      : {0}, {1}, {2}, {3}", Color.r, Color.g, Color.b, Color.a);
+            VOLT_LOG(Trace, "- TexCoords  : {0}, {1}", TexCoords.x, TexCoords.y);
+            VOLT_LOG(Trace, "- TexIndex   : {0}", TexIndex);
+            VOLT_LOG(Trace, "- TilingFact : {0}\n", TilingFactor);
+        }
     };
 
     struct SRenderer2DData
@@ -44,6 +53,8 @@ namespace Volt
 
         uint32_t TextureSlotIndex = 1;
         std::array<Ref<ITexture>, MaxTextureSlots> TextureSlots;
+
+        SRenderer2DStats Stats;
     };
 
     static SRenderer2DData RendererData;
@@ -69,9 +80,9 @@ namespace Volt
             quadIndices[index + 1] = offset + 1;
             quadIndices[index + 2] = offset + 2;
 
-            quadIndices[index + 3] = offset + 0;
-            quadIndices[index + 4] = offset + 2;
-            quadIndices[index + 5] = offset + 3;
+            quadIndices[index + 3] = offset + 2;
+            quadIndices[index + 4] = offset + 3;
+            quadIndices[index + 5] = offset + 0;
 
             offset += 4;
         }
@@ -89,14 +100,14 @@ namespace Volt
         RendererData.WhiteTexture->SetData(&whiteTextureData, sizeof(whiteTextureData));
 
         int32_t samplers[SRenderer2DData::MaxTextureSlots];
-        for (int32_t i = 0; i < SRenderer2DData::MaxTextureSlots; ++i)
+        for (int32_t i = 0; i < static_cast<int32_t>(SRenderer2DData::MaxTextureSlots); ++i)
         {
             samplers[i] = i;
         }
 
         RendererData.QuadShader = IShader::Create("assets/shaders/QuadTexture.glsl");
         RendererData.QuadShader->Bind();
-        RendererData.QuadShader->SetIntArray("u_Texture", samplers, SRenderer2DData::MaxIndices);
+        RendererData.QuadShader->SetIntArray("u_Texture", samplers, SRenderer2DData::MaxTextureSlots);
 
         RendererData.TextureSlots[0] = RendererData.WhiteTexture;
     }
@@ -114,6 +125,9 @@ namespace Volt
         RendererData.QuadShader->SetMat4("u_ViewProjection", viewProjection);
 
         Reset();
+
+        RendererData.Stats.DrawCalls = 0;
+        RendererData.Stats.QuadCount = 0;
     }
 
     void CRenderer2D::EndScene()
@@ -125,6 +139,8 @@ namespace Volt
         Flush();
     }
 
+    const SRenderer2DStats& CRenderer2D::GetStats() { return RendererData.Stats; }
+
     void CRenderer2D::DrawQuad(const glm::vec2& position, const glm::vec4& color)
     {
         DrawQuad({position.x, position.y, 0.f}, color);
@@ -132,11 +148,7 @@ namespace Volt
 
     void CRenderer2D::DrawQuad(const glm::vec3& position, const glm::vec4& color)
     {
-        const glm::mat4 transform = translate(glm::mat4(1.f), position)
-            * rotate(glm::mat4(1.f), 0.f, {1.f, 0.f, 0.f})
-            * rotate(glm::mat4(1.f), 0.f, {0.f, 1.f, 0.f})
-            * rotate(glm::mat4(1.f), 0.f, {0.f, 0.f, 1.f})
-            * scale(glm::mat4(1.f), {1.f, 1.f, 1.f});
+        const glm::mat4 transform = translate(glm::mat4(1.f), position);
         DrawQuad(transform, color);
     }
 
@@ -157,8 +169,8 @@ namespace Volt
             ++RendererData.QuadVertexPtr;
         }
         RendererData.QuadIndexCount += 6;
+        ++RendererData.Stats.QuadCount;
     }
-
 
     void CRenderer2D::Flush()
     {
@@ -168,8 +180,8 @@ namespace Volt
             {
                 RendererData.TextureSlots[index]->Bind(index);
             }
-
             CRenderCommand::DrawIndexed(RendererData.QuadVertexArray, RendererData.QuadIndexCount);
+            ++RendererData.Stats.DrawCalls;
         }
     }
 

@@ -9,7 +9,16 @@ namespace Volt
     static void OpenGLMessageCallback(GLenum source, GLenum type, GLenum id, GLenum severity,
                                       GLsizei length, const GLchar* message, const void* userParam)
     {
-        VOLT_LOG(Error, "GL_CALLBACK: {0} msg : {1}", type == GL_DEBUG_TYPE_ERROR ? "** GL_ERROR **" : "", message);
+        if (type == GL_DEBUG_TYPE_ERROR)
+        {
+            VOLT_LOG(Error, "GL_CALLBACK: ** GL_ERROR ** : {0}", message);
+        }
+#if 0
+        else
+        {
+            VOLT_LOG(Warning, "GL_CALLBACK: msg : {0}", message);
+        }
+#endif
     }
 
     void COpenGLRendererAPI::Init()
@@ -36,7 +45,7 @@ namespace Volt
     {
         vertexArray->Bind();
         const uint32_t count = indexCount == 0 ? vertexArray->GetIndexBuffer()->GetCount() : indexCount;
-        glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, nullptr);
+        glDrawElements(GL_TRIANGLES, vertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
         glBindTexture(GL_TEXTURE_2D, 0);
     }
 
