@@ -152,6 +152,33 @@ namespace Volt
         DrawQuad(transform, color);
     }
 
+    void CRenderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& scale, const glm::vec4& color)
+    {
+        DrawQuad({position.x, position.y, 0.f}, scale, color);
+    }
+
+    void CRenderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& scale, const glm::vec4& color)
+    {
+        const glm::mat4 transform = translate(glm::mat4(1.f), position) *
+            glm::scale(glm::mat4(1.f), {scale.x, scale.y, 1.f});
+        DrawQuad(transform, color);
+    }
+
+    void CRenderer2D::DrawQuad(const glm::vec2& position, const glm::vec3& rotation, const glm::vec2& scale, const glm::vec4& color)
+    {
+        DrawQuad({position.x, position.y, 0.f}, rotation, scale, color);
+    }
+
+    void CRenderer2D::DrawQuad(const glm::vec3& position, const glm::vec3& rotation, const glm::vec2& scale, const glm::vec4& color)
+    {
+        const glm::mat4 transform = translate(glm::mat4(1.f), position) *
+            rotate(glm::mat4(1.f), glm::radians(rotation.x), {1.f, 0.f, 0.f}) *
+            rotate(glm::mat4(1.f), glm::radians(rotation.y), {0.f, 1.f, 0.f}) *
+            rotate(glm::mat4(1.f), glm::radians(rotation.z), {0.f, 0.f, 1.f}) *
+            glm::scale(glm::mat4(1.f), {scale.x, scale.y, 1.f});
+        DrawQuad(transform, color);
+    }
+
     void CRenderer2D::DrawQuad(const glm::mat4& transform, const glm::vec4& color)
     {
         UpdateBatch();

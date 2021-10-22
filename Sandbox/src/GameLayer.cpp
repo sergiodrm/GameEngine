@@ -73,12 +73,17 @@ void CGameLayer::OnUpdate(float elapsedSeconds)
 
         const uint32_t width = 20;
         const uint32_t height = 20;
+        static float rotation = 0.f;
+        rotation += 45.f * elapsedSeconds;
         for (float x = 0; x < static_cast<float>(width); ++x)
         {
             for (float y = 0; y < static_cast<float>(height); ++y)
             {
                 const glm::vec3 pos = {x * 1.2f, y * 1.2f, 0.f};
-                Volt::CRenderer2D::DrawQuad(pos, {pos.x / static_cast<float>(width), pos.y / static_cast<float>(height), 0.f, 1.f});
+                Volt::CRenderer2D::DrawQuad(pos,
+                                            {0.f, 0.f, rotation},
+                                            {1.f, 1.f},
+                                            {pos.x / static_cast<float>(width), pos.y / static_cast<float>(height), 0.f, 1.f});
             }
         }
         Volt::CRenderer2D::EndScene();
