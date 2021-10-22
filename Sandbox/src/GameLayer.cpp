@@ -80,12 +80,13 @@ void CGameLayer::OnUpdate(float elapsedSeconds)
             for (float y = 0; y < static_cast<float>(height); ++y)
             {
                 const glm::vec3 pos = {x * 1.2f, y * 1.2f, 0.f};
-                Volt::CRenderer2D::DrawQuad(pos,
-                                            {0.f, 0.f, rotation},
-                                            {1.f, 1.f},
-                                            {pos.x / static_cast<float>(width), pos.y / static_cast<float>(height), 0.f, 1.f});
+                Volt::CRenderer2D::DrawTexture(pos,
+                                               {0.f, 0.f, rotation}, {1.f, 1.f, 1.f}, m_texture,
+                                               {pos.x / static_cast<float>(width), pos.y / static_cast<float>(height), 0.f, 1.f});
             }
         }
+
+        Volt::CRenderer2D::DrawTexture({-1.f, -1.f}, {0.f, 0.f, 0.f}, {1.f, 1.f, 1.f}, m_texture);
         Volt::CRenderer2D::EndScene();
 
         m_framebuffer->Unbind();
