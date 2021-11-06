@@ -10,5 +10,5 @@
 
 #define DECLARE_DERIVED_CLASS(BaseClass) \
     public: \
-    static const CType& GetStaticType() { static const CType type(BaseClass); return type; } \
+    static const CType& GetStaticType() { static const CType type(BaseClass::GetStaticType()); return type; } \
     private:
