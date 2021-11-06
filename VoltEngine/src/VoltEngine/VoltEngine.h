@@ -15,6 +15,7 @@
 #include "Renderer/Buffer.h"
 #include "Renderer/Framebuffer.h"
 #include "Renderer/Texture.h"
+#include "Renderer/SubTexture.h"
 #include "Renderer/Camera.h"
 
 #include "Events/ApplicationEvent.h"

@@ -4,6 +4,7 @@
 #include "Camera.h"
 #include "RenderCommand.h"
 #include "Shader.h"
+#include "SubTexture.h"
 #include "Texture.h"
 #include "VertexArray.h"
 #include "VoltEngine/Core/Core.h"
@@ -179,62 +180,93 @@ namespace Volt
         DrawQuad(transform, color);
     }
 
-    void CRenderer2D::DrawTexture(const glm::vec2& position, const glm::vec3& rotation, const glm::vec3& scale, const Ref<ITexture>& texture, const glm::vec4& color)
+    void CRenderer2D::DrawTexture(const glm::vec2& position, const glm::vec3& rotation, const glm::vec3& scale, const Ref<ITexture>& texture, const glm::vec4& color, float tilingFactor)
     {
-        DrawTexture({position.x, position.y, 0.f}, rotation, scale, texture);
+        DrawTexture({position.x, position.y, 0.f}, rotation, scale, texture, color, tilingFactor);
     }
 
-    void CRenderer2D::DrawTexture(const glm::vec3& position, const glm::vec3& rotation, const glm::vec3& scale, const Ref<ITexture>& texture, const glm::vec4& color)
+    void CRenderer2D::DrawTexture(const glm::vec3& position, const glm::vec3& rotation, const glm::vec3& scale, const Ref<ITexture>& texture, const glm::vec4& color, float tilingFactor)
     {
         const glm::mat4 transform = translate(glm::mat4(1.f), position) *
             rotate(glm::mat4(1.f), glm::radians(rotation.x), {1.f, 0.f, 0.f}) *
             rotate(glm::mat4(1.f), glm::radians(rotation.y), {0.f, 1.f, 0.f}) *
             rotate(glm::mat4(1.f), glm::radians(rotation.z), {0.f, 0.f, 1.f}) *
             glm::scale(glm::mat4(1.f), {scale.x, scale.y, 1.f});
-        DrawQuad(transform, texture, color);
+        DrawQuad(transform, texture, color, nullptr, tilingFactor);
+    }
+
+    void CRenderer2D::DrawTexture(const glm::vec2& position, const glm::vec3& rotation, const glm::vec3& scale, const Ref<CSubTexture>& texture, const glm::vec4& color, float tilingFactor)
+    {
+        DrawTexture({position.x, position.y, 0.f}, rotation, scale, texture, color, tilingFactor);
+    }
+
+    void CRenderer2D::DrawTexture(const glm::vec3& position, const glm::vec3& rotation, const glm::vec3& scale, const Ref<CSubTexture>& texture, const glm::vec4& color, float tilingFactor)
+    {
+        const glm::mat4 transform = translate(glm::mat4(1.f), position) *
+            rotate(glm::mat4(1.f), glm::radians(rotation.x), {1.f, 0.f, 0.f}) *
+            rotate(glm::mat4(1.f), glm::radians(rotation.y), {0.f, 1.f, 0.f}) *
+            rotate(glm::mat4(1.f), glm::radians(rotation.z), {0.f, 0.f, 1.f}) *
+            glm::scale(glm::mat4(1.f), {scale.x, scale.y, 1.f});
+        DrawQuad(transform, texture->GetTexture(), color, texture->GetCoords(), tilingFactor);
     }
 
     void CRenderer2D::DrawQuad(const glm::mat4& transform, const glm::vec4& color)
     {
-        UpdateBatch();
+        //UpdateBatch();
 
-        const float textureIndex = 0.f;
-        const float tilingFactor = 1.f;
-        const glm::vec2 texCoords[] = {{0.f, 0.f}, {1.f, 0.f}, {1.f, 1.f}, {0.f, 1.f}};
-        for (uint32_t index = 0; index < SRenderer2DData::QuadVertexCount; ++index)
-        {
-            RendererData.QuadVertexPtr->Position = transform * SRenderer2DData::QuadVertexPositions[index];
-            RendererData.QuadVertexPtr->Color = color;
-            RendererData.QuadVertexPtr->TexCoords = texCoords[index];
-            RendererData.QuadVertexPtr->TexIndex = textureIndex;
-            RendererData.QuadVertexPtr->TilingFactor = tilingFactor;
-            ++RendererData.QuadVertexPtr;
-        }
-        RendererData.QuadIndexCount += 6;
-        ++RendererData.Stats.QuadCount;
+        //const float textureIndex = 0.f;
+        //const float tilingFactor = 1.f;
+        //const glm::vec2 texCoords[] = {{0.f, 0.f}, {1.f, 0.f}, {1.f, 1.f}, {0.f, 1.f}};
+        //for (uint32_t index = 0; index < SRenderer2DData::QuadVertexCount; ++index)
+        //{
+        //    RendererData.QuadVertexPtr->Position = transform * SRenderer2DData::QuadVertexPositions[index];
+        //    RendererData.QuadVertexPtr->Color = color;
+        //    RendererData.QuadVertexPtr->TexCoords = texCoords[index];
+        //    RendererData.QuadVertexPtr->TexIndex = textureIndex;
+        //    RendererData.QuadVertexPtr->TilingFactor = tilingFactor;
+        //    ++RendererData.QuadVertexPtr;
+        //}
+        //RendererData.QuadIndexCount += 6;
+        //++RendererData.Stats.QuadCount;
+        DrawQuad(transform, nullptr, color);
     }
 
-    void CRenderer2D::DrawQuad(const glm::mat4& transform, const Ref<ITexture>& texture, const glm::vec4& color)
+    void CRenderer2D::DrawQuad(const glm::mat4& transform, const Ref<ITexture>& texture, const glm::vec4& color, const glm::vec2* uv, float tilingFactor)
     {
         UpdateBatch();
 
         float textureIndex = 0.f;
-        for (uint32_t index = 1; index < RendererData.TextureSlotIndex; ++index)
+        if (texture != nullptr)
         {
-            if (*RendererData.TextureSlots[index] == *texture)
+            for (uint32_t index = 1; index < RendererData.TextureSlotIndex; ++index)
             {
-                textureIndex = static_cast<float>(index);
-                break;
+                if (*RendererData.TextureSlots[index] == *texture)
+                {
+                    textureIndex = static_cast<float>(index);
+                    break;
+                }
+            }
+            if (textureIndex == 0.f)
+            {
+                textureIndex = static_cast<float>(RendererData.TextureSlotIndex);
+                RendererData.TextureSlots[RendererData.TextureSlotIndex] = texture;
+                ++RendererData.TextureSlotIndex;
             }
         }
-        if (textureIndex == 0.f)
+
+        glm::vec2 texCoords[4];
+        if (!uv)
         {
-            textureIndex = static_cast<float>(RendererData.TextureSlotIndex);
-            RendererData.TextureSlots[RendererData.TextureSlotIndex] = texture;
-            ++RendererData.TextureSlotIndex;
+            texCoords[0] = {0.f, 0.f};
+            texCoords[1] = {1.f, 0.f};
+            texCoords[2] = {1.f, 1.f};
+            texCoords[3] = {0.f, 1.f};
         }
-        const float tilingFactor = 1.f;
-        const glm::vec2 texCoords[] = {{0.f, 0.f}, {1.f, 0.f}, {1.f, 1.f}, {0.f, 1.f}};
+        else
+        {
+            memcpy_s(texCoords, 4 * sizeof(glm::vec2), uv, 4 * sizeof(glm::vec2));
+        }
+
         for (uint32_t index = 0; index < SRenderer2DData::QuadVertexCount; ++index)
         {
             RendererData.QuadVertexPtr->Position = transform * SRenderer2DData::QuadVertexPositions[index];

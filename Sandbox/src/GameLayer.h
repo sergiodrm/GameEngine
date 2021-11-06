@@ -15,9 +15,10 @@ private:
     Volt::Ref<Volt::CCamera> m_camera;
 
     Volt::Ref<Volt::ITexture> m_texture;
+    Volt::Ref<Volt::ITexture> m_tileSetTexture;
+    Volt::Ref<Volt::CSubTexture> m_treeTexture;
     Volt::Ref<Volt::IFramebuffer> m_framebuffer;
     glm::vec2 m_viewportSize;
 
     glm::vec3 m_position;
-    bool m_draw;
 };
