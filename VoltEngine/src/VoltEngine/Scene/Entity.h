@@ -30,7 +30,7 @@ namespace Volt
             {
                 if (it->GetStaticType() == T::GetStaticType())
                 {
-                    return it;
+                    return Cast<T>(it);
                 }
             }
             return nullptr;
@@ -43,7 +43,7 @@ namespace Volt
             {
                 if (it->GetStaticType() == T::GetStaticType())
                 {
-                    return it;
+                    return Cast<T>(it);
                 }
             }
             return nullptr;
