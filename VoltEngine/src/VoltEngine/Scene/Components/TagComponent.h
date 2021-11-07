@@ -9,8 +9,8 @@ namespace Volt
     {
     DECLARE_DERIVED_CLASS(CComponent)
     public:
-        CTagComponent(const std::string& tag)
-            : m_tag(tag) {}
+        CTagComponent(CEntity* owner, const std::string& tag)
+            : CComponent(owner), m_tag(tag) {}
 
         const std::string& GetTag() const { return m_tag; }
 

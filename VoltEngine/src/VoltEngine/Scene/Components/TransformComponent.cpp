@@ -6,6 +6,9 @@
 
 namespace Volt
 {
+    CTransformComponent::CTransformComponent(CEntity* owner)
+        : CComponent(owner) {}
+
     glm::mat4 CTransformComponent::GetTransform() const
     {
         return translate(glm::mat4(1.f), m_position)

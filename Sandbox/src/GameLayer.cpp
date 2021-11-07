@@ -31,7 +31,7 @@ void CGameLayer::OnUpdate(float elapsedSeconds)
         (spec.Width != static_cast<uint32_t>(m_viewportSize.x) || spec.Height != static_cast<uint32_t>(m_viewportSize.y)))
     {
         m_framebuffer->Resize(m_viewportSize);
-        m_camera->SetViewport(spec.Width, spec.Height);
+        m_camera->SetViewportSize(spec.Width, spec.Height);
     }
 
     glm::mat4 transform(1.f);

@@ -8,6 +8,8 @@ namespace Volt
     {
     DECLARE_DERIVED_CLASS(CComponent)
     public:
+        CTransformComponent(CEntity* owner);
+
         glm::mat4 GetTransform() const;
 
     private:

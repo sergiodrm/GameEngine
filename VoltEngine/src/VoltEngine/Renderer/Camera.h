@@ -24,7 +24,7 @@ namespace Volt
 
         void SetOrthographic(float size, float nearClip, float farClip);
         void SetPerspective(float verticalFOV, float nearClip, float farClip);
-        void SetViewport(uint32_t width, uint32_t height);
+        void SetViewportSize(uint32_t width, uint32_t height);
 
         float GetOrthographicSize() const { return m_orthographicSize; }
         void SetOrthographicSize(float size);

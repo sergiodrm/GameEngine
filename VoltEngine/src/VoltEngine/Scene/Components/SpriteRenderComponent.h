@@ -9,7 +9,8 @@ namespace Volt
     {
     DECLARE_DERIVED_CLASS(CComponent)
     public:
-        CSpriteRenderComponent(const glm::vec4& color = glm::vec4(1.f));
+        CSpriteRenderComponent(CEntity* owner, const glm::vec4& color = glm::vec4(1.f))
+            : CComponent(owner), m_color(color) {}
 
         const glm::vec4& GetColor() const { return m_color; }
         void SetColor(const glm::vec4& color) { m_color = color; }

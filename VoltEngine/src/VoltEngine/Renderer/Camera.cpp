@@ -32,7 +32,7 @@ namespace Volt
         RecalculateProjection();
     }
 
-    void CCamera::SetViewport(uint32_t width, uint32_t height)
+    void CCamera::SetViewportSize(uint32_t width, uint32_t height)
     {
         m_aspectRatio = static_cast<float>(width) / static_cast<float>(height);
         RecalculateProjection();

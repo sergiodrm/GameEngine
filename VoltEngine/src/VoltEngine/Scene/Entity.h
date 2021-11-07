@@ -7,18 +7,19 @@
 
 namespace Volt
 {
+    class CScene;
     class CComponent;
 
     class CEntity
     {
     public:
-        CEntity();
+        CEntity(CScene* scene);
 
         template <typename T, typename ... Args>
         Ref<T> AddComponent(Args&& ... args)
         {
             VOLT_ASSERT(!HasComponent<T>(), "Entity has already that component!");
-            Ref<T> component = CreateRef<T>(std::forward<Args>(args)...);
+            Ref<T> component = CreateRef<T>(this, std::forward<Args>(args)...);
             m_components.push_back(component);
             return component;
         }
@@ -62,7 +63,11 @@ namespace Volt
             return false;
         }
 
+        const CScene* GetSceneContext() const { return m_sceneContext; }
+        CScene* GetSceneContext() { return m_sceneContext; }
+
     private:
+        CScene* m_sceneContext;
         std::vector<Ref<CComponent>> m_components;
     };
 }
