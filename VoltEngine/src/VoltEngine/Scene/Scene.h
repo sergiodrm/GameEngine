@@ -15,6 +15,8 @@ namespace Volt
         void OnUpdate(float elapsedSeconds);
         void OnViewportResize(uint32_t width, uint32_t height);
 
+        Ref<CEntity> GetPrimaryCamera() const;
+
         glm::vec2 GetViewportSize() const { return {static_cast<float>(m_width), static_cast<float>(m_height)}; }
         uint32_t GetViewportWidth() const { return m_width; }
         uint32_t GetViewportHeight() const { return m_height; }
