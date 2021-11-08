@@ -19,6 +19,17 @@ void CGameLayer::OnAttach()
 
     m_framebuffer = Volt::IFramebuffer::Create({1280, 720});
 
+    m_scene = Volt::CreateRef<Volt::CScene>();
+
+    m_cameraEntity = m_scene->CreateEntity("CameraEntity");
+    Volt::CCameraComponent* cameraComponent = m_cameraEntity->AddComponent<Volt::CCameraComponent>();
+    cameraComponent->SetPrimary(true);
+
+    m_squareEntity = m_scene->CreateEntity("SquareEntity");
+    m_squareEntity->AddComponent<Volt::CSpriteRenderComponent>(glm::vec4(1.f, 0.f, 0.f, 1.f));
+    Volt::CTransformComponent* transform = m_squareEntity->GetComponent<Volt::CTransformComponent>();
+    transform->SetPosition({-1.f, -1.f, 0.f});
+
     Volt::CRenderCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1.f});
 }
 
@@ -32,6 +43,7 @@ void CGameLayer::OnUpdate(float elapsedSeconds)
     {
         m_framebuffer->Resize(m_viewportSize);
         m_camera->SetViewportSize(spec.Width, spec.Height);
+        m_scene->OnViewportResize(spec.Width, spec.Height);
     }
 
     glm::mat4 transform(1.f);
@@ -71,9 +83,11 @@ void CGameLayer::OnUpdate(float elapsedSeconds)
 
         Volt::CRenderCommand::Clear();
 
-        Volt::CRenderer2D::BeginScene(*m_camera, transform);
-        Volt::CRenderer2D::DrawTexture({0.f, 0.f}, {0.f, 0.f, 0.f}, {1.f, 1.f, 1.f}, m_treeTexture);
-        Volt::CRenderer2D::EndScene();
+        //Volt::CRenderer2D::BeginScene(*m_camera, transform);
+        //Volt::CRenderer2D::DrawTexture({0.f, 0.f}, {0.f, 0.f, 0.f}, {1.f, 1.f, 1.f}, m_treeTexture);
+        //Volt::CRenderer2D::EndScene();
+
+        m_scene->OnUpdate(elapsedSeconds);
 
         m_framebuffer->Unbind();
     }

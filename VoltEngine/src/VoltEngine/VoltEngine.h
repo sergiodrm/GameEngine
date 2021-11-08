@@ -18,6 +18,14 @@
 #include "Renderer/SubTexture.h"
 #include "Renderer/Camera.h"
 
+#include "Scene/Entity.h"
+#include "Scene/Scene.h"
+#include "Scene/Components/CameraComponent.h"
+#include "Scene/Components/SpriteRenderComponent.h"
+#include "Scene/Components/TransformComponent.h"
+#include "Scene/Components/CameraComponent.h"
+#include "Scene/Components/TagComponent.h"
+
 #include "Events/ApplicationEvent.h"
 #include "Events/MouseEvent.h"
 #include "Events/KeyEvent.h"

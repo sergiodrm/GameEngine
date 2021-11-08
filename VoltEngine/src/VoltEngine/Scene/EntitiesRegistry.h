@@ -24,10 +24,13 @@ namespace Volt
 
         void Delete(const Ref<CEntity>& entity);
 
-        RegistryIterator begin() { return m_registry.begin(); }
-        RegistryIterator end() { return m_registry.end(); }
-        RegistryConstIterator begin() const { return m_registry.begin(); }
-        RegistryConstIterator end() const { return m_registry.end(); }
+        const Registry& GetRegistry() const { return m_registry; }
+        Registry& GetRegistry() { return m_registry; }
+
+        //RegistryIterator begin() { return m_registry.begin(); }
+        //RegistryIterator end() { return m_registry.end(); }
+        //RegistryConstIterator begin() const { return m_registry.begin(); }
+        //RegistryConstIterator end() const { return m_registry.end(); }
 
     private:
         Registry m_registry;

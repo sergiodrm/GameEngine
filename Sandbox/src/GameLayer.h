@@ -2,6 +2,7 @@
 
 #include "VoltEngine/VoltEngine.h"
 
+
 class CGameLayer : public Volt::CLayer
 {
 public:
@@ -13,6 +14,11 @@ public:
 
 private:
     Volt::Ref<Volt::CCamera> m_camera;
+
+    Volt::Ref<Volt::CScene> m_scene;
+
+    Volt::Ref<Volt::CEntity> m_cameraEntity;
+    Volt::Ref<Volt::CEntity> m_squareEntity;
 
     Volt::Ref<Volt::ITexture> m_texture;
     Volt::Ref<Volt::ITexture> m_tileSetTexture;

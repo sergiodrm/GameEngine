@@ -14,37 +14,39 @@ namespace Volt
     {
     public:
         CEntity(CScene* scene);
+        ~CEntity();
 
         template <typename T, typename ... Args>
-        Ref<T> AddComponent(Args&& ... args)
+        T* AddComponent(Args&& ... args)
         {
             VOLT_ASSERT(!HasComponent<T>(), "Entity has already that component!");
-            Ref<T> component = CreateRef<T>(this, std::forward<Args>(args)...);
+            //Ref<T> component = CreateRef<T>(this, std::forward<Args>(args)...);
+            T* component = new T(this, std::forward<Args>(args)...);
             m_components.push_back(component);
             return component;
         }
 
         template <typename T>
-        const Ref<T>& GetComponent() const
+        const T* GetComponent() const
         {
-            for (const Ref<CComponent>& it : m_components)
+            for (const CComponent* it : m_components)
             {
-                if (it->GetStaticType() == T::GetStaticType())
+                if (it->GetDynamicType() == T::GetStaticType())
                 {
-                    return Cast<T>(it);
+                    return reinterpret_cast<T*>(it);
                 }
             }
             return nullptr;
         }
 
         template <typename T>
-        Ref<T> GetComponent()
+        T* GetComponent()
         {
-            for (Ref<CComponent>& it : m_components)
+            for (CComponent* it : m_components)
             {
-                if (it->GetStaticType() == T::GetStaticType())
+                if (it->GetDynamicType() == T::GetStaticType())
                 {
-                    return Cast<T>(it);
+                    return reinterpret_cast<T*>(it);
                 }
             }
             return nullptr;
@@ -53,9 +55,9 @@ namespace Volt
         template <typename T>
         bool HasComponent() const
         {
-            for (const Ref<CComponent>& it : m_components)
+            for (CComponent* it : m_components)
             {
-                if (it->GetStaticType() == T::GetStaticType())
+                if (it->GetDynamicType() == T::GetStaticType())
                 {
                     return true;
                 }
@@ -68,6 +70,6 @@ namespace Volt
 
     private:
         CScene* m_sceneContext;
-        std::vector<Ref<CComponent>> m_components;
+        std::vector<CComponent*> m_components;
     };
 }

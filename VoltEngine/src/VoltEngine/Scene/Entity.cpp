@@ -7,4 +7,13 @@ namespace Volt
     {
         VOLT_ASSERT(m_sceneContext, "Entity was created without scene context!");
     }
+
+    CEntity::~CEntity()
+    {
+        for (CComponent* it : m_components)
+        {
+            delete it;
+        }
+        m_components.clear();
+    }
 }
