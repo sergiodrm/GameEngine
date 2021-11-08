@@ -4,7 +4,7 @@
 
 
 CGameLayer::CGameLayer(const std::string& name)
-    : CLayer(name), m_position(0.f)
+    : CLayer(name), m_viewportSize(0.f), m_position(0.f)
 {}
 
 void CGameLayer::OnAttach()
@@ -100,12 +100,6 @@ void CGameLayer::OnUIRender()
 
         ImGui::Begin("VoltEngine");
         ImGui::Text("Welcome to Volt Engine!!!");
-        ImGui::Separator();
-        ImGui::DragFloat3("Camera position", &m_position[0]);
-        //glm::vec2& uv0 = m_treeTexture->GetUV0();
-        //ImGui::DragFloat2("UV 0", &uv0[0], 0.001f);
-        //glm::vec2& uv1 = m_treeTexture->GetUV1();
-        //ImGui::DragFloat2("UV 1", &uv1[0], 0.001f);
         ImGui::Separator();
         ImGui::Text("- Draw calls: %d", stats.DrawCalls);
         ImGui::Text("- Quad count: %d", stats.QuadCount);

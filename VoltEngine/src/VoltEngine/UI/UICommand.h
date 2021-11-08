@@ -9,5 +9,7 @@ namespace Volt
         static void Shutdown();
         static void BeginFrame();
         static void EndFrame();
+    private:
+        static void InitStyle();
     };
 }
