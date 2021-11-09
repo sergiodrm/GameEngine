@@ -85,6 +85,56 @@ project "VoltEngine"
 	filter "configurations:Dist"
 		optimize "on"
 
+project "VoltEditor"
+    location "VoltEditor"
+    kind "StaticLib"
+    language "C++"
+    cppdialect "C++17"
+	staticruntime "on"
+
+	targetdir ("bin/" .. outputdir .. "/%{prj.name}-bin")
+	objdir ("bin-int/" .. outputdir .. "/%{prj.name}-binobj")
+
+    files
+	{
+		"VoltEditor/src/**.h",
+		"VoltEditor/src/**.cpp"
+	}
+
+	includedirs
+	{
+		"%{wks.location}/VoltEngine/src",
+		"%{IncludeDir.glm}",
+		"%{IncludeDir.spdlog}",
+        "%{IncludeDir.stb_image}",
+        "%{IncludeDir.imgui}"
+	}
+
+	links
+	{
+		"VoltEngine",
+        "ImGui"
+	}
+	
+	filter "system:windows"
+		systemversion "latest"
+
+		defines
+		{
+		"VOLT_PLATFORM_WINDOWS",
+        "VOLT_EDITOR=1"
+		}
+
+
+	filter "configurations:Debug"
+		symbols "on"
+
+	filter "configurations:Release"
+		optimize "on"
+
+	filter "configurations:Dist"
+		optimize "on"
+
 group "Game"
 project "Sandbox"
     location "Sandbox"
