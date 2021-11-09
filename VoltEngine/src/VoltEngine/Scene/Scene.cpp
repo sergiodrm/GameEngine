@@ -2,6 +2,7 @@
 
 #include "Entity.h"
 #include "Components/CameraComponent.h"
+#include "Components/NativeScriptComponent.h"
 #include "Components/SpriteRenderComponent.h"
 #include "Components/TagComponent.h"
 #include "Components/TransformComponent.h"
@@ -20,7 +21,7 @@ namespace Volt
 
     Ref<CEntity> CScene::GetPrimaryCamera() const
     {
-        for (const Ref<CEntity>& it : m_registry.GetRegistry())
+        for (const Ref<CEntity>& it : m_registry)
         {
             const CCameraComponent* cameraComponent = it->GetComponent<CCameraComponent>();
             if (cameraComponent && cameraComponent->IsPrimary())
@@ -34,8 +35,41 @@ namespace Volt
 
     void CScene::OnUpdate(float elapsedSeconds)
     {
-        // @todo Entity script code
+        RunEntitiesScripts(elapsedSeconds);
+        RenderScene();
+    }
 
+    void CScene::OnViewportResize(uint32_t width, uint32_t height)
+    {
+        m_width = width;
+        m_height = height;
+
+        for (const Ref<CEntity>& it : m_registry)
+        {
+            CCameraComponent* cameraComponent = it->GetComponent<CCameraComponent>();
+            if (cameraComponent)
+            {
+                cameraComponent->GetCamera().SetViewportSize(width, height);
+            }
+        }
+    }
+
+
+    void CScene::RunEntitiesScripts(float elapsedSeconds)
+    {
+        // Update scripts
+        for (const Ref<CEntity>& it : m_registry)
+        {
+            CNativeScriptComponent* nativeScript = it->GetComponent<CNativeScriptComponent>();
+            if (nativeScript)
+            {
+                nativeScript->OnUpdate(elapsedSeconds);
+            }
+        }
+    }
+
+    void CScene::RenderScene()
+    {
         // Get scene camera
         const Ref<CEntity> cameraEntity = GetPrimaryCamera();
         if (cameraEntity)
@@ -45,7 +79,8 @@ namespace Volt
             const glm::mat4 viewMatrix = transformComponent->GetTransform();
             CRenderer2D::BeginScene(cameraComponent->GetCamera(), viewMatrix);
 
-            for (const Ref<CEntity>& it : m_registry.GetRegistry())
+            // Render entities
+            for (const Ref<CEntity>& it : m_registry)
             {
                 const CTransformComponent* entityTransform = it->GetComponent<CTransformComponent>();
                 const CSpriteRenderComponent* entityRender = it->GetComponent<CSpriteRenderComponent>();
@@ -56,21 +91,6 @@ namespace Volt
             }
 
             CRenderer2D::EndScene();
-        }
-    }
-
-    void CScene::OnViewportResize(uint32_t width, uint32_t height)
-    {
-        m_width = width;
-        m_height = height;
-
-        for (const Ref<CEntity>& it : m_registry.GetRegistry())
-        {
-            CCameraComponent* cameraComponent = it->GetComponent<CCameraComponent>();
-            if (cameraComponent)
-            {
-                cameraComponent->GetCamera().SetViewportSize(width, height);
-            }
         }
     }
 }

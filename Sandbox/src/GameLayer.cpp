@@ -1,6 +1,7 @@
 #include "GameLayer.h"
 
 #include "imgui.h"
+#include "VoltEngine/Scene/Components/NativeScriptComponent.h"
 
 
 CGameLayer::CGameLayer(const std::string& name)
@@ -27,8 +28,7 @@ void CGameLayer::OnAttach()
 
     m_squareEntity = m_scene->CreateEntity("SquareEntity");
     m_squareEntity->AddComponent<Volt::CSpriteRenderComponent>(glm::vec4(1.f, 0.f, 0.f, 1.f));
-    Volt::CTransformComponent* transform = m_squareEntity->GetComponent<Volt::CTransformComponent>();
-    transform->SetPosition({-1.f, -1.f, 0.f});
+    m_squareEntity->AddComponent<Volt::CMovementScriptComponent>();
 
     Volt::CRenderCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1.f});
 }

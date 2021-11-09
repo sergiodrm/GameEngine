@@ -2,8 +2,8 @@
 
 namespace Volt
 {
-    CType::CType(const CType* baseType)
-        : m_baseType(baseType) {}
+    CType::CType(const std::string& name, const CType* baseType)
+        : m_name(name), m_baseType(baseType) {}
 
     bool CType::IsSubTypeOf(const CType& type) const
     {

@@ -27,10 +27,17 @@ namespace Volt
         const Registry& GetRegistry() const { return m_registry; }
         Registry& GetRegistry() { return m_registry; }
 
-        //RegistryIterator begin() { return m_registry.begin(); }
-        //RegistryIterator end() { return m_registry.end(); }
-        //RegistryConstIterator begin() const { return m_registry.begin(); }
-        //RegistryConstIterator end() const { return m_registry.end(); }
+        uint32_t GetSize() const { return static_cast<uint32_t>(m_registry.size()); }
+
+        Ref<CEntity> operator[](uint32_t index);
+        Ref<const CEntity> operator[](uint32_t index) const;
+
+
+        RegistryIterator begin() { return m_registry.begin(); }
+        RegistryIterator end() { return m_registry.end(); }
+        RegistryConstIterator begin() const { return m_registry.begin(); }
+        RegistryConstIterator end() const { return m_registry.end(); }
+
 
     private:
         Registry m_registry;

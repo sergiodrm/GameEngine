@@ -6,11 +6,13 @@ namespace Volt
 {
     class CTransformComponent : public CComponent
     {
-    DECLARE_DERIVED_CLASS(CComponent)
+    DECLARE_DERIVED_CLASS(CTransformComponent, CComponent)
     public:
-        CTransformComponent(CEntity* owner);
-
         glm::mat4 GetTransform() const;
+
+        const glm::vec3& GetPosition() const { return m_position; }
+        const glm::vec3& GetRotation() const { return m_rotation; }
+        const glm::vec3& GetScale() const { return m_scale; }
 
         void SetPosition(const glm::vec3& position) { m_position = position; }
         void SetRotation(const glm::vec3& rotation) { m_rotation = rotation; }

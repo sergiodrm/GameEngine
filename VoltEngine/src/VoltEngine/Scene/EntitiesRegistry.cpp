@@ -10,4 +10,22 @@ namespace Volt
             m_registry.erase(it);
         }
     }
+
+    Ref<CEntity> CEntitiesRegistry::operator[](uint32_t index)
+    {
+        if (index < m_registry.size())
+        {
+            return m_registry[index];
+        }
+        return nullptr;
+    }
+
+    Ref<const CEntity> CEntitiesRegistry::operator[](uint32_t index) const
+    {
+        if (index < m_registry.size())
+        {
+            return m_registry[index];
+        }
+        return nullptr;
+    }
 }

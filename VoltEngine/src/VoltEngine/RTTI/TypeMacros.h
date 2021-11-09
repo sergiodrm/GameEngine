@@ -3,14 +3,20 @@
 #include "Type.h"
 #include "TypeCast.h"
 
-#define DECLARE_BASE_CLASS() \
+#define DECLARE_BASE_CLASS(Class) \
     public: \
-    static const CType& GetStaticType() { static const CType type; return type; } \
-    virtual const CType& GetDynamicType() const { return GetStaticType(); } \
+    inline static const CType& GetStaticType() { static const CType type(#Class); return type; } \
+    inline virtual const CType& GetDynamicType() const { return GetStaticType(); } \
+    template <typename T> \
+    inline bool IsA() \
+    { \
+        const CType& type = GetDynamicType(); \
+        return type.IsSubTypeOf<T>(); \
+    } \
     private:
 
-#define DECLARE_DERIVED_CLASS(BaseClass) \
+#define DECLARE_DERIVED_CLASS(Class, BaseClass) \
     public: \
-    static const CType& GetStaticType() { static const CType type(BaseClass::GetStaticType()); return type; } \
-    virtual const CType& GetDynamicType() const override { return GetStaticType(); } \
+    inline static const CType& GetStaticType() { static const CType type(#Class, &BaseClass::GetStaticType()); return type; } \
+    inline virtual const CType& GetDynamicType() const override { return GetStaticType(); } \
     private:

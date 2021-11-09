@@ -20,9 +20,9 @@ namespace Volt
         T* AddComponent(Args&& ... args)
         {
             VOLT_ASSERT(!HasComponent<T>(), "Entity has already that component!");
-            //Ref<T> component = CreateRef<T>(this, std::forward<Args>(args)...);
-            T* component = new T(this, std::forward<Args>(args)...);
+            T* component = CComponent::Create<T, Args...>(this, std::forward<Args>(args)...);
             m_components.push_back(component);
+            OnComponentAdded(component);
             return component;
         }
 
@@ -31,9 +31,9 @@ namespace Volt
         {
             for (const CComponent* it : m_components)
             {
-                if (it->GetDynamicType() == T::GetStaticType())
+                if (it->IsA<T>())
                 {
-                    return reinterpret_cast<T*>(it);
+                    return static_cast<T*>(it);
                 }
             }
             return nullptr;
@@ -44,9 +44,9 @@ namespace Volt
         {
             for (CComponent* it : m_components)
             {
-                if (it->GetDynamicType() == T::GetStaticType())
+                if (it->IsA<T>())
                 {
-                    return reinterpret_cast<T*>(it);
+                    return static_cast<T*>(it);
                 }
             }
             return nullptr;
@@ -67,6 +67,11 @@ namespace Volt
 
         const CScene* GetSceneContext() const { return m_sceneContext; }
         CScene* GetSceneContext() { return m_sceneContext; }
+
+    protected:
+        void OnComponentAdded(CComponent* component);
+
+        void OnComponentRemoved(CComponent* component);
 
     private:
         CScene* m_sceneContext;
