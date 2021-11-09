@@ -8,6 +8,9 @@ namespace Volt
     {
     DECLARE_DERIVED_CLASS(CCameraComponent, CComponent)
     public:
+        CCameraComponent(bool primary = false)
+            : m_primary(primary) {}
+
         CCamera& GetCamera() { return m_camera; }
         const CCamera& GetCamera() const { return m_camera; }
 

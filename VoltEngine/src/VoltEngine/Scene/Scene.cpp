@@ -86,7 +86,19 @@ namespace Volt
                 const CSpriteRenderComponent* entityRender = it->GetComponent<CSpriteRenderComponent>();
                 if (entityTransform && entityRender)
                 {
-                    CRenderer2D::DrawQuad(entityTransform->GetTransform(), entityRender->GetColor());
+                    const Ref<ITexture>& texture = entityRender->GetTexture();
+                    if (texture)
+                    {
+                        CRenderer2D::DrawTexture(entityTransform->GetPosition(),
+                                                 entityTransform->GetRotation(),
+                                                 entityTransform->GetScale(),
+                                                 texture,
+                                                 entityRender->GetColor());
+                    }
+                    else
+                    {
+                        CRenderer2D::DrawQuad(entityTransform->GetTransform(), entityRender->GetColor());
+                    }
                 }
             }
 
