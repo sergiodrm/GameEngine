@@ -10,6 +10,12 @@ namespace Volt
     class CScene;
     class CComponent;
 
+    enum class EEntityStatus : uint8_t
+    {
+        Destroyed,
+        Active
+    };
+
     class CEntity
     {
         friend class CEntitiesRegistry;
@@ -17,6 +23,10 @@ namespace Volt
         CEntity(CScene* scene);
         ~CEntity();
 
+        void Destroy();
+
+        EEntityStatus GetStatus() const { return m_status; }
+        void SetStatus(EEntityStatus status) { m_status = status; }
         uint32_t GetID() const { return m_id; }
 
         template <typename T, typename ... Args>
@@ -36,7 +46,7 @@ namespace Volt
             {
                 if (it->IsA<T>())
                 {
-                    return static_cast<T*>(it);
+                    return static_cast<const T*>(it);
                 }
             }
             return nullptr;
@@ -78,9 +88,12 @@ namespace Volt
 
         void OnComponentRemoved(CComponent* component);
 
+        void DestroyComponents();
+
     private:
         CScene* m_sceneContext;
         std::vector<CComponent*> m_components;
         uint32_t m_id;
+        EEntityStatus m_status;
     };
 }

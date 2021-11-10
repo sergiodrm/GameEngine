@@ -8,7 +8,7 @@
     inline static const CType& GetStaticType() { static const CType type(#Class); return type; } \
     inline virtual const CType& GetDynamicType() const { return GetStaticType(); } \
     template <typename T> \
-    inline bool IsA() \
+    inline bool IsA() const \
     { \
         const CType& type = GetDynamicType(); \
         return type.IsSubTypeOf<T>(); \

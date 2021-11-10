@@ -13,5 +13,6 @@ namespace Volt
             case IRendererAPI::API::OpenGL: return CreateRef<COpenGLFramebuffer>(spec);
         }
         VOLT_ASSERT(false, "Unknown renderer API!");
+        return nullptr;
     }
 }

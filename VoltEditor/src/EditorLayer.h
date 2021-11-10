@@ -17,8 +17,8 @@ private:
     Volt::Ref<Volt::CScene> m_scene;
     Volt::Ref<Volt::CSceneHierarchyPanel> m_sceneHierarchyPanel;
 
-    Volt::Ref<Volt::CEntity> m_cameraEntity;
-    Volt::Ref<Volt::CEntity> m_squareEntity;
+    Volt::CEntity* m_cameraEntity {nullptr};
+    Volt::CEntity* m_squareEntity {nullptr};
 
     Volt::Ref<Volt::IFramebuffer> m_framebuffer;
     glm::vec2 m_viewportSize {0.f};

@@ -12,9 +12,23 @@ namespace Volt
         if (m_sceneContext)
         {
             ImGui::Begin("Scene Hierarchy");
-            for (const Ref<CEntity>& it : m_sceneContext->GetRegistry())
+            m_sceneContext->GetRegistry().Each([this](CEntity* entity)
             {
-                DrawEntity(*it);
+                DrawEntity(*entity);
+            });
+
+            if (ImGui::IsMouseDown(ImGuiMouseButton_Left) && ImGui::IsWindowHovered())
+            {
+                m_selection = nullptr;
+            }
+
+            if (ImGui::BeginPopupContextWindow(nullptr, ImGuiMouseButton_Right, false))
+            {
+                if (ImGui::MenuItem("Create entity"))
+                {
+                    m_sceneContext->CreateEntity();
+                }
+                ImGui::EndPopup();
             }
             ImGui::End();
         }
@@ -31,9 +45,23 @@ namespace Volt
         {
             m_selection = &entity;
         }
+
+        bool deleted = false;
+        if (ImGui::BeginPopupContextItem(tagComponent->GetTag().c_str()))
+        {
+            deleted = ImGui::MenuItem("Delete entity");
+            ImGui::EndPopup();
+        }
+
         if (opened)
         {
             ImGui::TreePop();
+        }
+
+        if (deleted)
+        {
+            m_selection = nullptr;
+            m_sceneContext->RemoveEntity(entity);
         }
     }
 }

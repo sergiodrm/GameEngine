@@ -11,17 +11,20 @@
 
 namespace Volt
 {
-    Ref<CEntity> CScene::CreateEntity(const std::string& name)
+    CEntity* CScene::CreateEntity(const std::string& name)
     {
-        Ref<CEntity> entity = m_registry.Create(this);
-        entity->AddComponent<CTagComponent>(name);
-        entity->AddComponent<CTransformComponent>();
+        CEntity* entity = m_registry.Create(this, name);
         return entity;
     }
 
-    Ref<CEntity> CScene::GetPrimaryCamera() const
+    void CScene::RemoveEntity(CEntity& entity)
     {
-        for (const Ref<CEntity>& it : m_registry)
+        m_registry.Delete(&entity);
+    }
+
+    CEntity* CScene::GetPrimaryCamera() const
+    {
+        for (CEntity* it : m_registry)
         {
             const CCameraComponent* cameraComponent = it->GetComponent<CCameraComponent>();
             if (cameraComponent && cameraComponent->IsPrimary())
@@ -44,7 +47,7 @@ namespace Volt
         m_width = width;
         m_height = height;
 
-        for (const Ref<CEntity>& it : m_registry)
+        for (CEntity* it : m_registry)
         {
             CCameraComponent* cameraComponent = it->GetComponent<CCameraComponent>();
             if (cameraComponent)
@@ -58,7 +61,7 @@ namespace Volt
     void CScene::RunEntitiesScripts(float elapsedSeconds)
     {
         // Update scripts
-        for (const Ref<CEntity>& it : m_registry)
+        for (CEntity* it : m_registry)
         {
             CNativeScriptComponent* nativeScript = it->GetComponent<CNativeScriptComponent>();
             if (nativeScript)
@@ -71,7 +74,7 @@ namespace Volt
     void CScene::RenderScene()
     {
         // Get scene camera
-        const Ref<CEntity> cameraEntity = GetPrimaryCamera();
+        const CEntity* cameraEntity = GetPrimaryCamera();
         if (cameraEntity)
         {
             const CCameraComponent* cameraComponent = cameraEntity->GetComponent<CCameraComponent>();
@@ -80,7 +83,7 @@ namespace Volt
             CRenderer2D::BeginScene(cameraComponent->GetCamera(), viewMatrix);
 
             // Render entities
-            for (const Ref<CEntity>& it : m_registry)
+            for (CEntity* it : m_registry)
             {
                 const CTransformComponent* entityTransform = it->GetComponent<CTransformComponent>();
                 const CSpriteRenderComponent* entityRender = it->GetComponent<CSpriteRenderComponent>();

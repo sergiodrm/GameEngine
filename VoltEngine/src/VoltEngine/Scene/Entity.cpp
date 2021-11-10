@@ -7,7 +7,7 @@
 namespace Volt
 {
     CEntity::CEntity(CScene* scene)
-        : m_sceneContext(scene), m_id(0)
+        : m_sceneContext(scene), m_id(0), m_status(EEntityStatus::Active)
     {
         VOLT_ASSERT(m_sceneContext, "Entity was created without scene context!");
     }
@@ -15,12 +15,12 @@ namespace Volt
 
     CEntity::~CEntity()
     {
-        for (CComponent* it : m_components)
-        {
-            OnComponentRemoved(it);
-            delete it;
-        }
-        m_components.clear();
+        DestroyComponents();
+    }
+
+    void CEntity::Destroy()
+    {
+        m_status = EEntityStatus::Destroyed;
     }
 
     void CEntity::OnComponentAdded(CComponent* component)
@@ -48,5 +48,15 @@ namespace Volt
         {
             nativeScript->OnDestroy();
         }
+    }
+
+    void CEntity::DestroyComponents()
+    {
+        for (CComponent* it : m_components)
+        {
+            OnComponentRemoved(it);
+            delete it;
+        }
+        m_components.clear();
     }
 }

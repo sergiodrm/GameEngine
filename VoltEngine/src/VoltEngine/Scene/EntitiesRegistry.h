@@ -3,42 +3,42 @@
 
 #include "VoltEngine/Core/Core.h"
 #include "Entity.h"
+#include "Components/TagComponent.h"
 
 namespace Volt
 {
+    class CTransformComponent;
+    class CTagComponent;
+
     class CEntitiesRegistry
     {
-        using Registry = std::vector<Ref<CEntity>>;
+        using Registry = std::vector<CEntity*>;
         using RegistryIterator = Registry::iterator;
         using RegistryConstIterator = Registry::const_iterator;
 
+        using RegistryReverseIterator = Registry::reverse_iterator;
+        using RegistryConstReverseIterator = Registry::const_reverse_iterator;
+
     public:
-        template <typename ... Args>
-        Ref<CEntity> Create(Args&& ... args)
-        {
-            Ref<CEntity> entity = CreateRef<CEntity>(std::forward<Args>(args)...);
-            m_registry.push_back(entity);
-            entity->m_id = m_idCounter;
-            ++m_idCounter;
-            return entity;
-        }
+        ~CEntitiesRegistry();
 
-        void Delete(const Ref<CEntity>& entity);
+        CEntity* Create(CScene* sceneContext, const std::string& name = {});
+        void Delete(CEntity* entity);
 
-        const Registry& GetRegistry() const { return m_registry; }
-        Registry& GetRegistry() { return m_registry; }
+        void Each(std::function<void(CEntity*)> callback);
 
         uint32_t GetSize() const { return static_cast<uint32_t>(m_registry.size()); }
 
-        Ref<CEntity> operator[](uint32_t index);
-        Ref<const CEntity> operator[](uint32_t index) const;
-
+        CEntity* operator[](uint32_t index);
+        const CEntity* operator[](uint32_t index) const;
 
         RegistryIterator begin() { return m_registry.begin(); }
         RegistryIterator end() { return m_registry.end(); }
         RegistryConstIterator begin() const { return m_registry.begin(); }
         RegistryConstIterator end() const { return m_registry.end(); }
 
+    protected:
+        CEntity* FindFreeEntity() const;
 
     private:
         Registry m_registry;

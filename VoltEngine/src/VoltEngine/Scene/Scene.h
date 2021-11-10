@@ -10,12 +10,13 @@ namespace Volt
     class CScene
     {
     public:
-        Ref<CEntity> CreateEntity(const std::string& name = "EmptyEntity");
+        CEntity* CreateEntity(const std::string& name = "EmptyEntity");
+        void RemoveEntity(CEntity& entity);
 
         void OnUpdate(float elapsedSeconds);
         void OnViewportResize(uint32_t width, uint32_t height);
 
-        Ref<CEntity> GetPrimaryCamera() const;
+        CEntity* GetPrimaryCamera() const;
 
         glm::vec2 GetViewportSize() const { return {static_cast<float>(m_width), static_cast<float>(m_height)}; }
         uint32_t GetViewportWidth() const { return m_width; }
