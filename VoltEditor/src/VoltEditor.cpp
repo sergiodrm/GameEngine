@@ -1,7 +1,20 @@
 #include "VoltEditor.h"
 
-namespace Volt
+#include "EditorLayer.h"
+
+CVoltEditor::CVoltEditor()
 {
-    CVoltEditor::CVoltEditor()
-    { }
+    VOLT_LOG(Info, "Creating Volt Editor instance!");
+    PushLayer(new CEditorLayer());
+}
+
+CVoltEditor::~CVoltEditor()
+{
+    VOLT_LOG(Info, "Destroying Volt Editor instance!");
+}
+
+
+Volt::CApplication* CreateApplication()
+{
+    return new CVoltEditor();
 }

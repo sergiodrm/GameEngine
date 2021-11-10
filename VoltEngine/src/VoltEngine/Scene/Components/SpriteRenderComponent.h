@@ -15,12 +15,6 @@ namespace Volt
         CSpriteRenderComponent(const Ref<ITexture>& texture = nullptr, const glm::vec4& color = glm::vec4(1.f))
             : m_texture(texture), m_color(color) {}
 
-        CSpriteRenderComponent(const std::string& textureFilePath = {}, const glm::vec4& color = glm::vec4(1.f))
-            : m_color(color)
-        {
-            m_texture = textureFilePath.empty() ? nullptr : CTextureLoader::Load(textureFilePath);
-        }
-
         const Ref<ITexture>& GetTexture() const { return m_texture; }
         void SetTexture(const Ref<ITexture>& texture) { m_texture = texture; }
 

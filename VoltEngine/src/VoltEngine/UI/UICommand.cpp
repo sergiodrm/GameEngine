@@ -20,7 +20,7 @@ namespace Volt
         io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
         io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
 
-        io.Fonts->AddFontFromFileTTF("fonts/OpenSans-Regular.ttf", 14.f);
+        io.Fonts->AddFontFromFileTTF("assets/fonts/OpenSans/OpenSans-Regular.ttf", 14.f);
 
         //ImGui::StyleColorsDark();
         InitStyle();

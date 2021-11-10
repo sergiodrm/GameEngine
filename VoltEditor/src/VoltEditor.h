@@ -2,12 +2,9 @@
 
 #include "VoltEngine/VoltEngine.h"
 
-namespace Volt
+class CVoltEditor : public Volt::CApplication
 {
-    class CVoltEditor : public CApplication
-    {
-    public:
-        CVoltEditor();
-        virtual ~CVoltEditor() override;
-    };
-}
+public:
+    CVoltEditor();
+    virtual ~CVoltEditor() override;
+};

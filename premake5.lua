@@ -87,7 +87,7 @@ project "VoltEngine"
 
 project "VoltEditor"
     location "VoltEditor"
-    kind "StaticLib"
+    kind "ConsoleApp"
     language "C++"
     cppdialect "C++17"
 	staticruntime "on"
