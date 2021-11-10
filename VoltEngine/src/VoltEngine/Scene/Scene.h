@@ -21,6 +21,9 @@ namespace Volt
         uint32_t GetViewportWidth() const { return m_width; }
         uint32_t GetViewportHeight() const { return m_height; }
 
+        const CEntitiesRegistry& GetRegistry() const { return m_registry; }
+        CEntitiesRegistry& GetRegistry() { return m_registry; }
+
     protected:
         void RunEntitiesScripts(float elapsedSeconds);
         void RenderScene();

@@ -2,11 +2,10 @@
 #include <vector>
 
 #include "VoltEngine/Core/Core.h"
+#include "Entity.h"
 
 namespace Volt
 {
-    class CEntity;
-
     class CEntitiesRegistry
     {
         using Registry = std::vector<Ref<CEntity>>;
@@ -19,6 +18,8 @@ namespace Volt
         {
             Ref<CEntity> entity = CreateRef<CEntity>(std::forward<Args>(args)...);
             m_registry.push_back(entity);
+            entity->m_id = m_idCounter;
+            ++m_idCounter;
             return entity;
         }
 
@@ -41,5 +42,6 @@ namespace Volt
 
     private:
         Registry m_registry;
+        uint32_t m_idCounter {0};
     };
 }

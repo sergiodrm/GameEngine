@@ -1,6 +1,7 @@
 #include "EditorLayer.h"
 
 #include "imgui.h"
+#include "Panels/SceneHierarchyPanel.h"
 #include "VoltEngine/Scene/Components/NativeScriptComponent.h"
 
 void CEditorLayer::OnAttach()
@@ -17,6 +18,8 @@ void CEditorLayer::OnAttach()
     m_squareEntity = m_scene->CreateEntity("SquareEntity");
     m_squareEntity->AddComponent<Volt::CSpriteRenderComponent>(nullptr, glm::vec4(0.4f, 0.2f, 0.3f, 1.f));
     m_squareEntity->AddComponent<Volt::CMovementScriptComponent>();
+
+    m_sceneHierarchyPanel = Volt::CreateRef<Volt::CSceneHierarchyPanel>(m_scene);
 
     Volt::CRenderCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1.f});
 }
@@ -45,6 +48,7 @@ void CEditorLayer::OnUpdate(float elapsedSeconds)
 
 void CEditorLayer::OnUIRender()
 {
+    m_sceneHierarchyPanel->OnUIRender();
     {
         const Volt::SRenderer2DStats& stats = Volt::CRenderer2D::GetStats();
 

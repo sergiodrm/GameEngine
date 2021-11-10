@@ -1,6 +1,11 @@
 #pragma once
 #include "VoltEngine/VoltEngine.h"
 
+namespace Volt
+{
+    class CSceneHierarchyPanel;
+}
+
 class CEditorLayer : public Volt::CLayer
 {
 public:
@@ -10,6 +15,7 @@ public:
 
 private:
     Volt::Ref<Volt::CScene> m_scene;
+    Volt::Ref<Volt::CSceneHierarchyPanel> m_sceneHierarchyPanel;
 
     Volt::Ref<Volt::CEntity> m_cameraEntity;
     Volt::Ref<Volt::CEntity> m_squareEntity;

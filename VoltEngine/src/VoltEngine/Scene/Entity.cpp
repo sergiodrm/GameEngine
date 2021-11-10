@@ -7,10 +7,11 @@
 namespace Volt
 {
     CEntity::CEntity(CScene* scene)
-        : m_sceneContext(scene)
+        : m_sceneContext(scene), m_id(0)
     {
         VOLT_ASSERT(m_sceneContext, "Entity was created without scene context!");
     }
+
 
     CEntity::~CEntity()
     {

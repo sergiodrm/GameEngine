@@ -12,9 +12,12 @@ namespace Volt
 
     class CEntity
     {
+        friend class CEntitiesRegistry;
     public:
         CEntity(CScene* scene);
         ~CEntity();
+
+        uint32_t GetID() const { return m_id; }
 
         template <typename T, typename ... Args>
         T* AddComponent(Args&& ... args)
@@ -68,6 +71,8 @@ namespace Volt
         const CScene* GetSceneContext() const { return m_sceneContext; }
         CScene* GetSceneContext() { return m_sceneContext; }
 
+        bool operator ==(const CEntity& other) const { return m_id == other.m_id; }
+
     protected:
         void OnComponentAdded(CComponent* component);
 
@@ -76,5 +81,6 @@ namespace Volt
     private:
         CScene* m_sceneContext;
         std::vector<CComponent*> m_components;
+        uint32_t m_id;
     };
 }
