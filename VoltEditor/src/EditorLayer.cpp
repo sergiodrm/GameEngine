@@ -2,6 +2,7 @@
 
 #include "imgui.h"
 #include "Panels/SceneHierarchyPanel.h"
+#include "Panels/StatsPanel.h"
 #include "VoltEngine/Scene/Components/NativeScriptComponent.h"
 
 #define TEST_TEXTURE_PATH "assets/textures/sample.png"
@@ -22,6 +23,7 @@ void CEditorLayer::OnAttach()
     m_squareEntity->AddComponent<Volt::CMovementScriptComponent>();
 
     m_sceneHierarchyPanel = Volt::CreateRef<Volt::CSceneHierarchyPanel>(m_scene);
+    m_statsPanel = Volt::CreateRef<Volt::CStatsPanel>();
 
     Volt::CRenderCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1.f});
 }
@@ -51,18 +53,7 @@ void CEditorLayer::OnUpdate(float elapsedSeconds)
 void CEditorLayer::OnUIRender()
 {
     m_sceneHierarchyPanel->OnUIRender();
-    {
-        const Volt::SRenderer2DStats& stats = Volt::CRenderer2D::GetStats();
-
-        ImGui::Begin("Stats");
-        ImGui::Text("- Draw calls: %d", stats.DrawCalls);
-        ImGui::Text("- Quad count: %d", stats.QuadCount);
-        ImGui::Text("- Vertices:   %d", stats.GetVerticesCount());
-        ImGui::Text("- Indices:    %d", stats.GetIndicesCount());
-        ImGui::Text("- Triangles:  %d", stats.GetTrianglesCount());
-
-        ImGui::End();
-    }
+    m_statsPanel->OnUIRender();
     {
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, {0.f, 0.f});
         ImGui::Begin("Viewport");

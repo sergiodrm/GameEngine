@@ -31,10 +31,13 @@ namespace Volt
 
         CRenderer::Init();
         CUICommand::Init();
+
+        m_timer = new CTime();
     }
 
     CApplication::~CApplication()
     {
+        delete m_timer;
         CUICommand::Shutdown();
         CRenderer::Shutdown();
         s_instance = nullptr;
@@ -44,17 +47,15 @@ namespace Volt
     {
         VOLT_LOG(Warning, "Run!");
 
-        CTime mainLoopTimer;
-
         while (IsRunning())
         {
-            mainLoopTimer.Update();
+            m_timer->Update();
             if (!m_minimized)
             {
                 // Layers update
                 for (CLayer* it : m_layerStack)
                 {
-                    it->OnUpdate(mainLoopTimer.GetElapsedTimeSeconds());
+                    it->OnUpdate(m_timer->GetElapsedTimeSeconds());
                 }
 
                 // Layers UI

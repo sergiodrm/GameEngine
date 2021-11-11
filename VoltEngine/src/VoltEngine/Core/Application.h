@@ -4,6 +4,8 @@
 
 namespace Volt
 {
+    class CTime;
+
     class CApplication
     {
     public:
@@ -27,6 +29,8 @@ namespace Volt
         Ref<class IWindow>& GetWindow() { return m_window; }
         const Ref<class IWindow>& GetWindow() const { return m_window; }
 
+        const CTime& GetTimer() const { return *m_timer; }
+
     protected:
         void OnEvent(class CEvent& e);
         bool OnWindowClosed(class CWindowClosedEvent& e);
@@ -41,5 +45,7 @@ namespace Volt
         CLayerStack m_layerStack;
         bool m_running {true};
         bool m_minimized {false};
+
+        CTime* m_timer;
     };
 }

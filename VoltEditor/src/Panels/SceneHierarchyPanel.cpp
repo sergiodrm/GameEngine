@@ -319,6 +319,7 @@ namespace Volt
                     newTextureFilePath = CFileDialogs::LoadFile("Images (*.png)\0*.png\0*.jpg\0");
                 }
                 ImGui::SameLine();
+
                 if (ImGui::Button("Clear"))
                     component.SetTexture(nullptr);
             }

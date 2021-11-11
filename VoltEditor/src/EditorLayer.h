@@ -3,6 +3,7 @@
 
 namespace Volt
 {
+    class CStatsPanel;
     class CSceneHierarchyPanel;
 }
 
@@ -16,6 +17,7 @@ public:
 private:
     Volt::Ref<Volt::CScene> m_scene;
     Volt::Ref<Volt::CSceneHierarchyPanel> m_sceneHierarchyPanel;
+    Volt::Ref<Volt::CStatsPanel> m_statsPanel;
 
     Volt::CEntity* m_cameraEntity {nullptr};
     Volt::CEntity* m_squareEntity {nullptr};
