@@ -13,6 +13,7 @@ namespace Volt
 
     protected:
         void DrawEntity(CEntity& entity);
+        void DrawComponents(CEntity& entity);
 
     private:
         Ref<CScene> m_sceneContext;

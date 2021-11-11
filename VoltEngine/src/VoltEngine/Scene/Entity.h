@@ -40,6 +40,9 @@ namespace Volt
         }
 
         template <typename T>
+        void RemoveComponent() {}
+
+        template <typename T>
         const T* GetComponent() const
         {
             for (const CComponent* it : m_components)

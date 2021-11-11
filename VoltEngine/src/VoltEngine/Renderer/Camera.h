@@ -9,8 +9,9 @@ namespace Volt
     public:
         enum class EProjectionType : uint8_t
         {
+            Perspective,
             Orthographic,
-            Perspective
+            Max
         };
 
     public:
