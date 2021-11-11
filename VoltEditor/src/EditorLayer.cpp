@@ -4,6 +4,8 @@
 #include "Panels/SceneHierarchyPanel.h"
 #include "VoltEngine/Scene/Components/NativeScriptComponent.h"
 
+#define TEST_TEXTURE_PATH "assets/textures/sample.png"
+
 void CEditorLayer::OnAttach()
 {
     CLayer::OnAttach();
@@ -16,7 +18,7 @@ void CEditorLayer::OnAttach()
     m_cameraEntity->AddComponent<Volt::CCameraComponent>(true);
 
     m_squareEntity = m_scene->CreateEntity("SquareEntity");
-    m_squareEntity->AddComponent<Volt::CSpriteRenderComponent>(nullptr, glm::vec4(0.4f, 0.2f, 0.3f, 1.f));
+    m_squareEntity->AddComponent<Volt::CSpriteRenderComponent>(Volt::CTextureLoader::Load(TEST_TEXTURE_PATH), glm::vec4(0.4f, 0.2f, 0.3f, 1.f));
     m_squareEntity->AddComponent<Volt::CMovementScriptComponent>();
 
     m_sceneHierarchyPanel = Volt::CreateRef<Volt::CSceneHierarchyPanel>(m_scene);

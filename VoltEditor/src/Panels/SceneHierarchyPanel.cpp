@@ -301,11 +301,40 @@ namespace Volt
             ImGui::Text("Color");
             ImGui::NextColumn();
 
-            if (ImGui::ColorEdit4("##color", value_ptr(color)))
+            if (ImGui::ColorEdit4("##color", value_ptr(color), ImGuiColorEditFlags_NoInputs))
             {
                 component.SetColor(color);
             }
             ImGui::NextColumn();
+
+            ImGui::Text("Texture");
+            ImGui::NextColumn();
+            const Ref<ITexture> texture = component.GetTexture();
+            std::string newTextureFilePath;
+            if (texture)
+            {
+                void* textureID = reinterpret_cast<void*>(texture->GetRendererID());
+                if (ImGui::ImageButton(textureID, {64.f, 64.f}, {0.f, 0.f}, {1.f, -1.f}, 1))
+                {
+                    newTextureFilePath = CFileDialogs::LoadFile("Images (*.png)\0*.png\0*.jpg\0");
+                }
+                ImGui::SameLine();
+                if (ImGui::Button("Clear"))
+                    component.SetTexture(nullptr);
+            }
+            else
+            {
+                if (ImGui::Button("Add texture", {64.f, 64.f}))
+                {
+                    newTextureFilePath = CFileDialogs::LoadFile("Images (*.png)\0*.png\0*.jpg\0");
+                }
+            }
+
+            if (!newTextureFilePath.empty())
+            {
+                const Ref<ITexture> newTexture = CTextureLoader::Load(newTextureFilePath);
+                component.SetTexture(newTexture);
+            }
 
             ImGui::Columns(1);
         });

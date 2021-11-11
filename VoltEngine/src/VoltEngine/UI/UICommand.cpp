@@ -50,6 +50,9 @@ namespace Volt
         // Set dockspace
         static ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
 
+        // Demo window status
+        static bool showDemoWindow = false;
+
         // We are using the ImGuiWindowFlags_NoDocking flag to make the parent window not dockable into,
         // because it would be confusing to have two docking targets within each others.
         ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
@@ -96,9 +99,19 @@ namespace Volt
 
                 ImGui::EndMenu();
             }
+            if (ImGui::BeginMenu("Options"))
+            {
+                if (showDemoWindow)
+                    showDemoWindow = ImGui::MenuItem("Hide imgui demo");
+                else
+                    showDemoWindow = ImGui::MenuItem("Show imgui demo");
+                ImGui::EndMenu();
+            }
 
             ImGui::EndMenuBar();
         }
+
+        ImGui::ShowDemoWindow(&showDemoWindow);
     }
 
     void CUICommand::EndFrame()

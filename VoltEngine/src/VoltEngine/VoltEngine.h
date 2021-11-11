@@ -30,4 +30,6 @@
 #include "Events/MouseEvent.h"
 #include "Events/KeyEvent.h"
 
+#include "Utils/PlatformUtils.h"
+
 #include "glm/gtx/transform.hpp"
