@@ -3,6 +3,7 @@
 #include "imgui.h"
 #include "imgui_internal.h"
 #include "glm/gtc/type_ptr.hpp"
+#include "VoltEngine/Scene/Components/NativeScriptComponent.h"
 
 
 namespace DetailPanelUtils
@@ -198,7 +199,7 @@ namespace Volt
         ImGui::PopItemWidth();
 
 
-        DetailPanelUtils::DrawComponentHeader<CTransformComponent>("Transform component", entity, [](CTransformComponent& component)
+        DetailPanelUtils::DrawComponentHeader<CTransformComponent>("Transform Component", entity, [](CTransformComponent& component)
         {
             glm::vec3 position = component.GetPosition();
             glm::vec3 rotation = degrees(component.GetRotation());
@@ -210,7 +211,7 @@ namespace Volt
             component.SetRotation(radians(rotation));
             component.SetScale(scale);
         });
-        DetailPanelUtils::DrawComponentHeader<CCameraComponent>("Camera component", entity, [](CCameraComponent& component)
+        DetailPanelUtils::DrawComponentHeader<CCameraComponent>("Camera Component", entity, [](CCameraComponent& component)
         {
             ImGui::Columns(2);
 
@@ -338,6 +339,10 @@ namespace Volt
             }
 
             ImGui::Columns(1);
+        });
+        DetailPanelUtils::DrawComponentHeader<CNativeScriptComponent>("Native Script Component", entity, [](CNativeScriptComponent& component)
+        {
+            ImGui::Text("WIP");
         });
     }
 }

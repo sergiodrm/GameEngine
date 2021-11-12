@@ -12,15 +12,19 @@ namespace Volt
         ImGui::Begin("Stats");
 
         const CTime& timer = CApplication::Get().GetTimer();
-        if (ImGui::TreeNodeEx("Performance"))
+        if (ImGui::TreeNodeEx("Performance", ImGuiTreeNodeFlags_DefaultOpen))
         {
             const float ms = timer.GetElapsedTimeMilliseconds();
             Add(ms);
+            ImGui::Text("FPS: %.2f", 1000.f / ms);
             ImGui::Text("Frame time: %.4f ms", ms);
             if (ImGui::TreeNodeEx("Graph"))
             {
+                char overlay[32];
+                sprintf_s(overlay, "Average : %.4f ms", CalculateAverage());
+                const float width = ImGui::GetContentRegionAvailWidth() - 10.f;
                 ImGui::PlotLines("Frame time (ms)", m_samples.data(),
-                                 m_samples.size(), 0, nullptr, 0.f, 40.f);
+                                 m_samples.size(), 0, overlay, 0.f, 40.f, {width, 64.f});
                 ImGui::SliderInt("Samples", &m_maxSamples, 10, 1000);
                 ImGui::TreePop();
             }
@@ -28,13 +32,13 @@ namespace Volt
         }
 
         const SRenderer2DStats stats = CRenderer2D::GetStats();
-        if (ImGui::TreeNodeEx("Render"))
+        if (ImGui::TreeNodeEx("Render", ImGuiTreeNodeFlags_DefaultOpen))
         {
-            ImGui::BulletText("Draw calls: %d", stats.DrawCalls);
-            ImGui::BulletText("Quad count: %d", stats.QuadCount);
-            ImGui::BulletText("Vertices:   %d", stats.GetVerticesCount());
-            ImGui::BulletText("Indices:    %d", stats.GetIndicesCount());
-            ImGui::BulletText("Triangles:  %d", stats.GetTrianglesCount());
+            ImGui::Text("Draw calls: %d", stats.DrawCalls);
+            ImGui::Text("Quad count: %d", stats.QuadCount);
+            ImGui::Text("Vertices:   %d", stats.GetVerticesCount());
+            ImGui::Text("Indices:    %d", stats.GetIndicesCount());
+            ImGui::Text("Triangles:  %d", stats.GetTrianglesCount());
             ImGui::TreePop();
         }
         ImGui::End();
@@ -69,8 +73,6 @@ namespace Volt
         {
             sum += it;
         }
-        return sum / m_samples.size() < m_maxSamples
-                   ? static_cast<float>(m_samples.size())
-                   : static_cast<float>(m_maxSamples);
+        return sum / static_cast<float>(m_samples.size());
     }
 }
