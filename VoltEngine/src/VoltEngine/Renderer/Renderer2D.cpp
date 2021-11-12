@@ -120,7 +120,7 @@ namespace Volt
 
     void CRenderer2D::BeginScene(const CCamera& camera, const glm::mat4& transform)
     {
-        const glm::mat4 viewProjection = camera.GetProjection() * transform;
+        const glm::mat4 viewProjection = camera.GetProjection() * inverse(transform);
 
         RendererData.QuadShader->Bind();
         RendererData.QuadShader->SetMat4("u_ViewProjection", viewProjection);
