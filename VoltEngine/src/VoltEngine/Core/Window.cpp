@@ -1,6 +1,6 @@
 #include "Window.h"
 
-#include "VoltEngine/Platform/Windows/WindowsWindow.h"
+#include "Platform/Windows/WindowsWindow.h"
 
 namespace Volt
 {

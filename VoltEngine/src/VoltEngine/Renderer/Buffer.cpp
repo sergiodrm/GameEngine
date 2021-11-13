@@ -1,6 +1,6 @@
 #include "Buffer.h"
 
-#include "VoltEngine/Platform/OpenGL/OpenGLBuffer.h"
+#include "Platform/OpenGL/OpenGLBuffer.h"
 
 namespace Volt
 {

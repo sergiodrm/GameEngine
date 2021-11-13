@@ -1,6 +1,6 @@
 #include "VertexArray.h"
 
-#include "VoltEngine/Platform/OpenGL/OpenGLVertexArray.h"
+#include "Platform/OpenGL/OpenGLVertexArray.h"
 
 namespace Volt
 {

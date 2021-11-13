@@ -1,7 +1,7 @@
 #include "Texture.h"
 
 #include "RendererAPI.h"
-#include "VoltEngine/Platform/OpenGL/OpenGLTexture2D.h"
+#include "Platform/OpenGL/OpenGLTexture2D.h"
 
 namespace Volt
 {

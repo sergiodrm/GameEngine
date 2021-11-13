@@ -1,6 +1,6 @@
 #include "RenderCommand.h"
 
-#include "VoltEngine/Platform/OpenGL/OpenGLRendererAPI.h"
+#include "Platform/OpenGL/OpenGLRendererAPI.h"
 
 namespace Volt
 {

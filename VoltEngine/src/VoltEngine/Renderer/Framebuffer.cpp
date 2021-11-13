@@ -2,7 +2,7 @@
 
 #include "RendererAPI.h"
 #include "VoltEngine/Core/Log.h"
-#include "VoltEngine/Platform/OpenGL/OpenGLFramebuffer.h"
+#include "Platform/OpenGL/OpenGLFramebuffer.h"
 
 namespace Volt
 {
