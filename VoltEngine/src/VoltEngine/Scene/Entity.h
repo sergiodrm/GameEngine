@@ -40,7 +40,21 @@ namespace Volt
         }
 
         template <typename T>
-        void RemoveComponent() {}
+        void RemoveComponent()
+        {
+            for (std::vector<CComponent*>::iterator it(m_components.begin());
+                 it != m_components.end();
+                 ++it)
+            {
+                if ((*it)->IsA<T>())
+                {
+                    OnComponentRemoved(*it);
+                    delete (*it);
+                    m_components.erase(it);
+                    break;
+                }
+            }
+        }
 
         template <typename T>
         const T* GetComponent() const

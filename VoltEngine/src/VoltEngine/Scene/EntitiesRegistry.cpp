@@ -19,24 +19,20 @@ namespace Volt
         if (!entity)
         {
             entity = new CEntity(sceneContext);
-            m_registry.push_back(entity);
             entity->m_id = m_idCounter;
-            entity->AddComponent<CTagComponent>(name);
-            entity->AddComponent<CTransformComponent>();
+            m_registry.push_back(entity);
             ++m_idCounter;
         }
         else
         {
             entity->SetStatus(EEntityStatus::Active);
-            entity->GetComponent<CTagComponent>()->SetTag(name);
-            entity->GetComponent<CTransformComponent>()->SetPosition(glm::vec3(0.f));
-            entity->GetComponent<CTransformComponent>()->SetRotation(glm::vec3(0.f));
-            entity->GetComponent<CTransformComponent>()->SetScale(glm::vec3(1.f));
         }
+        entity->AddComponent<CTagComponent>(name);
+        entity->AddComponent<CTransformComponent>();
         return entity;
     }
 
-    void CEntitiesRegistry::Delete(CEntity* entity)
+    void CEntitiesRegistry::DestroyEntity(CEntity* entity)
     {
         RegistryIterator it = std::find(m_registry.begin(), m_registry.end(), entity);
         if (it != m_registry.end())
@@ -76,6 +72,30 @@ namespace Volt
         }
         return nullptr;
     }
+
+    CEntitiesRegistry::SIterator::SIterator(CEntitiesRegistry& instance, bool iterateDestroyed)
+        : m_instance(instance), m_iterator(instance.begin()), m_iterateDestroyed(iterateDestroyed) {}
+
+    bool CEntitiesRegistry::SIterator::IsValid() const { return m_iterator != m_instance.end(); }
+
+    CEntitiesRegistry::SIterator::operator bool() const
+    {
+        return IsValid();
+    }
+
+    void CEntitiesRegistry::SIterator::operator++()
+    {
+        ++m_iterator;
+        if (!m_iterateDestroyed)
+        {
+            while (IsValid() && (*m_iterator)->GetStatus() == EEntityStatus::Destroyed)
+            {
+                ++m_iterator;
+            }
+        }
+    }
+
+    CEntity* CEntitiesRegistry::SIterator::operator*() const { return *m_iterator; }
 
     CEntity* CEntitiesRegistry::FindFreeEntity() const
     {

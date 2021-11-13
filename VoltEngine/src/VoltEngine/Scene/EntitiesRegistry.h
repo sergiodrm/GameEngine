@@ -23,7 +23,7 @@ namespace Volt
         ~CEntitiesRegistry();
 
         CEntity* Create(CScene* sceneContext, const std::string& name = {});
-        void Delete(CEntity* entity);
+        void DestroyEntity(CEntity* entity);
 
         void Each(std::function<void(CEntity*)> callback);
 
@@ -36,6 +36,21 @@ namespace Volt
         RegistryIterator end() { return m_registry.end(); }
         RegistryConstIterator begin() const { return m_registry.begin(); }
         RegistryConstIterator end() const { return m_registry.end(); }
+
+        struct SIterator
+        {
+            SIterator(CEntitiesRegistry& instance, bool iterateDestroyed = false);
+
+            bool IsValid() const;
+
+            operator bool() const;
+            void operator++();
+            CEntity* operator*() const;
+        private:
+            CEntitiesRegistry& m_instance;
+            RegistryIterator m_iterator;
+            bool m_iterateDestroyed;
+        };
 
     protected:
         CEntity* FindFreeEntity() const;

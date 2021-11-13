@@ -15,12 +15,13 @@ namespace Volt
 
     CEntity::~CEntity()
     {
-        DestroyComponents();
+        Destroy();
     }
 
     void CEntity::Destroy()
     {
         m_status = EEntityStatus::Destroyed;
+        DestroyComponents();
     }
 
     void CEntity::OnComponentAdded(CComponent* component)

@@ -19,7 +19,7 @@ namespace Volt
 
     void CScene::RemoveEntity(CEntity& entity)
     {
-        m_registry.Delete(&entity);
+        m_registry.DestroyEntity(&entity);
     }
 
     CEntity* CScene::GetPrimaryCamera() const
@@ -83,10 +83,11 @@ namespace Volt
             CRenderer2D::BeginScene(cameraComponent->GetCamera(), viewMatrix);
 
             // Render entities
-            for (CEntity* it : m_registry)
+            for (CEntitiesRegistry::SIterator it(m_registry); it; ++it)
             {
-                const CTransformComponent* entityTransform = it->GetComponent<CTransformComponent>();
-                const CSpriteRenderComponent* entityRender = it->GetComponent<CSpriteRenderComponent>();
+                CEntity* entity = *it;
+                const CTransformComponent* entityTransform = entity->GetComponent<CTransformComponent>();
+                const CSpriteRenderComponent* entityRender = entity->GetComponent<CSpriteRenderComponent>();
                 if (entityTransform && entityRender)
                 {
                     const Ref<ITexture>& texture = entityRender->GetTexture();
