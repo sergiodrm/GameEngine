@@ -6,8 +6,11 @@
 #include "Shader.h"
 #include "SubTexture.h"
 #include "Texture.h"
+#include "TextureManager.h"
 #include "VertexArray.h"
 #include "VoltEngine/Core/Core.h"
+#define GLM_ENABLE_EXPERIMENTAL
+#include "glm/gtx/quaternion.hpp"
 
 namespace Volt
 {
@@ -96,7 +99,11 @@ namespace Volt
         RendererData.QuadVertexPtr = RendererData.QuadVertexBase;
 
         // Textures
-        RendererData.WhiteTexture = ITexture::Create(1, 1);
+        RendererData.WhiteTexture = CTextureManager::Get().CreateResource<ITexture>("WhiteTexture");
+        RendererData.WhiteTexture->SetWidth(1);
+        RendererData.WhiteTexture->SetHeight(1);
+        RendererData.WhiteTexture->SetLoadType(ETextureLoadType::Procedural);
+        RendererData.WhiteTexture->Load();
         uint32_t whiteTextureData = 0xffffffff;
         RendererData.WhiteTexture->SetData(&whiteTextureData, sizeof(whiteTextureData));
 
@@ -172,11 +179,9 @@ namespace Volt
 
     void CRenderer2D::DrawQuad(const glm::vec3& position, const glm::vec3& rotation, const glm::vec2& scale, const glm::vec4& color)
     {
-        const glm::mat4 transform = translate(glm::mat4(1.f), position) *
-            rotate(glm::mat4(1.f), glm::radians(rotation.x), {1.f, 0.f, 0.f}) *
-            rotate(glm::mat4(1.f), glm::radians(rotation.y), {0.f, 1.f, 0.f}) *
-            rotate(glm::mat4(1.f), glm::radians(rotation.z), {0.f, 0.f, 1.f}) *
-            glm::scale(glm::mat4(1.f), {scale.x, scale.y, 1.f});
+        const glm::mat4 transform = translate(glm::mat4(1.f), position)
+            * toMat4(glm::quat({rotation.x, rotation.y, rotation.z}))
+            * glm::scale(glm::mat4(1.f), {scale.x, scale.y, 1.f});
         DrawQuad(transform, color);
     }
 
@@ -187,11 +192,9 @@ namespace Volt
 
     void CRenderer2D::DrawTexture(const glm::vec3& position, const glm::vec3& rotation, const glm::vec3& scale, const Ref<ITexture>& texture, const glm::vec4& color, float tilingFactor)
     {
-        const glm::mat4 transform = translate(glm::mat4(1.f), position) *
-            rotate(glm::mat4(1.f), glm::radians(rotation.x), {1.f, 0.f, 0.f}) *
-            rotate(glm::mat4(1.f), glm::radians(rotation.y), {0.f, 1.f, 0.f}) *
-            rotate(glm::mat4(1.f), glm::radians(rotation.z), {0.f, 0.f, 1.f}) *
-            glm::scale(glm::mat4(1.f), {scale.x, scale.y, 1.f});
+        const glm::mat4 transform = translate(glm::mat4(1.f), position)
+            * toMat4(glm::quat({rotation.x, rotation.y, rotation.z}))
+            * glm::scale(glm::mat4(1.f), {scale.x, scale.y, 1.f});
         DrawQuad(transform, texture, color, nullptr, tilingFactor);
     }
 
@@ -202,32 +205,14 @@ namespace Volt
 
     void CRenderer2D::DrawTexture(const glm::vec3& position, const glm::vec3& rotation, const glm::vec3& scale, const Ref<CSubTexture>& texture, const glm::vec4& color, float tilingFactor)
     {
-        const glm::mat4 transform = translate(glm::mat4(1.f), position) *
-            rotate(glm::mat4(1.f), glm::radians(rotation.x), {1.f, 0.f, 0.f}) *
-            rotate(glm::mat4(1.f), glm::radians(rotation.y), {0.f, 1.f, 0.f}) *
-            rotate(glm::mat4(1.f), glm::radians(rotation.z), {0.f, 0.f, 1.f}) *
-            glm::scale(glm::mat4(1.f), {scale.x, scale.y, 1.f});
+        const glm::mat4 transform = translate(glm::mat4(1.f), position)
+            * toMat4(glm::quat({rotation.x, rotation.y, rotation.z}))
+            * glm::scale(glm::mat4(1.f), {scale.x, scale.y, 1.f});
         DrawQuad(transform, texture->GetTexture(), color, texture->GetCoords(), tilingFactor);
     }
 
     void CRenderer2D::DrawQuad(const glm::mat4& transform, const glm::vec4& color)
     {
-        //UpdateBatch();
-
-        //const float textureIndex = 0.f;
-        //const float tilingFactor = 1.f;
-        //const glm::vec2 texCoords[] = {{0.f, 0.f}, {1.f, 0.f}, {1.f, 1.f}, {0.f, 1.f}};
-        //for (uint32_t index = 0; index < SRenderer2DData::QuadVertexCount; ++index)
-        //{
-        //    RendererData.QuadVertexPtr->Position = transform * SRenderer2DData::QuadVertexPositions[index];
-        //    RendererData.QuadVertexPtr->Color = color;
-        //    RendererData.QuadVertexPtr->TexCoords = texCoords[index];
-        //    RendererData.QuadVertexPtr->TexIndex = textureIndex;
-        //    RendererData.QuadVertexPtr->TilingFactor = tilingFactor;
-        //    ++RendererData.QuadVertexPtr;
-        //}
-        //RendererData.QuadIndexCount += 6;
-        //++RendererData.Stats.QuadCount;
         DrawQuad(transform, nullptr, color);
     }
 

@@ -9,6 +9,7 @@
 #include "VoltEngine/Events/ApplicationEvent.h"
 #include "VoltEngine/Renderer/RenderCommand.h"
 #include "VoltEngine/Renderer/Renderer.h"
+#include "VoltEngine/Renderer/TextureManager.h"
 #include "VoltEngine/UI/UICommand.h"
 
 namespace Volt
@@ -29,8 +30,13 @@ namespace Volt
         windowSpec.EventFunction = BIND_FUNCTION(CApplication::OnEvent);
         m_window = IWindow::Create(windowSpec);
 
+        // Create singletons
+        CTextureManager::Create();
+
+        // Initialize systems
         CRenderer::Init();
         CUICommand::Init();
+
 
         m_timer = new CTime();
     }
@@ -40,6 +46,7 @@ namespace Volt
         delete m_timer;
         CUICommand::Shutdown();
         CRenderer::Shutdown();
+        CTextureManager::Destroy();
         s_instance = nullptr;
     }
 

@@ -8,10 +8,10 @@ namespace Volt
     class COpenGLTexture2D : public ITexture
     {
     public:
-        COpenGLTexture2D(uint32_t width, uint32_t height);
-        COpenGLTexture2D(const std::string& filepath);
+        COpenGLTexture2D(IResourceManager* creator, const std::string& name, uint32_t id);
         virtual ~COpenGLTexture2D() override;
 
+        /** Begin ITexture interface */
         virtual void Bind(uint32_t slot = 0) const override;
         virtual void Unbind() const override;
 
@@ -19,10 +19,23 @@ namespace Volt
 
         virtual uint32_t GetWidth() const override { return m_width; }
         virtual uint32_t GetHeight() const override { return m_height; }
+        virtual void SetWidth(uint32_t width) override { m_width = width; }
+        virtual void SetHeight(uint32_t height) override { m_height = height; }
 
         virtual void SetData(void* data, uint32_t size) override;
 
         virtual bool operator==(const ITexture& other) const override;
+        /** End ITexture interface */
+
+        /** Begin IResource interface */
+        virtual void Load() override;
+        virtual void Unload() override;
+        /** End IResource interface */
+
+    protected:
+        void LoadFromFile();
+        void LoadProceduralTexture();
+
     private:
         uint32_t m_rendererID;
         uint32_t m_width;

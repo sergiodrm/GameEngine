@@ -1,6 +1,5 @@
 #pragma once
 #include "glm/vec4.hpp"
-#include "VoltEngine/Renderer/TextureLoader.h"
 #include "VoltEngine/Scene/Component.h"
 
 

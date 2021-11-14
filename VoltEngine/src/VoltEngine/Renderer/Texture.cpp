@@ -5,21 +5,11 @@
 
 namespace Volt
 {
-    Ref<ITexture> ITexture::Create(uint32_t width, uint32_t height)
+    Ref<ITexture> ITexture::Create(IResourceManager* creator, const std::string& name, uint32_t id)
     {
         switch (IRendererAPI::GetAPI())
         {
-            case IRendererAPI::API::OpenGL: return CreateRef<COpenGLTexture2D>(width, height);
-            default: VOLT_LOG(Error, "Unknown API!");
-        }
-        return nullptr;
-    }
-
-    Ref<ITexture> ITexture::Create(const std::string& filepath)
-    {
-        switch (IRendererAPI::GetAPI())
-        {
-            case IRendererAPI::API::OpenGL: return CreateRef<COpenGLTexture2D>(filepath);
+            case IRendererAPI::API::OpenGL: return CreateRef<COpenGLTexture2D>(creator, name, id);
             default: VOLT_LOG(Error, "Unknown API!");
         }
         return nullptr;

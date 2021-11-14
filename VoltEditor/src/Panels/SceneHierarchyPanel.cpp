@@ -3,6 +3,7 @@
 #include "imgui.h"
 #include "imgui_internal.h"
 #include "glm/gtc/type_ptr.hpp"
+#include "VoltEngine/Renderer/TextureManager.h"
 #include "VoltEngine/Scene/Components/NativeScriptComponent.h"
 
 
@@ -334,7 +335,9 @@ namespace Volt
 
             if (!newTextureFilePath.empty())
             {
-                const Ref<ITexture> newTexture = CTextureLoader::Load(newTextureFilePath);
+                const Ref<ITexture> newTexture = CTextureManager::Get().CreateResource<ITexture>(newTextureFilePath);
+                newTexture->SetLoadType(ETextureLoadType::File);
+                newTexture->Load();
                 component.SetTexture(newTexture);
             }
 
