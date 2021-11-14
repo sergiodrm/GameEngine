@@ -20,9 +20,9 @@ namespace Volt
 
     void CEntity::Destroy()
     {
-        VOLT_LOG(Trace, "Destroying entity: {0}", GetComponent<CTagComponent>()->GetTag().c_str());
         m_status = EEntityStatus::Destroyed;
         DestroyComponents();
+        VOLT_LOG(Trace, "Entity [ID: {0}] was destroyed.", GetID());
     }
 
     void CEntity::OnComponentAdded(CComponent* component)
@@ -41,6 +41,9 @@ namespace Volt
                                                              m_sceneContext->GetViewportHeight());
             }
         }
+#ifdef VOLT_DEBUG
+        VOLT_LOG(Trace, "Adding component {0} from entity {1}.", component->GetTypeName().c_str(), GetID());
+#endif
     }
 
     void CEntity::OnComponentRemoved(CComponent* component)
@@ -50,6 +53,9 @@ namespace Volt
         {
             nativeScript->OnDestroy();
         }
+#ifdef VOLT_DEBUG
+        VOLT_LOG(Trace, "Removing component {0} from entity {1}.", component->GetTypeName().c_str(), GetID());
+#endif
     }
 
     void CEntity::DestroyComponents()

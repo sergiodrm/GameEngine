@@ -20,6 +20,8 @@ namespace Volt
         bool operator ==(const CType& other) const { return this == &other; }
         bool operator ==(CType& other) { return this == &other; }
 
+        const std::string& GetName() const { return m_name; }
+
     private:
         std::string m_name;
         const CType* m_baseType;

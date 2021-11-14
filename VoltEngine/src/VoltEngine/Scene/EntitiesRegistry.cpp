@@ -27,6 +27,9 @@ namespace Volt
         {
             entity->SetStatus(EEntityStatus::Active);
         }
+#ifdef VOLT_DEBUG
+        VOLT_LOG(Trace, "Entity created: [ID: {0}, Tag: {1}]", entity->GetID(), name.c_str());
+#endif
         entity->AddComponent<CTagComponent>(name);
         entity->AddComponent<CTransformComponent>();
         return entity;
