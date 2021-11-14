@@ -6,10 +6,7 @@ namespace Volt
 {
     CLayerStack::~CLayerStack()
     {
-        for (CLayer* it : m_layers)
-        {
-            delete it;
-        }
+        Clear();
     }
 
     void CLayerStack::PushLayer(class CLayer* layer)
@@ -40,5 +37,14 @@ namespace Volt
         {
             m_layers.erase(it);
         }
+    }
+
+    void CLayerStack::Clear()
+    {
+        for (CLayer* it : m_layers)
+        {
+            delete it;
+        }
+        m_layers.clear();
     }
 }

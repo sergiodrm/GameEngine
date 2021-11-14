@@ -42,6 +42,7 @@ namespace Volt
 
     CApplication::~CApplication()
     {
+        m_layerStack.Clear();
         delete m_timer;
         CUICommand::Shutdown();
         CRenderer::Shutdown();

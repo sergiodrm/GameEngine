@@ -19,6 +19,8 @@ namespace Volt
         void PopLayer(class CLayer* layer);
         void PopOverlay(class CLayer* overlay);
 
+        void Clear();
+
         LayerIterator begin() { return m_layers.begin(); }
         LayerConstIterator begin() const { return m_layers.begin(); }
         LayerIterator end() { return m_layers.end(); }
