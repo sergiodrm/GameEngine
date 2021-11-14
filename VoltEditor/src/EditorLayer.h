@@ -15,13 +15,13 @@ public:
     virtual void OnUIRender() override;
 
 private:
-    Volt::Ref<Volt::CScene> m_scene;
-    Volt::Ref<Volt::CSceneHierarchyPanel> m_sceneHierarchyPanel;
-    Volt::Ref<Volt::CStatsPanel> m_statsPanel;
+    Volt::SharedPtr<Volt::CScene> m_scene;
+    Volt::SharedPtr<Volt::CSceneHierarchyPanel> m_sceneHierarchyPanel;
+    Volt::SharedPtr<Volt::CStatsPanel> m_statsPanel;
 
     Volt::CEntity* m_cameraEntity {nullptr};
     Volt::CEntity* m_squareEntity {nullptr};
 
-    Volt::Ref<Volt::IFramebuffer> m_framebuffer;
+    Volt::SharedPtr<Volt::IFramebuffer> m_framebuffer;
     glm::vec2 m_viewportSize {0.f};
 };

@@ -14,7 +14,7 @@ void CEditorLayer::OnAttach()
 
     m_framebuffer = Volt::IFramebuffer::Create({1280, 720});
 
-    m_scene = Volt::CreateRef<Volt::CScene>();
+    m_scene = Volt::CreateSharedPtr<Volt::CScene>();
 
     m_cameraEntity = m_scene->CreateEntity("CameraEntity");
     m_cameraEntity->AddComponent<Volt::CCameraComponent>(true);
@@ -22,8 +22,8 @@ void CEditorLayer::OnAttach()
     m_squareEntity = m_scene->CreateEntity("SquareEntity");
     m_squareEntity->AddComponent<Volt::CMovementScriptComponent>();
 
-    m_sceneHierarchyPanel = Volt::CreateRef<Volt::CSceneHierarchyPanel>(m_scene);
-    m_statsPanel = Volt::CreateRef<Volt::CStatsPanel>();
+    m_sceneHierarchyPanel = Volt::CreateSharedPtr<Volt::CSceneHierarchyPanel>(m_scene);
+    m_statsPanel = Volt::CreateSharedPtr<Volt::CStatsPanel>();
 
     Volt::CRenderCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1.f});
 }

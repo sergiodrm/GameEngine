@@ -24,7 +24,7 @@ void CGameLayer::OnAttach()
 
     m_framebuffer = Volt::IFramebuffer::Create({1280, 720});
 
-    m_scene = Volt::CreateRef<Volt::CScene>();
+    m_scene = Volt::CreateSharedPtr<Volt::CScene>();
 
     m_cameraEntity = m_scene->CreateEntity("CameraEntity");
     m_cameraEntity->AddComponent<Volt::CCameraComponent>(true);

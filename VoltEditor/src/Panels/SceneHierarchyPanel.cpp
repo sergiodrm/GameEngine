@@ -96,7 +96,7 @@ namespace DetailPanelUtils
 
 namespace Volt
 {
-    CSceneHierarchyPanel::CSceneHierarchyPanel(const Ref<CScene>& sceneContext)
+    CSceneHierarchyPanel::CSceneHierarchyPanel(const SharedPtr<CScene>& sceneContext)
         : m_sceneContext(sceneContext), m_selection(nullptr) {}
 
     void CSceneHierarchyPanel::OnUIRender()
@@ -311,7 +311,7 @@ namespace Volt
 
             ImGui::Text("Texture");
             ImGui::NextColumn();
-            const Ref<ITexture> texture = component.GetTexture();
+            const ITexture* texture = component.GetTexture();
             std::string newTextureFilePath;
             if (texture)
             {
@@ -335,10 +335,13 @@ namespace Volt
 
             if (!newTextureFilePath.empty())
             {
-                const Ref<ITexture> newTexture = CTextureManager::Get().CreateResource<ITexture>(newTextureFilePath);
-                newTexture->SetLoadType(ETextureLoadType::File);
-                newTexture->Load();
-                component.SetTexture(newTexture);
+                ITexture* newTexture = CTextureManager::Get().CreateResource<ITexture>(newTextureFilePath);
+                if (newTexture)
+                {
+                    newTexture->SetLoadType(ETextureLoadType::File);
+                    newTexture->Load();
+                    component.SetTexture(newTexture);
+                }
             }
 
             ImGui::Columns(1);

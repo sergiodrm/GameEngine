@@ -7,7 +7,7 @@ namespace Volt
     class CSceneHierarchyPanel
     {
     public:
-        CSceneHierarchyPanel(const Ref<CScene>& sceneContext);
+        CSceneHierarchyPanel(const SharedPtr<CScene>& sceneContext);
 
         void OnUIRender();
 
@@ -16,7 +16,7 @@ namespace Volt
         void DrawComponents(CEntity& entity);
 
     private:
-        Ref<CScene> m_sceneContext;
+        SharedPtr<CScene> m_sceneContext;
         CEntity* m_selection;
     };
 }
