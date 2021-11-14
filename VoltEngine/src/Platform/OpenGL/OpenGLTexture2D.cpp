@@ -9,7 +9,9 @@ namespace Volt
         : ITexture(creator, name, id) { }
 
     COpenGLTexture2D::~COpenGLTexture2D()
-    { }
+    {
+        Unload();
+    }
 
     void COpenGLTexture2D::Bind(uint32_t slot) const
     {

@@ -16,7 +16,7 @@ namespace Volt
     class IFramebuffer
     {
     public:
-        static Ref<IFramebuffer> Create(const SFramebufferSpecification& spec);
+        static SharedPtr<IFramebuffer> Create(const SFramebufferSpecification& spec);
 
         virtual ~IFramebuffer() = default;
 

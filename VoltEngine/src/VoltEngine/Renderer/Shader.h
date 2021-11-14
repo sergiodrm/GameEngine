@@ -7,8 +7,8 @@ namespace Volt
     class IShader
     {
     public:
-        static Ref<IShader> Create(const std::string& filepath);
-        static Ref<IShader> Create(const std::string& name, const std::string& vertexSource, const std::string& fragmentSource);
+        static SharedPtr<IShader> Create(const std::string& filepath);
+        static SharedPtr<IShader> Create(const std::string& name, const std::string& vertexSource, const std::string& fragmentSource);
 
         virtual ~IShader() = default;
 
@@ -32,16 +32,16 @@ namespace Volt
     class CShaderLibrary
     {
     public:
-        void Add(const Ref<IShader>& shader);
-        void Add(const std::string& name, const Ref<IShader>& shader);
+        void Add(const SharedPtr<IShader>& shader);
+        void Add(const std::string& name, const SharedPtr<IShader>& shader);
 
-        Ref<IShader> Load(const std::string& filepath);
-        Ref<IShader> Load(const std::string& name, const std::string& filepath);
+        SharedPtr<IShader> Load(const std::string& filepath);
+        SharedPtr<IShader> Load(const std::string& name, const std::string& filepath);
 
-        Ref<IShader> Get(const std::string& name) const;
+        SharedPtr<IShader> Get(const std::string& name) const;
 
         bool Exists(const std::string& name) const;
     private:
-        std::unordered_map<std::string, Ref<IShader>> m_shaders;
+        std::unordered_map<std::string, SharedPtr<IShader>> m_shaders;
     };
 }

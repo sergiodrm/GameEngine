@@ -26,8 +26,8 @@ namespace Volt
 
         static CApplication& Get() { return *s_instance; }
 
-        Ref<class IWindow>& GetWindow() { return m_window; }
-        const Ref<class IWindow>& GetWindow() const { return m_window; }
+        SharedPtr<class IWindow>& GetWindow() { return m_window; }
+        const SharedPtr<class IWindow>& GetWindow() const { return m_window; }
 
         const CTime& GetTimer() const { return *m_timer; }
 
@@ -41,7 +41,7 @@ namespace Volt
     private:
         static CApplication* s_instance;
 
-        Ref<class IWindow> m_window;
+        SharedPtr<class IWindow> m_window;
         CLayerStack m_layerStack;
         bool m_running {true};
         bool m_minimized {false};

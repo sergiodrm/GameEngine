@@ -28,7 +28,7 @@ namespace Volt
         SWindowData m_windowData;
 
         GLFWwindow* m_nativeWindow;
-        Ref<class IGraphicsContext> m_graphicsContext;
+        SharedPtr<class IGraphicsContext> m_graphicsContext;
 
         /**
          * Statics

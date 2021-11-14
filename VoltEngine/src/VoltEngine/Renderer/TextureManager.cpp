@@ -14,7 +14,7 @@ namespace Volt
         VOLT_LOG(Info, "Texture manager was destroyed correctly.");
     }
 
-    Ref<IResource> CTextureManager::CreateResourceImplementation(uint32_t resourceId, const std::string& filepath)
+    SharedPtr<IResource> CTextureManager::CreateResourceImplementation(uint32_t resourceId, const std::string& filepath)
     {
         return ITexture::Create(this, filepath, resourceId);
     }

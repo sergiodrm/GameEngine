@@ -23,7 +23,7 @@ namespace Volt
     class IWindow
     {
     public:
-        static Ref<IWindow> Create(const SWindowData& windowProps = SWindowData());
+        static SharedPtr<IWindow> Create(const SWindowData& windowProps = SWindowData());
 
         virtual ~IWindow() = default;
 

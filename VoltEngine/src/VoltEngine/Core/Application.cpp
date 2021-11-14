@@ -37,7 +37,6 @@ namespace Volt
         CRenderer::Init();
         CUICommand::Init();
 
-
         m_timer = new CTime();
     }
 

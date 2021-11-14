@@ -12,7 +12,12 @@ namespace Volt
         IResource(IResourceManager* creator, const std::string& name, uint32_t id)
             : m_creator(creator), m_name(name), m_id(id) {}
 
-        virtual ~IResource() = default;
+        virtual ~IResource()
+        {
+#ifdef VOLT_DEBUG
+            VOLT_LOG(Trace, "Resource [{0}, {1}] destroyed.", m_id, m_name.c_str());
+#endif
+        }
 
         virtual void Load() = 0;
         virtual void Unload() = 0;

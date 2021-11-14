@@ -4,8 +4,8 @@
 
 namespace Volt
 {
-    Ref<IVertexArray> IVertexArray::Create()
+    SharedPtr<IVertexArray> IVertexArray::Create()
     {
-        return CreateRef<COpenGLVertexArray>();
+        return CreateSharedPtr<COpenGLVertexArray>();
     }
 }

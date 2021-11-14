@@ -41,7 +41,7 @@ namespace Volt
         glClearColor(color.r, color.g, color.b, color.a);
     }
 
-    void COpenGLRendererAPI::DrawIndexed(const Ref<IVertexArray>& vertexArray, uint32_t indexCount)
+    void COpenGLRendererAPI::DrawIndexed(const SharedPtr<IVertexArray>& vertexArray, uint32_t indexCount)
     {
         vertexArray->Bind();
         const uint32_t count = indexCount == 0 ? vertexArray->GetIndexBuffer()->GetCount() : indexCount;

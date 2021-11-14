@@ -25,14 +25,14 @@ namespace Volt
         CRenderCommand::SetViewport(0, 0, width, height);
     }
 
-    void CRenderer::BeginScene(const Ref<CCamera>& camera)
+    void CRenderer::BeginScene(const SharedPtr<CCamera>& camera)
     {
         s_sceneData.SceneProjection = camera->GetProjection();
     }
 
     void CRenderer::EndScene() {}
 
-    void CRenderer::Submit(const Ref<IShader>& shader, const Ref<IVertexArray>& vertexArray, uint32_t indexCount)
+    void CRenderer::Submit(const SharedPtr<IShader>& shader, const SharedPtr<IVertexArray>& vertexArray, uint32_t indexCount)
     {
         shader->Bind();
         shader->SetMat4("u_ViewProjection", s_sceneData.SceneProjection);

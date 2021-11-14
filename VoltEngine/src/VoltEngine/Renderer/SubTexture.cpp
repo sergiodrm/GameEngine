@@ -2,7 +2,7 @@
 
 #include "Texture.h"
 
-Volt::Ref<Volt::CSubTexture> Volt::CSubTexture::Create(const Ref<ITexture>& texture, const glm::vec2& coords, const glm::vec2& cellSize, const glm::vec2& spriteSize)
+Volt::SharedPtr<Volt::CSubTexture> Volt::CSubTexture::Create(ITexture* texture, const glm::vec2& coords, const glm::vec2& cellSize, const glm::vec2& spriteSize)
 {
     const glm::vec2 min =
         {
@@ -14,10 +14,10 @@ Volt::Ref<Volt::CSubTexture> Volt::CSubTexture::Create(const Ref<ITexture>& text
             (coords.x + spriteSize.x) * cellSize.x / static_cast<float>(texture->GetWidth()),
             (coords.y + spriteSize.y) * cellSize.y / static_cast<float>(texture->GetHeight())
         };
-    return CreateRef<CSubTexture>(texture, min, max);
+    return CreateSharedPtr<CSubTexture>(texture, min, max);
 }
 
-Volt::CSubTexture::CSubTexture(const Ref<ITexture>& texture, const glm::vec2& min, const glm::vec2& max)
+Volt::CSubTexture::CSubTexture(ITexture* texture, const glm::vec2& min, const glm::vec2& max)
     : m_texture(texture)
 {
     m_uvCoords[0] = {min.x, min.y};

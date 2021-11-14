@@ -13,6 +13,6 @@ namespace Volt
         virtual void OnCreate() override;
         virtual void OnDestroy() override;
     protected:
-        virtual Ref<IResource> CreateResourceImplementation(uint32_t resourceId, const std::string& filepath) override;
+        virtual SharedPtr<IResource> CreateResourceImplementation(uint32_t resourceId, const std::string& filepath) override;
     };
 }

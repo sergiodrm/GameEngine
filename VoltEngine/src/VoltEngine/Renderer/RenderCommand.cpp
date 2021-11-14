@@ -40,7 +40,7 @@ namespace Volt
         s_rendererAPI->SetClearColor(color);
     }
 
-    void CRenderCommand::DrawIndexed(const Ref<IVertexArray>& vertexArray, uint32_t indexCount)
+    void CRenderCommand::DrawIndexed(const SharedPtr<IVertexArray>& vertexArray, uint32_t indexCount)
     {
         s_rendererAPI->DrawIndexed(vertexArray, indexCount);
     }

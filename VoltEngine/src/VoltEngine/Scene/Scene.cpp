@@ -35,7 +35,6 @@ namespace Volt
         return nullptr;
     }
 
-
     void CScene::OnUpdate(float elapsedSeconds)
     {
         RunEntitiesScripts(elapsedSeconds);
@@ -90,7 +89,7 @@ namespace Volt
                 const CSpriteRenderComponent* entityRender = entity->GetComponent<CSpriteRenderComponent>();
                 if (entityTransform && entityRender)
                 {
-                    const Ref<ITexture>& texture = entityRender->GetTexture();
+                    const ITexture* texture = entityRender->GetTexture();
                     if (texture)
                     {
                         CRenderer2D::DrawTexture(entityTransform->GetPosition(),

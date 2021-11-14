@@ -20,6 +20,7 @@ namespace Volt
 
     void CEntity::Destroy()
     {
+        VOLT_LOG(Trace, "Destroying entity: {0}", GetComponent<CTagComponent>()->GetTag().c_str());
         m_status = EEntityStatus::Destroyed;
         DestroyComponents();
     }

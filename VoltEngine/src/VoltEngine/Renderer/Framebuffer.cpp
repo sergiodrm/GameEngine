@@ -6,11 +6,11 @@
 
 namespace Volt
 {
-    Ref<IFramebuffer> IFramebuffer::Create(const SFramebufferSpecification& spec)
+    SharedPtr<IFramebuffer> IFramebuffer::Create(const SFramebufferSpecification& spec)
     {
         switch (IRendererAPI::GetAPI())
         {
-            case IRendererAPI::API::OpenGL: return CreateRef<COpenGLFramebuffer>(spec);
+            case IRendererAPI::API::OpenGL: return CreateSharedPtr<COpenGLFramebuffer>(spec);
         }
         VOLT_ASSERT(false, "Unknown renderer API!");
         return nullptr;

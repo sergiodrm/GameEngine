@@ -18,10 +18,10 @@ namespace Volt
 
         static void Init();
 
-        static Ref<spdlog::logger>& GetCoreLogger() { return s_coreLogger; }
-        static Ref<spdlog::logger>& GetClientLogger() { return s_clientLogger; }
+        static SharedPtr<spdlog::logger>& GetCoreLogger() { return s_coreLogger; }
+        static SharedPtr<spdlog::logger>& GetClientLogger() { return s_clientLogger; }
 
-        static Ref<spdlog::logger>& CLog::GetLogger()
+        static SharedPtr<spdlog::logger>& CLog::GetLogger()
         {
 #if VOLT_ENGINE
             return GetCoreLogger();
@@ -34,8 +34,8 @@ namespace Volt
         static void Log(EType type, const char* format, Args&& ... args);
 
     private:
-        static Ref<spdlog::logger> s_coreLogger;
-        static Ref<spdlog::logger> s_clientLogger;
+        static SharedPtr<spdlog::logger> s_coreLogger;
+        static SharedPtr<spdlog::logger> s_clientLogger;
     };
 
     template <typename ... Args>

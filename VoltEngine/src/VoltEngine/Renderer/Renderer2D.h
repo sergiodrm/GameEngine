@@ -37,14 +37,14 @@ namespace Volt
         static void DrawQuad(const glm::vec2& position, const glm::vec3& rotation, const glm::vec2& scale, const glm::vec4& color);
         static void DrawQuad(const glm::vec3& position, const glm::vec3& rotation, const glm::vec2& scale, const glm::vec4& color);
 
-        static void DrawTexture(const glm::vec2& position, const glm::vec3& rotation, const glm::vec3& scale, const Ref<ITexture>& texture, const glm::vec4& color = glm::vec4(1.f), float tilingFactor = 1.f);
-        static void DrawTexture(const glm::vec3& position, const glm::vec3& rotation, const glm::vec3& scale, const Ref<ITexture>& texture, const glm::vec4& color = glm::vec4(1.f), float tilingFactor = 1.f);
+        static void DrawTexture(const glm::vec2& position, const glm::vec3& rotation, const glm::vec3& scale, const ITexture* texture, const glm::vec4& color = glm::vec4(1.f), float tilingFactor = 1.f);
+        static void DrawTexture(const glm::vec3& position, const glm::vec3& rotation, const glm::vec3& scale, const ITexture* texture, const glm::vec4& color = glm::vec4(1.f), float tilingFactor = 1.f);
 
-        static void DrawTexture(const glm::vec2& position, const glm::vec3& rotation, const glm::vec3& scale, const Ref<CSubTexture>& texture, const glm::vec4& color = glm::vec4(1.f), float tilingFactor = 1.f);
-        static void DrawTexture(const glm::vec3& position, const glm::vec3& rotation, const glm::vec3& scale, const Ref<CSubTexture>& texture, const glm::vec4& color = glm::vec4(1.f), float tilingFactor = 1.f);
+        static void DrawTexture(const glm::vec2& position, const glm::vec3& rotation, const glm::vec3& scale, const SharedPtr<CSubTexture>& texture, const glm::vec4& color = glm::vec4(1.f), float tilingFactor = 1.f);
+        static void DrawTexture(const glm::vec3& position, const glm::vec3& rotation, const glm::vec3& scale, const SharedPtr<CSubTexture>& texture, const glm::vec4& color = glm::vec4(1.f), float tilingFactor = 1.f);
 
         static void DrawQuad(const glm::mat4& transform, const glm::vec4& color);
-        static void DrawQuad(const glm::mat4& transform, const Ref<ITexture>& texture, const glm::vec4& color, const glm::vec2* uv = nullptr, float tilingFactor = 1.f);
+        static void DrawQuad(const glm::mat4& transform, const ITexture* texture, const glm::vec4& color, const glm::vec2* uv = nullptr, float tilingFactor = 1.f);
 
 
     protected:

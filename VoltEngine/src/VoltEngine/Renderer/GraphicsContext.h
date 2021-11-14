@@ -6,7 +6,7 @@ namespace Volt
     class IGraphicsContext
     {
     public:
-        static Ref<IGraphicsContext> Create();
+        static SharedPtr<IGraphicsContext> Create();
 
         virtual void Init(void* windowContext) = 0;
         virtual void SwapBuffers() = 0;

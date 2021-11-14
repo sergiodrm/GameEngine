@@ -116,8 +116,8 @@ namespace Volt
     class IVertexBuffer
     {
     public:
-        static Ref<IVertexBuffer> Create(float* vertices, uint32_t size);
-        static Ref<IVertexBuffer> Create(uint32_t size);
+        static SharedPtr<IVertexBuffer> Create(float* vertices, uint32_t size);
+        static SharedPtr<IVertexBuffer> Create(uint32_t size);
 
         virtual ~IVertexBuffer() = default;
 
@@ -133,7 +133,7 @@ namespace Volt
     class IIndexBuffer
     {
     public:
-        static Ref<IIndexBuffer> Create(uint32_t* indices, uint32_t count);
+        static SharedPtr<IIndexBuffer> Create(uint32_t* indices, uint32_t count);
 
         virtual ~IIndexBuffer() = default;
 

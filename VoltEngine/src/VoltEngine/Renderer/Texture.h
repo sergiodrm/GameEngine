@@ -13,10 +13,10 @@ namespace Volt
     class ITexture : public IResource
     {
     public:
-        static Ref<ITexture> Create(IResourceManager* creator, const std::string& name, uint32_t id);
+        static SharedPtr<ITexture> Create(IResourceManager* creator, const std::string& name, uint32_t id);
 
         ITexture(IResourceManager* creator, const std::string& name, uint32_t id)
-            : IResource(creator, name, id) {}
+            : IResource(creator, name, id), m_loadType(ETextureLoadType::File) {}
 
         virtual ~ITexture() = default;
 

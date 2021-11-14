@@ -20,20 +20,28 @@
 namespace Volt
 {
     template <typename T>
-    using Ref = std::shared_ptr<T>;
+    using SharedPtr = std::shared_ptr<T>;
 
     template <typename T, typename ... Args>
-    constexpr Ref<T> CreateRef(Args&& ... args)
+    constexpr SharedPtr<T> CreateSharedPtr(Args&& ... args)
     {
         return std::make_shared<T>(std::forward<Args>(args)...);
     }
 
     template <typename T>
-    using Unique = std::unique_ptr<T>;
+    using UniquePtr = std::unique_ptr<T>;
 
     template <typename T, typename ... Args>
-    constexpr Unique<T> CreateUnique(Args&& ... args)
+    constexpr UniquePtr<T> CreateUnique(Args&& ... args)
     {
         return std::make_unique<T>(std::forward<Args>(args)...);
     }
+
+    template <typename T>
+    class WeakPtr : public std::weak_ptr<T>
+    {
+    public:
+        T* operator->() { return this->lock() ? this->lock().get() : nullptr; }
+        const T* operator->() const { return this->lock() ? this->lock().get() : nullptr; }
+    };
 }

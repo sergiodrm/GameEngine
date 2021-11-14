@@ -78,12 +78,15 @@ project "VoltEngine"
 
 	filter "configurations:Debug"
 		symbols "on"
+		defines {"VOLT_DEBUG"}
 
 	filter "configurations:Release"
 		optimize "on"
+		defines {"VOLT_RELEASE"}
 
 	filter "configurations:Dist"
 		optimize "on"
+		defines {"VOLT_DIST"}
 
 project "VoltEditor"
     location "VoltEditor"
@@ -128,12 +131,15 @@ project "VoltEditor"
 
 	filter "configurations:Debug"
 		symbols "on"
+		defines {"VOLT_DEBUG"}
 
 	filter "configurations:Release"
 		optimize "on"
+		defines {"VOLT_RELEASE"}
 
 	filter "configurations:Dist"
 		optimize "on"
+		defines {"VOLT_DIST"}
 
 group "Game"
 project "Sandbox"
@@ -176,10 +182,13 @@ project "Sandbox"
 
 
     filter "configurations:Debug"
-        symbols "on"
+		symbols "on"
+		defines {"VOLT_DEBUG"}
 
-    filter "configurations:Release"
-        optimize "on"
+	filter "configurations:Release"
+		optimize "on"
+		defines {"VOLT_RELEASE"}
 
-    filter "configurations:Dist"
-        optimize "on"
+	filter "configurations:Dist"
+		optimize "on"
+		defines {"VOLT_DIST"}

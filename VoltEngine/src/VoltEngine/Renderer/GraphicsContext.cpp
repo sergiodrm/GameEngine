@@ -7,11 +7,11 @@
 
 namespace Volt
 {
-    Ref<IGraphicsContext> IGraphicsContext::Create()
+    SharedPtr<IGraphicsContext> IGraphicsContext::Create()
     {
         switch (IRendererAPI::GetAPI())
         {
-            case IRendererAPI::API::OpenGL: return CreateRef<COpenGLGraphicsContext>();
+            case IRendererAPI::API::OpenGL: return CreateSharedPtr<COpenGLGraphicsContext>();
             default:
                 VOLT_ASSERT(false, "Unknown renderer API");
         }

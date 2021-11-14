@@ -13,9 +13,9 @@ namespace Volt
 
         static void OnWindowResize(uint32_t width, uint32_t height);
 
-        static void BeginScene(const Ref<class CCamera>& camera);
+        static void BeginScene(const SharedPtr<class CCamera>& camera);
         static void EndScene();
-        static void Submit(const Ref<class IShader>& shader, const Ref<class IVertexArray>& vertexArray, uint32_t indexCount = 0);
+        static void Submit(const SharedPtr<class IShader>& shader, const SharedPtr<class IVertexArray>& vertexArray, uint32_t indexCount = 0);
     protected:
         struct SSceneData
         {

@@ -4,8 +4,8 @@
 
 namespace Volt
 {
-    Ref<spdlog::logger> CLog::s_coreLogger = nullptr;
-    Ref<spdlog::logger> CLog::s_clientLogger = nullptr;
+    SharedPtr<spdlog::logger> CLog::s_coreLogger = nullptr;
+    SharedPtr<spdlog::logger> CLog::s_clientLogger = nullptr;
 
     void CLog::Init()
     {
