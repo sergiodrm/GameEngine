@@ -3,7 +3,7 @@
 
 namespace Volt
 {
-    COpenGLVertexBuffer::COpenGLVertexBuffer(float* vertices, uint32_t size)
+    COpenGLVertexBuffer::COpenGLVertexBuffer(const float* vertices, uint32_t size)
     {
         glCreateBuffers(1, &m_rendererID);
         glBindBuffer(GL_ARRAY_BUFFER, m_rendererID);
@@ -41,7 +41,7 @@ namespace Volt
         //glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
 
-    COpenGLIndexBuffer::COpenGLIndexBuffer(uint32_t* indices, uint32_t count)
+    COpenGLIndexBuffer::COpenGLIndexBuffer(const uint32_t* indices, uint32_t count)
         : m_rendererID(0), m_count(count)
     {
         glCreateBuffers(1, &m_rendererID);

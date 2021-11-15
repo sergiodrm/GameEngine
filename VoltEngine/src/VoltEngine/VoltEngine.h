@@ -17,6 +17,7 @@
 #include "Renderer/Texture.h"
 #include "Renderer/SubTexture.h"
 #include "Renderer/Camera.h"
+#include "Renderer/Mesh.h"
 
 #include "Scene/Entity.h"
 #include "Scene/Scene.h"
@@ -25,6 +26,7 @@
 #include "Scene/Components/TransformComponent.h"
 #include "Scene/Components/CameraComponent.h"
 #include "Scene/Components/TagComponent.h"
+#include "Scene/Components/MeshComponent.h"
 
 #include "Events/ApplicationEvent.h"
 #include "Events/MouseEvent.h"

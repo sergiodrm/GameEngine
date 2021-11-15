@@ -4,9 +4,73 @@
 #include "Panels/SceneHierarchyPanel.h"
 #include "Panels/StatsPanel.h"
 #include "VoltEngine/Renderer/TextureManager.h"
+#include "VoltEngine/Renderer/VertexData.h"
 #include "VoltEngine/Scene/Components/NativeScriptComponent.h"
 
 #define TEST_TEXTURE_PATH "assets/textures/sample.png"
+
+
+static Volt::SharedPtr<Volt::IMesh> CreateCube()
+{
+    const float offset = -0.5f;
+    const std::vector<Volt::SVertexData> vertices =
+        {
+            // bottom face
+            {(glm::vec3(0.f, 0.f, 0.f) + offset), glm::vec4(1.f)},
+            {(glm::vec3(0.f, 1.f, 0.f) + offset), glm::vec4(1.f)},
+            {(glm::vec3(1.f, 1.f, 0.f) + offset), glm::vec4(1.f)},
+            {(glm::vec3(1.f, 0.f, 0.f) + offset), glm::vec4(1.f)},
+            // top face                                                
+            {(glm::vec3(0.f, 0.f, 1.f) + offset), glm::vec4(1.f)},
+            {(glm::vec3(0.f, 1.f, 1.f) + offset), glm::vec4(1.f)},
+            {(glm::vec3(1.f, 1.f, 1.f) + offset), glm::vec4(1.f)},
+            {(glm::vec3(1.f, 0.f, 1.f) + offset), glm::vec4(1.f)},
+            // side face 1                              
+            {(glm::vec3(1.f, 1.f, 0.f) + offset), glm::vec4(1.f)},
+            {(glm::vec3(0.f, 1.f, 1.f) + offset), glm::vec4(1.f)},
+            {(glm::vec3(1.f, 1.f, 1.f) + offset), glm::vec4(1.f)},
+            {(glm::vec3(0.f, 1.f, 0.f) + offset), glm::vec4(1.f)},
+            // side face 2                              
+            {(glm::vec3(1.f, 0.f, 0.f) + offset), glm::vec4(1.f)},
+            {(glm::vec3(1.f, 1.f, 0.f) + offset), glm::vec4(1.f)},
+            {(glm::vec3(1.f, 1.f, 1.f) + offset), glm::vec4(1.f)},
+            {(glm::vec3(1.f, 0.f, 1.f) + offset), glm::vec4(1.f)},
+            // side face 3                              
+            {(glm::vec3(0.f, 0.f, 0.f) + offset), glm::vec4(1.f)},
+            {(glm::vec3(1.f, 0.f, 0.f) + offset), glm::vec4(1.f)},
+            {(glm::vec3(1.f, 0.f, 1.f) + offset), glm::vec4(1.f)},
+            {(glm::vec3(0.f, 0.f, 1.f) + offset), glm::vec4(1.f)},
+            // side face 4                              
+            {(glm::vec3(0.f, 1.f, 0.f) + offset), glm::vec4(1.f)},
+            {(glm::vec3(0.f, 0.f, 0.f) + offset), glm::vec4(1.f)},
+            {(glm::vec3(0.f, 0.f, 1.f) + offset), glm::vec4(1.f)},
+            {(glm::vec3(0.f, 1.f, 1.f) + offset), glm::vec4(1.f)}
+        };
+    std::vector<uint32_t> indices = {
+            // bottom
+            0, 1, 2,
+            0, 2, 3,
+
+            // top
+            4, 6, 5,
+            4, 7, 6,
+
+            8, 11, 9,
+            8, 9, 10,
+
+            12, 13, 14,
+            12, 14, 15,
+
+            16, 17, 18,
+            16, 18, 19,
+
+            20, 21, 22,
+            20, 22, 23
+        };
+    Volt::SharedPtr<Volt::IMesh> mesh = Volt::IMesh::Create(vertices, indices);
+    return mesh;
+}
+
 
 void CEditorLayer::OnAttach()
 {
@@ -21,6 +85,11 @@ void CEditorLayer::OnAttach()
 
     m_squareEntity = m_scene->CreateEntity("SquareEntity");
     m_squareEntity->AddComponent<Volt::CMovementScriptComponent>();
+
+    Volt::SharedPtr<Volt::IMesh> cubeMesh = CreateCube();
+
+    Volt::CEntity* cubeEntity = m_scene->CreateEntity("Cube");
+    cubeEntity->AddComponent<Volt::CMeshComponent>(cubeMesh);
 
     m_sceneHierarchyPanel = Volt::CreateSharedPtr<Volt::CSceneHierarchyPanel>(m_scene);
     m_statsPanel = Volt::CreateSharedPtr<Volt::CStatsPanel>();

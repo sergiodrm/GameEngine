@@ -6,7 +6,7 @@ namespace Volt
     class COpenGLVertexBuffer : public IVertexBuffer
     {
     public:
-        COpenGLVertexBuffer(float* vertices, uint32_t size);
+        COpenGLVertexBuffer(const float* vertices, uint32_t size);
         COpenGLVertexBuffer(uint32_t size);
         virtual ~COpenGLVertexBuffer() override;
 
@@ -25,7 +25,7 @@ namespace Volt
     class COpenGLIndexBuffer : public IIndexBuffer
     {
     public:
-        COpenGLIndexBuffer(uint32_t* indices, uint32_t count);
+        COpenGLIndexBuffer(const uint32_t* indices, uint32_t count);
         virtual ~COpenGLIndexBuffer() override;
 
         virtual void Bind() const override;

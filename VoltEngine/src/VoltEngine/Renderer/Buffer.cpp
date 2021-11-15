@@ -4,7 +4,7 @@
 
 namespace Volt
 {
-    SharedPtr<IVertexBuffer> IVertexBuffer::Create(float* vertices, uint32_t size)
+    SharedPtr<IVertexBuffer> IVertexBuffer::Create(const float* vertices, uint32_t size)
     {
         // @todo renderer API
         return CreateSharedPtr<COpenGLVertexBuffer>(vertices, size);
@@ -16,7 +16,7 @@ namespace Volt
         return CreateSharedPtr<COpenGLVertexBuffer>(size);
     }
 
-    SharedPtr<IIndexBuffer> IIndexBuffer::Create(uint32_t* indices, uint32_t count)
+    SharedPtr<IIndexBuffer> IIndexBuffer::Create(const uint32_t* indices, uint32_t count)
     {
         // @todo rendererAPI
         return CreateSharedPtr<COpenGLIndexBuffer>(indices, count);

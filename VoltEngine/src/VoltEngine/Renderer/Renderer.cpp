@@ -3,6 +3,7 @@
 #include "Camera.h"
 #include "RenderCommand.h"
 #include "Renderer2D.h"
+#include "Renderer3D.h"
 
 namespace Volt
 {
@@ -12,10 +13,12 @@ namespace Volt
     {
         CRenderCommand::Init();
         CRenderer2D::Init();
+        CRenderer3D::Init();
     }
 
     void CRenderer::Shutdown()
     {
+        CRenderer3D::Shutdown();
         CRenderer2D::Shutdown();
         CRenderCommand::Shutdown();
     }
