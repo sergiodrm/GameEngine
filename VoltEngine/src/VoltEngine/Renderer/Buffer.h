@@ -124,7 +124,7 @@ namespace Volt
         virtual void Bind() const = 0;
         virtual void Unbind() const = 0;
 
-        virtual void SetData(const void* data, uint32_t size) = 0;
+        virtual void SetData(const void* data, uint32_t size, uint32_t offset = 0) = 0;
 
         virtual void SetLayout(const CBufferLayout& layout) = 0;
         virtual const CBufferLayout& GetLayout() const = 0;
@@ -134,6 +134,7 @@ namespace Volt
     {
     public:
         static SharedPtr<IIndexBuffer> Create(const uint32_t* indices, uint32_t count);
+        static SharedPtr<IIndexBuffer> Create(uint32_t count);
 
         virtual ~IIndexBuffer() = default;
 
@@ -141,5 +142,7 @@ namespace Volt
         virtual void Unbind() const = 0;
 
         virtual uint32_t GetCount() const = 0;
+
+        virtual void SetData(const void* data, uint32_t size, uint32_t offset = 0) = 0;
     };
 }

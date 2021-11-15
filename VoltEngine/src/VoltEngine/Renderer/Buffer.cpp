@@ -21,4 +21,9 @@ namespace Volt
         // @todo rendererAPI
         return CreateSharedPtr<COpenGLIndexBuffer>(indices, count);
     }
+
+    SharedPtr<IIndexBuffer> IIndexBuffer::Create(uint32_t count)
+    {
+        return CreateSharedPtr<COpenGLIndexBuffer>(count);
+    }
 }

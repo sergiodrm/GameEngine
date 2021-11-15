@@ -12,15 +12,13 @@ namespace Volt
     }
 
     COpenGLMesh::COpenGLMesh(const std::vector<SVertexData>& vertices, const std::vector<uint32_t>& indices)
+        : m_vertexData(vertices), m_indexData(indices)
     {
         // Vertices
         const SVertexData* vertexDataPtr = vertices.data();
         const float* verticesPtr = vertexDataPtr->GetData();
         SharedPtr<IVertexBuffer> vertexBuffer = IVertexBuffer::Create(verticesPtr, vertices.size() * sizeof(SVertexData));
-        vertexBuffer->SetLayout({
-                                    {EShaderDataType::Float3, "a_Position"},
-                                    {EShaderDataType::Float4, "a_Color"},
-                                });
+        vertexBuffer->SetLayout(SVertexData::GetStaticBufferLayout());
 
         // Indices
         const SharedPtr<IIndexBuffer> indexBuffer = IIndexBuffer::Create(indices.data(), indices.size());
