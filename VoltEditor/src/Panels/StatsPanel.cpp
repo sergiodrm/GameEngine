@@ -4,6 +4,7 @@
 #include "VoltEngine/Core/Application.h"
 #include "VoltEngine/Core/Time.h"
 #include "VoltEngine/Renderer/Renderer2D.h"
+#include "VoltEngine/Renderer/Renderer3D.h"
 
 namespace Volt
 {
@@ -31,14 +32,30 @@ namespace Volt
             ImGui::TreePop();
         }
 
-        const SRenderer2DStats stats = CRenderer2D::GetStats();
+
         if (ImGui::TreeNodeEx("Render", ImGuiTreeNodeFlags_DefaultOpen))
         {
-            ImGui::Text("Draw calls: %d", stats.DrawCalls);
-            ImGui::Text("Quad count: %d", stats.QuadCount);
-            ImGui::Text("Vertices:   %d", stats.GetVerticesCount());
-            ImGui::Text("Indices:    %d", stats.GetIndicesCount());
-            ImGui::Text("Triangles:  %d", stats.GetTrianglesCount());
+            if (ImGui::TreeNodeEx("3D"))
+            {
+                const SRenderStats& stats = CRenderer3D::GetStats();
+                ImGui::Text("Draw calls: %d", stats.DrawCallCount);
+                ImGui::Text("Vertices:   %d", stats.VertexCount);
+                ImGui::Text("Indices:    %d", stats.GetIndexCount());
+                ImGui::Text("Triangles:  %d", stats.TriangleCount);
+                ImGui::Text("Vertex used memory: %d bytes", stats.GetVertexUsedMemory());
+                ImGui::Text("Index used memory: %d bytes", stats.GetIndexUsedMemory());
+                ImGui::TreePop();
+            }
+            if (ImGui::TreeNodeEx("2D"))
+            {
+                const SRenderer2DStats& stats = CRenderer2D::GetStats();
+                ImGui::Text("Draw calls: %d", stats.DrawCalls);
+                ImGui::Text("Quad count: %d", stats.QuadCount);
+                ImGui::Text("Vertices:   %d", stats.GetVerticesCount());
+                ImGui::Text("Indices:    %d", stats.GetIndicesCount());
+                ImGui::Text("Triangles:  %d", stats.GetTrianglesCount());
+                ImGui::TreePop();
+            }
             ImGui::TreePop();
         }
         ImGui::End();

@@ -10,6 +10,19 @@ namespace Volt
     class IVertexArray;
     class CCamera;
 
+    struct SRenderStats
+    {
+        uint32_t VertexCount;
+        uint32_t TriangleCount;
+        uint32_t DrawCallCount;
+
+        uint32_t GetIndexCount() const;
+        uint32_t GetVertexUsedMemory() const;
+        uint32_t GetIndexUsedMemory() const;
+
+        void Reset();
+    };
+
     class CRenderer3D
     {
     public:
@@ -20,5 +33,10 @@ namespace Volt
         static void EndScene();
 
         static void DrawMesh(const glm::mat4& transform, const SharedPtr<IMesh>& mesh);
+
+        static const SRenderStats& GetStats() { return Stats; }
+
+    private:
+        static SRenderStats Stats;
     };
 }

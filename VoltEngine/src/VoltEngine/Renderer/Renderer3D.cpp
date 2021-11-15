@@ -10,17 +10,42 @@
 
 namespace Volt
 {
+    SRenderStats CRenderer3D::Stats;
+
     constexpr const char* BasicShaderFilepath = "assets/shaders/Basic3D.glsl";
 
     struct SSceneBatchData
     {
-        glm::mat4 ViewProjectionMatrix;
+        glm::mat4 ViewProjectionMatrix {1.f};
 
         SharedPtr<IShader> Shader;
         SharedPtr<IBatch> Batch;
     };
 
     static SSceneBatchData* BatchData {nullptr};
+
+    uint32_t SRenderStats::GetIndexCount() const
+    {
+        return TriangleCount * 3;
+    }
+
+    uint32_t SRenderStats::GetVertexUsedMemory() const
+    {
+        return sizeof(SVertexData) * VertexCount;
+    }
+
+    uint32_t SRenderStats::GetIndexUsedMemory() const
+    {
+        return sizeof(uint32_t) * GetIndexCount();
+    }
+
+    void SRenderStats::Reset()
+    {
+        VertexCount = 0;
+        TriangleCount = 0;
+        DrawCallCount = 0;
+    }
+
 
     void CRenderer3D::Init()
     {
@@ -37,6 +62,8 @@ namespace Volt
 
     void CRenderer3D::BeginScene(const CCamera& camera, const glm::mat4& transform)
     {
+        Stats.Reset();
+
         BatchData->ViewProjectionMatrix = camera.GetProjection() * inverse(transform);
         BatchData->Shader->Bind();
         BatchData->Shader->SetMat4("u_ViewProjection", BatchData->ViewProjectionMatrix);
@@ -48,6 +75,7 @@ namespace Volt
         {
             BatchData->Batch->Render();
             BatchData->Batch->Clear();
+            ++Stats.DrawCallCount;
         }
     }
 
@@ -69,6 +97,8 @@ namespace Volt
                 it.Position = transform * glm::vec4(it.Position.x, it.Position.y, it.Position.z, 1.f);
             }
             BatchData->Batch->AddTriangles(vertexData, mesh->GetIndexData());
+            Stats.TriangleCount += mesh->GetNumTriangles();
+            Stats.VertexCount += static_cast<uint32_t>(vertexData.size());
         }
         else
         {
