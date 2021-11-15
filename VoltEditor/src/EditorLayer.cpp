@@ -12,62 +12,66 @@
 
 static Volt::SharedPtr<Volt::IMesh> CreateCube()
 {
-    const float offset = -0.5f;
-    const std::vector<Volt::SVertexData> vertices =
-        {
-            // bottom face
-            {(glm::vec3(0.f, 0.f, 0.f) + offset), glm::vec4(1.f)},
-            {(glm::vec3(0.f, 1.f, 0.f) + offset), glm::vec4(1.f)},
-            {(glm::vec3(1.f, 1.f, 0.f) + offset), glm::vec4(1.f)},
-            {(glm::vec3(1.f, 0.f, 0.f) + offset), glm::vec4(1.f)},
-            // top face                                                
-            {(glm::vec3(0.f, 0.f, 1.f) + offset), glm::vec4(1.f)},
-            {(glm::vec3(0.f, 1.f, 1.f) + offset), glm::vec4(1.f)},
-            {(glm::vec3(1.f, 1.f, 1.f) + offset), glm::vec4(1.f)},
-            {(glm::vec3(1.f, 0.f, 1.f) + offset), glm::vec4(1.f)},
-            // side face 1                              
-            {(glm::vec3(1.f, 1.f, 0.f) + offset), glm::vec4(1.f)},
-            {(glm::vec3(0.f, 1.f, 1.f) + offset), glm::vec4(1.f)},
-            {(glm::vec3(1.f, 1.f, 1.f) + offset), glm::vec4(1.f)},
-            {(glm::vec3(0.f, 1.f, 0.f) + offset), glm::vec4(1.f)},
-            // side face 2                              
-            {(glm::vec3(1.f, 0.f, 0.f) + offset), glm::vec4(1.f)},
-            {(glm::vec3(1.f, 1.f, 0.f) + offset), glm::vec4(1.f)},
-            {(glm::vec3(1.f, 1.f, 1.f) + offset), glm::vec4(1.f)},
-            {(glm::vec3(1.f, 0.f, 1.f) + offset), glm::vec4(1.f)},
-            // side face 3                              
-            {(glm::vec3(0.f, 0.f, 0.f) + offset), glm::vec4(1.f)},
-            {(glm::vec3(1.f, 0.f, 0.f) + offset), glm::vec4(1.f)},
-            {(glm::vec3(1.f, 0.f, 1.f) + offset), glm::vec4(1.f)},
-            {(glm::vec3(0.f, 0.f, 1.f) + offset), glm::vec4(1.f)},
-            // side face 4                              
-            {(glm::vec3(0.f, 1.f, 0.f) + offset), glm::vec4(1.f)},
-            {(glm::vec3(0.f, 0.f, 0.f) + offset), glm::vec4(1.f)},
-            {(glm::vec3(0.f, 0.f, 1.f) + offset), glm::vec4(1.f)},
-            {(glm::vec3(0.f, 1.f, 1.f) + offset), glm::vec4(1.f)}
-        };
-    std::vector<uint32_t> indices = {
-            // bottom
-            0, 1, 2,
-            0, 2, 3,
+    static Volt::SharedPtr<Volt::IMesh> mesh {nullptr};
+    if (mesh == nullptr)
+    {
+        const float offset = -0.5f;
+        const std::vector<Volt::SVertexData> vertices =
+            {
+                // bottom face
+                {(glm::vec3(0.f, 0.f, 0.f) + offset), glm::vec4(1.f)},
+                {(glm::vec3(0.f, 1.f, 0.f) + offset), glm::vec4(1.f)},
+                {(glm::vec3(1.f, 1.f, 0.f) + offset), glm::vec4(1.f)},
+                {(glm::vec3(1.f, 0.f, 0.f) + offset), glm::vec4(1.f)},
+                // top face                                                
+                {(glm::vec3(0.f, 0.f, 1.f) + offset), glm::vec4(1.f)},
+                {(glm::vec3(0.f, 1.f, 1.f) + offset), glm::vec4(1.f)},
+                {(glm::vec3(1.f, 1.f, 1.f) + offset), glm::vec4(1.f)},
+                {(glm::vec3(1.f, 0.f, 1.f) + offset), glm::vec4(1.f)},
+                // side face 1                              
+                {(glm::vec3(1.f, 1.f, 0.f) + offset), glm::vec4(1.f)},
+                {(glm::vec3(0.f, 1.f, 1.f) + offset), glm::vec4(1.f)},
+                {(glm::vec3(1.f, 1.f, 1.f) + offset), glm::vec4(1.f)},
+                {(glm::vec3(0.f, 1.f, 0.f) + offset), glm::vec4(1.f)},
+                // side face 2                              
+                {(glm::vec3(1.f, 0.f, 0.f) + offset), glm::vec4(1.f)},
+                {(glm::vec3(1.f, 1.f, 0.f) + offset), glm::vec4(1.f)},
+                {(glm::vec3(1.f, 1.f, 1.f) + offset), glm::vec4(1.f)},
+                {(glm::vec3(1.f, 0.f, 1.f) + offset), glm::vec4(1.f)},
+                // side face 3                              
+                {(glm::vec3(0.f, 0.f, 0.f) + offset), glm::vec4(1.f)},
+                {(glm::vec3(1.f, 0.f, 0.f) + offset), glm::vec4(1.f)},
+                {(glm::vec3(1.f, 0.f, 1.f) + offset), glm::vec4(1.f)},
+                {(glm::vec3(0.f, 0.f, 1.f) + offset), glm::vec4(1.f)},
+                // side face 4                              
+                {(glm::vec3(0.f, 1.f, 0.f) + offset), glm::vec4(1.f)},
+                {(glm::vec3(0.f, 0.f, 0.f) + offset), glm::vec4(1.f)},
+                {(glm::vec3(0.f, 0.f, 1.f) + offset), glm::vec4(1.f)},
+                {(glm::vec3(0.f, 1.f, 1.f) + offset), glm::vec4(1.f)}
+            };
+        std::vector<uint32_t> indices = {
+                // bottom
+                0, 1, 2,
+                0, 2, 3,
 
-            // top
-            4, 6, 5,
-            4, 7, 6,
+                // top
+                4, 6, 5,
+                4, 7, 6,
 
-            8, 11, 9,
-            8, 9, 10,
+                8, 11, 9,
+                8, 9, 10,
 
-            12, 13, 14,
-            12, 14, 15,
+                12, 13, 14,
+                12, 14, 15,
 
-            16, 17, 18,
-            16, 18, 19,
+                16, 17, 18,
+                16, 18, 19,
 
-            20, 21, 22,
-            20, 22, 23
-        };
-    Volt::SharedPtr<Volt::IMesh> mesh = Volt::IMesh::Create(vertices, indices);
+                20, 21, 22,
+                20, 22, 23
+            };
+        mesh = Volt::IMesh::Create(vertices, indices);
+    }
     return mesh;
 }
 
@@ -81,10 +85,10 @@ void CEditorLayer::OnAttach()
     m_scene = Volt::CreateSharedPtr<Volt::CScene>();
 
     m_cameraEntity = m_scene->CreateEntity("CameraEntity");
-    m_cameraEntity->AddComponent<Volt::CCameraComponent>(true);
-
-    m_squareEntity = m_scene->CreateEntity("SquareEntity");
-    m_squareEntity->AddComponent<Volt::CMovementScriptComponent>();
+    Volt::CCameraComponent* cameraComponent = m_cameraEntity->AddComponent<Volt::CCameraComponent>(true);
+    Volt::CTransformComponent* transformComponent = m_cameraEntity->GetComponent<Volt::CTransformComponent>();
+    transformComponent->SetPosition({0.f, 1.7f, 5.f});
+    transformComponent->SetRotation(radians(glm::vec3 {-18.3f, 0.f, 0.f}));
 
     Volt::SharedPtr<Volt::IMesh> cubeMesh = CreateCube();
 

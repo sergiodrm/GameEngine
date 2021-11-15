@@ -45,7 +45,7 @@ namespace Volt
         void RecalculateProjection();
 
     protected:
-        EProjectionType m_projectionType {EProjectionType::Orthographic};
+        EProjectionType m_projectionType {EProjectionType::Perspective};
         glm::mat4 m_projection {1.f};
 
         float m_aspectRatio {16.f / 9.f};
