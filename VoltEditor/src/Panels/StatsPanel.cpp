@@ -8,6 +8,32 @@
 
 namespace Volt
 {
+    static void BeginDoubleColumn()
+    {
+        ImGui::Columns(2);
+    }
+
+    static void EndDoubleColumn()
+    {
+        ImGui::Columns(1);
+    }
+
+    static void PrintTextValue(const std::string& text, float value, const char* valueFormat = "%.2f")
+    {
+        ImGui::Text("%s", text.c_str());
+        ImGui::NextColumn();
+        ImGui::Text(valueFormat, value);
+        ImGui::NextColumn();
+    }
+
+    static void PrintTextValue(const std::string& text, uint32_t value, const char* valueFormat = "%d")
+    {
+        ImGui::Text("%s", text.c_str());
+        ImGui::NextColumn();
+        ImGui::Text(valueFormat, value);
+        ImGui::NextColumn();
+    }
+
     void CStatsPanel::OnUIRender()
     {
         ImGui::Begin("Stats");
@@ -17,8 +43,12 @@ namespace Volt
         {
             const float ms = timer.GetElapsedTimeMilliseconds();
             Add(ms);
-            ImGui::Text("FPS: %.2f", 1000.f / ms);
-            ImGui::Text("Frame time: %.4f ms", ms);
+
+            BeginDoubleColumn();
+            PrintTextValue("FPS", 1000.f / ms);
+            PrintTextValue("Frame time", ms, "%.4f ms");
+            EndDoubleColumn();
+
             if (ImGui::TreeNodeEx("Graph"))
             {
                 char overlay[32];
@@ -38,22 +68,26 @@ namespace Volt
             if (ImGui::TreeNodeEx("3D"))
             {
                 const SRenderStats& stats = CRenderer3D::GetStats();
-                ImGui::Text("Draw calls: %d", stats.DrawCallCount);
-                ImGui::Text("Vertices:   %d", stats.VertexCount);
-                ImGui::Text("Indices:    %d", stats.GetIndexCount());
-                ImGui::Text("Triangles:  %d", stats.TriangleCount);
-                ImGui::Text("Vertex used memory: %d bytes", stats.GetVertexUsedMemory());
-                ImGui::Text("Index used memory: %d bytes", stats.GetIndexUsedMemory());
+                BeginDoubleColumn();
+                PrintTextValue("Draw calls", stats.DrawCallCount);
+                PrintTextValue("Vertices", stats.VertexCount);
+                PrintTextValue("Indices", stats.GetIndexCount());
+                PrintTextValue("Triangles", stats.TriangleCount);
+                PrintTextValue("Vertex used memory", stats.GetVertexUsedMemory(), "%d bytes");
+                PrintTextValue("Index used memory", stats.GetIndexUsedMemory(), "%d bytes");
+                EndDoubleColumn();
                 ImGui::TreePop();
             }
             if (ImGui::TreeNodeEx("2D"))
             {
                 const SRenderer2DStats& stats = CRenderer2D::GetStats();
-                ImGui::Text("Draw calls: %d", stats.DrawCalls);
-                ImGui::Text("Quad count: %d", stats.QuadCount);
-                ImGui::Text("Vertices:   %d", stats.GetVerticesCount());
-                ImGui::Text("Indices:    %d", stats.GetIndicesCount());
-                ImGui::Text("Triangles:  %d", stats.GetTrianglesCount());
+                BeginDoubleColumn();
+                PrintTextValue("Draw calls", stats.DrawCalls);
+                PrintTextValue("Quad count", stats.QuadCount);
+                PrintTextValue("Vertices", stats.GetVerticesCount());
+                PrintTextValue("Indices", stats.GetIndicesCount());
+                PrintTextValue("Triangles", stats.GetTrianglesCount());
+                EndDoubleColumn();
                 ImGui::TreePop();
             }
             ImGui::TreePop();
