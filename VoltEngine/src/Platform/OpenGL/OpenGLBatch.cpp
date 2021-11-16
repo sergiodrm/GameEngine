@@ -38,12 +38,21 @@ namespace Volt
         m_vertexArray.reset();
     }
 
-    void COpenGLBatch::AddTriangles(const std::vector<SVertexData>& vertices, const std::vector<uint32_t>& indices)
+    void COpenGLBatch::AddTriangles(
+        const std::vector<SVertexData>& vertices,
+        const std::vector<uint32_t>& indices,
+        const SBatchConfig& batchConfig)
     {
         // Store vertices
         SVertexData* vertexDataPtr = GetVertexPtr();
-        const uint32_t vertexBytes = static_cast<uint32_t>(vertices.size()) * sizeof(SVertexData);
-        memcpy_s(vertexDataPtr, vertexBytes, vertices.data(), vertexBytes);
+        for (size_t i = 0; i < vertices.size(); ++i)
+        {
+            vertexDataPtr[i].Position = batchConfig.Transform
+                * glm::vec4(vertices[i].Position.x, vertices[i].Position.y, vertices[i].Position.z, 1.f);
+            vertexDataPtr[i].Color = vertices[i].Color;
+            vertexDataPtr[i].TexCoords = vertices[i].TexCoords;
+            vertexDataPtr[i].TexIndex = batchConfig.TextureIndex;
+        }
 
         // Store indices
         uint32_t* indexDataPtr = GetIndexPtr();

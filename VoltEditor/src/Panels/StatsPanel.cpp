@@ -65,10 +65,11 @@ namespace Volt
 
         if (ImGui::TreeNodeEx("Render", ImGuiTreeNodeFlags_DefaultOpen))
         {
-            if (ImGui::TreeNodeEx("3D"))
+            if (ImGui::TreeNodeEx("3D", ImGuiTreeNodeFlags_DefaultOpen))
             {
                 const SRenderStats& stats = CRenderer3D::GetStats();
                 BeginDoubleColumn();
+                PrintTextValue("Batch size", stats.BatchSize, "%d triangles");
                 PrintTextValue("Draw calls", stats.DrawCallCount);
                 PrintTextValue("Vertices", stats.VertexCount);
                 PrintTextValue("Indices", stats.GetIndexCount());

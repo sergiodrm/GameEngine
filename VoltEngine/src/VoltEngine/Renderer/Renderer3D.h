@@ -15,6 +15,7 @@ namespace Volt
         uint32_t VertexCount;
         uint32_t TriangleCount;
         uint32_t DrawCallCount;
+        uint32_t BatchSize;
 
         uint32_t GetIndexCount() const;
         uint32_t GetVertexUsedMemory() const;

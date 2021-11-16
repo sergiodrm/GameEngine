@@ -1,7 +1,6 @@
 #pragma once
 #include "VoltEngine/Renderer/Batch.h"
 
-
 namespace Volt
 {
     class IVertexArray;
@@ -14,7 +13,10 @@ namespace Volt
         COpenGLBatch(uint32_t maxNumTriangles);
         virtual ~COpenGLBatch() override;
 
-        virtual void AddTriangles(const std::vector<SVertexData>& vertices, const std::vector<uint32_t>& indices) override;
+        virtual void AddTriangles(
+            const std::vector<SVertexData>& vertices,
+            const std::vector<uint32_t>& indices,
+            const SBatchConfig& batchConfig = {}) override;
         virtual bool CanAddTriangles(uint32_t numTriangles) const override;
         virtual bool IsEmpty() const override;
         virtual void Render() const override;

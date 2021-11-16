@@ -5,6 +5,7 @@
 #include "Mesh.h"
 #include "RenderCommand.h"
 #include "Shader.h"
+#include "TextureManager.h"
 #include "VertexArray.h"
 #include "VertexData.h"
 
@@ -20,6 +21,9 @@ namespace Volt
 
         SharedPtr<IShader> Shader;
         SharedPtr<IBatch> Batch;
+
+        std::array<ITexture*, 32> TextureSlots;
+        uint32_t TextureSlotIndex {1};
     };
 
     static SSceneBatchData* BatchData {nullptr};
@@ -49,9 +53,27 @@ namespace Volt
 
     void CRenderer3D::Init()
     {
+        constexpr uint32_t BatchSize = 2000;
         BatchData = new SSceneBatchData();
         BatchData->Shader = IShader::Create(BasicShaderFilepath);
-        BatchData->Batch = IBatch::Create(1000);
+        BatchData->Batch = IBatch::Create(BatchSize);
+        Stats.BatchSize = BatchSize;
+
+        BatchData->TextureSlots[0] = CTextureManager::Get().CreateResource<ITexture>("3DWhiteTexture");
+        BatchData->TextureSlots[0]->SetLoadType(ETextureLoadType::Procedural);
+        BatchData->TextureSlots[0]->SetWidth(1);
+        BatchData->TextureSlots[0]->SetHeight(1);
+        BatchData->TextureSlots[0]->Load();
+        uint32_t whiteTextureData = 0xffffffff;
+        BatchData->TextureSlots[0]->SetData(&whiteTextureData, sizeof(uint32_t));
+
+        int32_t textureIndices[32];
+        for (int32_t i = 0; i < 32; ++i)
+        {
+            textureIndices[i] = i;
+        }
+        BatchData->Shader->Bind();
+        BatchData->Shader->SetIntArray("u_Textures", &textureIndices[0], 32);
     }
 
     void CRenderer3D::Shutdown()
@@ -88,14 +110,10 @@ namespace Volt
             Flush();
         }
 
-        std::vector<SVertexData> vertexData = mesh->GetVertexData();
-        for (SVertexData& it : vertexData)
-        {
-            it.Position = transform * glm::vec4(it.Position.x, it.Position.y, it.Position.z, 1.f);
-        }
-        BatchData->Batch->AddTriangles(vertexData, mesh->GetIndexData());
+        const SBatchConfig batchConfig {transform, 0};
+        BatchData->Batch->AddTriangles(mesh->GetVertexData(), mesh->GetIndexData(), batchConfig);
         Stats.TriangleCount += mesh->GetNumTriangles();
-        Stats.VertexCount += static_cast<uint32_t>(vertexData.size());
+        Stats.VertexCount += static_cast<uint32_t>(mesh->GetVertexData().size());
     }
 
     void CRenderer3D::UpdateBatch() {}
@@ -106,6 +124,7 @@ namespace Volt
         {
             BatchData->Batch->Render();
             BatchData->Batch->Clear();
+            BatchData->TextureSlotIndex = 1;
             ++Stats.DrawCallCount;
         }
     }
