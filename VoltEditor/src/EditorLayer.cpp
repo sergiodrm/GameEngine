@@ -87,13 +87,23 @@ void CEditorLayer::OnAttach()
     m_cameraEntity = m_scene->CreateEntity("CameraEntity");
     Volt::CCameraComponent* cameraComponent = m_cameraEntity->AddComponent<Volt::CCameraComponent>(true);
     Volt::CTransformComponent* transformComponent = m_cameraEntity->GetComponent<Volt::CTransformComponent>();
-    transformComponent->SetPosition({0.f, 1.7f, 5.f});
+    transformComponent->SetPosition({0.f, 15.f, 43.f});
     transformComponent->SetRotation(radians(glm::vec3 {-18.3f, 0.f, 0.f}));
 
     Volt::SharedPtr<Volt::IMesh> cubeMesh = CreateCube();
 
-    Volt::CEntity* cubeEntity = m_scene->CreateEntity("Cube");
-    cubeEntity->AddComponent<Volt::CMeshComponent>(cubeMesh);
+    for (int32_t x = -10; x < 10; ++x)
+    {
+        for (int32_t y = -10; y < 10; ++y)
+        {
+            char name[16];
+            sprintf_s(name, "Cube_%d_%d", x + 10, y + 10);
+            Volt::CEntity* cubeEntity = m_scene->CreateEntity(name);
+            cubeEntity->AddComponent<Volt::CMeshComponent>(cubeMesh);
+            cubeEntity->AddComponent<Volt::CRotateScriptComponent>();
+            cubeEntity->GetComponent<Volt::CTransformComponent>()->SetPosition({static_cast<float>(x) * 1.75f, static_cast<float>(y) * 1.75f, 0.f});
+        }
+    }
 
     m_sceneHierarchyPanel = Volt::CreateSharedPtr<Volt::CSceneHierarchyPanel>(m_scene);
     m_statsPanel = Volt::CreateSharedPtr<Volt::CStatsPanel>();

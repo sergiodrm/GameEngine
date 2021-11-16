@@ -58,4 +58,49 @@ namespace Volt
         float m_speed {1.f};
         CTransformComponent* m_ownerTransform {nullptr};
     };
+
+    class CRotateScriptComponent : public CNativeScriptComponent
+    {
+    DECLARE_DERIVED_CLASS(CRotateScriptComponent, CNativeScriptComponent)
+    public:
+        virtual void OnCreate() override
+        {
+            m_ownerTransform = GetOwner()->GetComponent<CTransformComponent>();
+        }
+
+        virtual void OnUpdate(float elapsedSeconds) override
+        {
+            if (IInput::IsKeyPressed(KeyCodes::Space))
+            {
+                if (!m_spacePressed)
+                {
+                    m_autoRotationEnabled = !m_autoRotationEnabled;
+                    m_spacePressed = true;
+                }
+            }
+            else
+                m_spacePressed = false;
+
+            float rotateDirection = 1.f;
+            if (!m_autoRotationEnabled)
+            {
+                rotateDirection = 0.f;
+                if (IInput::IsKeyPressed(KeyCodes::Q))
+                    rotateDirection = -1.f;
+                else if (IInput::IsKeyPressed(KeyCodes::E))
+                    rotateDirection = 1.f;
+            }
+            const float rotation = elapsedSeconds * m_rotationSpeed * rotateDirection;
+            glm::vec3 currentRotation = m_ownerTransform->GetRotation();
+            currentRotation.y += glm::radians(rotation);
+            currentRotation.y = fmodf(currentRotation.y, 2.f * 3.1415f);
+            m_ownerTransform->SetRotation(currentRotation);
+        }
+
+    private:
+        bool m_autoRotationEnabled {true};
+        bool m_spacePressed {false};
+        float m_rotationSpeed {20.f};
+        CTransformComponent* m_ownerTransform {nullptr};
+    };
 }
