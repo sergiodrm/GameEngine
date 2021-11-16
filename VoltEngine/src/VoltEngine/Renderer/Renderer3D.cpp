@@ -71,12 +71,7 @@ namespace Volt
 
     void CRenderer3D::EndScene()
     {
-        if (!BatchData->Batch->IsEmpty())
-        {
-            BatchData->Batch->Render();
-            BatchData->Batch->Clear();
-            ++Stats.DrawCallCount;
-        }
+        Flush();
     }
 
     void CRenderer3D::DrawMesh(const glm::mat4& transform, const SharedPtr<IMesh>& mesh)
@@ -88,21 +83,30 @@ namespace Volt
         CRenderCommand::DrawIndexed(vertexArray);
 #endif // 0
 
-
-        if (BatchData->Batch->CanAddTriangles(mesh->GetNumTriangles()))
+        if (!BatchData->Batch->CanAddTriangles(mesh->GetNumTriangles()))
         {
-            std::vector<SVertexData> vertexData = mesh->GetVertexData();
-            for (SVertexData& it : vertexData)
-            {
-                it.Position = transform * glm::vec4(it.Position.x, it.Position.y, it.Position.z, 1.f);
-            }
-            BatchData->Batch->AddTriangles(vertexData, mesh->GetIndexData());
-            Stats.TriangleCount += mesh->GetNumTriangles();
-            Stats.VertexCount += static_cast<uint32_t>(vertexData.size());
+            Flush();
         }
-        else
+
+        std::vector<SVertexData> vertexData = mesh->GetVertexData();
+        for (SVertexData& it : vertexData)
         {
-            VOLT_LOG(Error, "Can add more triangles to batch renderer!");
+            it.Position = transform * glm::vec4(it.Position.x, it.Position.y, it.Position.z, 1.f);
+        }
+        BatchData->Batch->AddTriangles(vertexData, mesh->GetIndexData());
+        Stats.TriangleCount += mesh->GetNumTriangles();
+        Stats.VertexCount += static_cast<uint32_t>(vertexData.size());
+    }
+
+    void CRenderer3D::UpdateBatch() {}
+
+    void CRenderer3D::Flush()
+    {
+        if (!BatchData->Batch->IsEmpty())
+        {
+            BatchData->Batch->Render();
+            BatchData->Batch->Clear();
+            ++Stats.DrawCallCount;
         }
     }
 }

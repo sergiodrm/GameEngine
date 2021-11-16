@@ -36,6 +36,10 @@ namespace Volt
 
         static const SRenderStats& GetStats() { return Stats; }
 
+    protected:
+        static void UpdateBatch();
+        static void Flush();
+
     private:
         static SRenderStats Stats;
     };

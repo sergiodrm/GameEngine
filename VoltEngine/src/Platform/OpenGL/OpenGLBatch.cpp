@@ -47,8 +47,10 @@ namespace Volt
 
         // Store indices
         uint32_t* indexDataPtr = GetIndexPtr();
-        const uint32_t indexBytes = static_cast<uint32_t>(indices.size()) * sizeof(uint32_t);
-        memcpy_s(indexDataPtr, indexBytes, indices.data(), indexBytes);
+        for (size_t i = 0; i < indices.size(); ++i)
+        {
+            indexDataPtr[i] = indices[i] + m_usedVertices;
+        }
 
         // Add counters
         m_usedVertices += static_cast<uint32_t>(vertices.size());
