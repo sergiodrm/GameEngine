@@ -1,0 +1,3 @@
+[submodule "VoltEngine/lib/tinyobjloader"]
+	path = VoltEngine/lib/tinyobjloader
+	url = https://github.com/tinyobjloader/tinyobjloader.git
