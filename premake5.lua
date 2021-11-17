@@ -17,11 +17,14 @@ IncludeDir["glm"] = "VoltEngine/lib/glm"
 IncludeDir["spdlog"] = "VoltEngine/lib/spdlog/include"
 IncludeDir["stb_image"] = "VoltEngine/lib/stb_image"
 IncludeDir["imgui"] = "VoltEngine/lib/imgui"
+IncludeDir["tinyobjloader"] = "VoltEngine/lib/tinyobjloader"
 
 group "Dependencies"
 	include "VoltEngine/lib/GLFW"
 	include "VoltEngine/lib/glad"
 	include "VoltEngine/lib/imgui"
+	include "VoltEngine/lib/tinyobjloader"
+	
 
 group "Engine"
 
@@ -54,7 +57,8 @@ project "VoltEngine"
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.spdlog}",
         "%{IncludeDir.stb_image}",
-        "%{IncludeDir.imgui}"
+        "%{IncludeDir.imgui}",
+        "%{IncludeDir.tinyobjloader}"
 	}
 
 	links
@@ -62,6 +66,7 @@ project "VoltEngine"
 		"GLFW",
 		"Glad",
         "ImGui",
+        "tinyobjloader",
 		"opengl32.lib"
 	}
 	

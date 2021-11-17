@@ -89,6 +89,7 @@ void CEditorLayer::OnAttach()
     Volt::CTransformComponent* transformComponent = m_cameraEntity->GetComponent<Volt::CTransformComponent>();
     transformComponent->SetPosition({0.f, 15.f, 43.f});
     transformComponent->SetRotation(radians(glm::vec3 {-18.3f, 0.f, 0.f}));
+#if 0
 
     Volt::SharedPtr<Volt::IMesh> cubeMesh = CreateCube();
 
@@ -101,9 +102,16 @@ void CEditorLayer::OnAttach()
             Volt::CEntity* cubeEntity = m_scene->CreateEntity(name);
             cubeEntity->AddComponent<Volt::CMeshComponent>(cubeMesh);
             cubeEntity->AddComponent<Volt::CRotateScriptComponent>();
-            cubeEntity->GetComponent<Volt::CTransformComponent>()->SetPosition({static_cast<float>(x) * 1.75f, static_cast<float>(y) * 1.75f, 0.f});
+            cubeEntity->GetComponent<Volt::CTransformComponent>()->SetPosition({ static_cast<float>(x) * 1.75f, static_cast<float>(y) * 1.75f, 0.f });
         }
     }
+#endif // 0
+
+    Volt::SharedPtr<Volt::IMesh> cubeMesh = Volt::IMesh::Create("assets/models/catmark_torus_creases0.obj");
+
+    Volt::CEntity* cubeEntity = m_scene->CreateEntity("Cube");
+    cubeEntity->AddComponent<Volt::CMeshComponent>(cubeMesh);
+    cubeEntity->AddComponent<Volt::CRotateScriptComponent>();
 
     m_sceneHierarchyPanel = Volt::CreateSharedPtr<Volt::CSceneHierarchyPanel>(m_scene);
     m_statsPanel = Volt::CreateSharedPtr<Volt::CStatsPanel>();
