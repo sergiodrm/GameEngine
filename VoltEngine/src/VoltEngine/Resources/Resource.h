@@ -1,17 +1,15 @@
 #pragma once
 #include <string>
 
+#include "ResourceManager.h"
+
 
 namespace Volt
 {
-    class IResourceManager;
-
     class IResource
     {
+        friend IResourceManager;
     public:
-        IResource(IResourceManager* creator, const std::string& name, uint32_t id)
-            : m_creator(creator), m_name(name), m_id(id) {}
-
         virtual ~IResource()
         {
 #ifdef VOLT_DEBUG
@@ -19,15 +17,13 @@ namespace Volt
 #endif
         }
 
-        virtual void Load() = 0;
+        virtual void Load(const std::string& filepath) = 0;
         virtual void Unload() = 0;
 
-        IResourceManager* GetCreator() const { return m_creator; }
         const std::string& GetName() const { return m_name; }
         uint32_t GetId() const { return m_id; }
 
     private:
-        IResourceManager* m_creator;
         std::string m_name;
         uint32_t m_id;
     };

@@ -66,14 +66,13 @@ namespace Volt
         SharedPtr<IVertexArray> QuadVertexArray;
         SharedPtr<IVertexBuffer> QuadVertexBuffer;
         SharedPtr<IShader> QuadShader;
-        ITexture* WhiteTexture;
 
         uint32_t QuadIndexCount = 0;
         SQuadVertex* QuadVertexBase = nullptr;
         SQuadVertex* QuadVertexPtr = nullptr;
 
-        uint32_t TextureSlotIndex = 1;
-        std::array<const ITexture*, MaxTextureSlots> TextureSlots;
+        uint32_t TextureSlotIndex = 0;
+        std::array<SharedPtr<ITexture>, MaxTextureSlots> TextureSlots;
 
         SRenderer2DStats Stats;
     };
@@ -114,13 +113,6 @@ namespace Volt
         delete[] quadIndices;
 
         // Textures
-        RendererData->WhiteTexture = CTextureManager::Get().CreateResource<ITexture>("WhiteTexture");
-        RendererData->WhiteTexture->SetWidth(1);
-        RendererData->WhiteTexture->SetHeight(1);
-        RendererData->WhiteTexture->SetLoadType(ETextureLoadType::Procedural);
-        RendererData->WhiteTexture->Load();
-        uint32_t whiteTextureData = 0xffffffff;
-        RendererData->WhiteTexture->SetData(&whiteTextureData, sizeof(whiteTextureData));
 
         int32_t samplers[SRenderer2DData::MaxTextureSlots];
         for (int32_t i = 0; i < static_cast<int32_t>(SRenderer2DData::MaxTextureSlots); ++i)
@@ -131,8 +123,6 @@ namespace Volt
         RendererData->QuadShader = IShader::Create("assets/shaders/QuadTexture.glsl");
         RendererData->QuadShader->Bind();
         RendererData->QuadShader->SetIntArray("u_Texture", samplers, SRenderer2DData::MaxTextureSlots);
-
-        RendererData->TextureSlots[0] = RendererData->WhiteTexture;
     }
 
     void CRenderer2D::Shutdown()
@@ -201,12 +191,12 @@ namespace Volt
         DrawQuad(transform, color);
     }
 
-    void CRenderer2D::DrawTexture(const glm::vec2& position, const glm::vec3& rotation, const glm::vec3& scale, const ITexture* texture, const glm::vec4& color, float tilingFactor)
+    void CRenderer2D::DrawTexture(const glm::vec2& position, const glm::vec3& rotation, const glm::vec3& scale, const SharedPtr<ITexture>& texture, const glm::vec4& color, float tilingFactor)
     {
         DrawTexture({position.x, position.y, 0.f}, rotation, scale, texture, color, tilingFactor);
     }
 
-    void CRenderer2D::DrawTexture(const glm::vec3& position, const glm::vec3& rotation, const glm::vec3& scale, const ITexture* texture, const glm::vec4& color, float tilingFactor)
+    void CRenderer2D::DrawTexture(const glm::vec3& position, const glm::vec3& rotation, const glm::vec3& scale, const SharedPtr<ITexture>& texture, const glm::vec4& color, float tilingFactor)
     {
         const glm::mat4 transform = translate(glm::mat4(1.f), position)
             * toMat4(glm::quat({rotation.x, rotation.y, rotation.z}))
@@ -232,7 +222,7 @@ namespace Volt
         DrawQuad(transform, nullptr, color);
     }
 
-    void CRenderer2D::DrawQuad(const glm::mat4& transform, const ITexture* texture, const glm::vec4& color, const glm::vec2* uv, float tilingFactor)
+    void CRenderer2D::DrawQuad(const glm::mat4& transform, const SharedPtr<ITexture>& texture, const glm::vec4& color, const glm::vec2* uv, float tilingFactor)
     {
         UpdateBatch();
 

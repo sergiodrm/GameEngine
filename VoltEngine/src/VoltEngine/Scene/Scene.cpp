@@ -94,7 +94,7 @@ namespace Volt
                     const CSpriteRenderComponent* entitySpriteRenderComponent = entity->GetComponent<CSpriteRenderComponent>();
                     if (entityTransform && entitySpriteRenderComponent)
                     {
-                        const ITexture* texture = entitySpriteRenderComponent->GetTexture();
+                        const SharedPtr<ITexture>& texture = entitySpriteRenderComponent->GetTexture();
                         if (texture)
                         {
                             CRenderer2D::DrawTexture(entityTransform->GetPosition(),

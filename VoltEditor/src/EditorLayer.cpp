@@ -107,7 +107,7 @@ void CEditorLayer::OnAttach()
     }
 #endif // 0
 
-    Volt::SharedPtr<Volt::IMesh> cubeMesh = Volt::IMesh::Create("assets/models/catmark_torus_creases0.obj");
+    Volt::SharedPtr<Volt::IMesh> cubeMesh = Volt::IMesh::Create("assets/models/skull/12140_Skull_v3_L2.obj");
 
     Volt::CEntity* cubeEntity = m_scene->CreateEntity("Cube");
     cubeEntity->AddComponent<Volt::CMeshComponent>(cubeMesh);

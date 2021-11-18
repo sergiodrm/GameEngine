@@ -4,33 +4,47 @@
 layout(location = 0) in vec3 a_Position;
 layout(location = 1) in vec4 a_Color;
 layout(location = 2) in vec2 a_TexCoords;
-layout(location = 3) in float a_TexIndex;
 
 uniform mat4 u_ViewProjection;
+uniform mat4 u_MVP;
 
 out vec4 v_Color;
 out vec2 v_TexCoords;
-out float v_TexIndex;
 
 void main()
 {
-    gl_Position = u_ViewProjection * vec4(a_Position, 1.f);
-    v_Color = a_Color;
+    gl_Position = u_MVP * vec4(a_Position, 1.f);
+    v_Color = vec4(a_Position, 1.f);
     v_TexCoords = a_TexCoords;
 }
 
 #type fragment
 #version 460 core
 
+struct SMaterial
+{
+    vec4 Ambient;
+    vec4 Diffuse;
+    vec4 Specular;
+};
+
 layout (location = 0) out vec4 color;
 
 in vec4 v_Color;
 in vec2 v_TexCoords;
-in float v_TexIndex;
 
-uniform sampler2D u_Textures[32];
+uniform int u_UseTexture;
+uniform sampler2D u_Texture;
+uniform SMaterial u_Material;
 
 void main()
 {
-    color = v_Color; //texture(u_Textures[int(v_TexIndex)], v_TexCoords) * v_Color;
+    if (u_UseTexture == 1)
+    {
+        color = texture(u_Texture, v_TexCoords);
+    }
+    else
+    {
+        color = v_Color;
+    }
 }

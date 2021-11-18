@@ -8,7 +8,6 @@ namespace Volt
     class COpenGLTexture2D : public ITexture
     {
     public:
-        COpenGLTexture2D(IResourceManager* creator, const std::string& name, uint32_t id);
         virtual ~COpenGLTexture2D() override;
 
         /** Begin ITexture interface */
@@ -28,7 +27,7 @@ namespace Volt
         /** End ITexture interface */
 
         /** Begin IResource interface */
-        virtual void Load() override;
+        virtual void Load(const std::string& filepath) override;
         virtual void Unload() override;
         /** End IResource interface */
 
@@ -37,10 +36,10 @@ namespace Volt
         void LoadProceduralTexture();
 
     private:
-        uint32_t m_rendererID;
-        uint32_t m_width;
-        uint32_t m_height;
-        uint32_t m_internalFormat;
-        uint32_t m_dataFormat;
+        uint32_t m_rendererID {0};
+        uint32_t m_width {0};
+        uint32_t m_height {0};
+        uint32_t m_internalFormat {0};
+        uint32_t m_dataFormat {0};
     };
 }

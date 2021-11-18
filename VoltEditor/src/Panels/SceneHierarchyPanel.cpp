@@ -311,7 +311,7 @@ namespace Volt
 
             ImGui::Text("Texture");
             ImGui::NextColumn();
-            const ITexture* texture = component.GetTexture();
+            const SharedPtr<ITexture>& texture = component.GetTexture();
             std::string newTextureFilePath;
             if (texture)
             {
@@ -335,11 +335,9 @@ namespace Volt
 
             if (!newTextureFilePath.empty())
             {
-                ITexture* newTexture = CTextureManager::Get().CreateResource<ITexture>(newTextureFilePath);
+                const SharedPtr<ITexture> newTexture = CTextureManager::Get().Load(newTextureFilePath);
                 if (newTexture)
                 {
-                    newTexture->SetLoadType(ETextureLoadType::File);
-                    newTexture->Load();
                     component.SetTexture(newTexture);
                 }
             }

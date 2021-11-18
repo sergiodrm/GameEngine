@@ -51,7 +51,6 @@ namespace Volt
                 * glm::vec4(vertices[i].Position.x, vertices[i].Position.y, vertices[i].Position.z, 1.f);
             vertexDataPtr[i].Color = vertices[i].Color;
             vertexDataPtr[i].TexCoords = vertices[i].TexCoords;
-            vertexDataPtr[i].TexIndex = batchConfig.TextureIndex;
         }
 
         // Store indices

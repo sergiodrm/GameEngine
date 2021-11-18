@@ -5,9 +5,6 @@
 
 namespace Volt
 {
-    COpenGLTexture2D::COpenGLTexture2D(IResourceManager* creator, const std::string& name, uint32_t id)
-        : ITexture(creator, name, id) { }
-
     COpenGLTexture2D::~COpenGLTexture2D()
     {
         Unload();
@@ -35,15 +32,9 @@ namespace Volt
         return m_rendererID == other.GetRendererID();
     }
 
-    void COpenGLTexture2D::Load()
+    void COpenGLTexture2D::Load(const std::string& filepath)
     {
-        switch (GetLoadType())
-        {
-            case ETextureLoadType::File: LoadFromFile();
-                break;
-            case ETextureLoadType::Procedural: LoadProceduralTexture();
-                break;
-        }
+        LoadFromFile();
     }
 
     void COpenGLTexture2D::Unload()

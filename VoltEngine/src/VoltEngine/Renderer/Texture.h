@@ -13,10 +13,7 @@ namespace Volt
     class ITexture : public IResource
     {
     public:
-        static SharedPtr<ITexture> Create(IResourceManager* creator, const std::string& name, uint32_t id);
-
-        ITexture(IResourceManager* creator, const std::string& name, uint32_t id)
-            : IResource(creator, name, id), m_loadType(ETextureLoadType::File) {}
+        static SharedPtr<ITexture> Create();
 
         virtual ~ITexture() = default;
 
@@ -33,11 +30,5 @@ namespace Volt
         virtual void SetData(void* data, uint32_t size) = 0;
 
         virtual bool operator==(const ITexture& other) const = 0;
-
-        ETextureLoadType GetLoadType() const { return m_loadType; }
-        void SetLoadType(ETextureLoadType type) { m_loadType = type; }
-
-    protected:
-        ETextureLoadType m_loadType;
     };
 }

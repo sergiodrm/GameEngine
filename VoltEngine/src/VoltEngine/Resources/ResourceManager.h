@@ -5,35 +5,61 @@ namespace Volt
 {
     class IResource;
 
+    template <typename T>
     class IResourceManager
     {
+        using ResourcePtr = SharedPtr<T>;
     public:
-        IResourceManager() = default;
-        virtual ~IResourceManager();
-
-        template <typename T>
-        T* CreateResource(const std::string& filepath)
+        ResourcePtr Load(const std::string& filepath)
         {
-            return static_cast<T*>(CreateResource(filepath).get());
+            ResourcePtr resource = Find(filepath);
+            if (!resource)
+            {
+                resource = CreateResource();
+                resource->m_name = filepath;
+                resource->m_id = m_currentId;
+                resource->Load(filepath);
+                m_resources[m_currentId] = resource;
+                m_resourcesByName[filepath] = m_currentId;
+                NextId();
+            }
+            return resource;
         }
 
-        SharedPtr<IResource> CreateResource(const std::string& name);
-        void DestroyResource(const SharedPtr<IResource>& resource);
-        void DestroyResource(const std::string& name);
-        void DestroyResource(uint32_t id);
+        ResourcePtr Find(const std::string& filepath)
+        {
+            return m_resourcesByName.count(filepath) > 0 ? Find(filepath) : nullptr;
+        }
 
-        SharedPtr<IResource> GetResourceByName(const std::string& name) const;
-        SharedPtr<IResource> GetResource(uint32_t resourceID) const;
+        ResourcePtr Find(uint32_t id)
+        {
+            return m_resources.count(id) > 0 ? m_resources[id] : nullptr;
+        }
+
+        void UnloadResource(const ResourcePtr& resource)
+        {
+            UnloadResource(resource->m_name);
+        }
+
+        void UnloadResource(const std::string& filepath)
+        {
+            if (m_resourcesByName.count(filepath) > 0)
+            {
+                m_resources[m_resourcesByName[filepath]]->Unload();
+                m_resources.erase(m_resourcesByName[filepath]);
+                m_resourcesByName.erase(filepath);
+            }
+        }
 
     protected:
-        virtual SharedPtr<IResource> CreateResourceImplementation(uint32_t resourceId, const std::string& filepath) = 0;
+        virtual ResourcePtr CreateResource() = 0;
 
     private:
-        void NextId();
+        void NextId() { ++m_currentId; }
 
     protected:
-        std::unordered_map<uint32_t, SharedPtr<IResource>> m_resources;
-        std::unordered_map<std::string, SharedPtr<IResource>> m_resourcesByName;
+        std::unordered_map<uint32_t, SharedPtr<T>> m_resources;
+        std::unordered_map<std::string, uint32_t> m_resourcesByName;
     private:
         uint32_t m_currentId {0};
     };
