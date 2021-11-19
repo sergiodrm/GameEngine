@@ -17,7 +17,7 @@ namespace Volt
     {
         GLFWwindow* window = static_cast<GLFWwindow*>(CApplication::Get().GetWindow()->GetNativeWindow());
         const int32_t state = glfwGetMouseButton(window, button);
-        return state == GLFW_PRESS || state == GLFW_REPEAT;
+        return state == GLFW_PRESS;
     }
 
     float IInput::GetMouseX()

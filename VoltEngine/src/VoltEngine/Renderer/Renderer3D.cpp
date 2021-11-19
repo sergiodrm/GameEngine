@@ -66,9 +66,18 @@ namespace Volt
 
     void CRenderer3D::BeginScene(const CCamera& camera, const glm::mat4& transform)
     {
-        Stats.Reset();
+        BeginScene(camera.GetProjection(), inverse(transform));
+    }
 
-        BatchData->ViewProjectionMatrix = camera.GetProjection() * inverse(transform);
+    void CRenderer3D::BeginScene(const glm::mat4& projection, const glm::mat4& view)
+    {
+        BeginScene(projection * view);
+    }
+
+    void CRenderer3D::BeginScene(const glm::mat4& viewProjection)
+    {
+        Stats.Reset();
+        BatchData->ViewProjectionMatrix = viewProjection;
         BatchData->Shader->Bind();
         BatchData->Shader->SetMat4("u_ViewProjection", BatchData->ViewProjectionMatrix);
     }

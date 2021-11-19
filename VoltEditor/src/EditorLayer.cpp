@@ -1,11 +1,15 @@
 #include "EditorLayer.h"
 
 #include "imgui.h"
+#include "glm/detail/type_quat.hpp"
+#include "glm/gtx/quaternion.hpp"
 #include "Panels/SceneHierarchyPanel.h"
 #include "Panels/StatsPanel.h"
 #include "VoltEngine/Renderer/TextureManager.h"
 #include "VoltEngine/Renderer/VertexData.h"
 #include "VoltEngine/Scene/Components/NativeScriptComponent.h"
+
+#include "VoltEngine/Renderer/EditorCamera.h"
 
 #define TEST_TEXTURE_PATH "assets/textures/sample.png"
 
@@ -116,6 +120,8 @@ void CEditorLayer::OnAttach()
     m_sceneHierarchyPanel = Volt::CreateSharedPtr<Volt::CSceneHierarchyPanel>(m_scene);
     m_statsPanel = Volt::CreateSharedPtr<Volt::CStatsPanel>();
 
+    m_editorCamera = Volt::CreateSharedPtr<Volt::CEditorCamera>(45.f, 1.3337f, 0.1f, 10000.f);
+
     Volt::CRenderCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1.f});
 }
 
@@ -130,13 +136,15 @@ void CEditorLayer::OnUpdate(float elapsedSeconds)
     {
         m_framebuffer->Resize(m_viewportSize);
         m_scene->OnViewportResize(spec.Width, spec.Height);
+        m_editorCamera->SetViewportSize(static_cast<uint32_t>(m_viewportSize.x), static_cast<uint32_t>(m_viewportSize.y));
     }
     {
         //PROFILE_SCOPE(Render);
-
+        m_editorCamera->OnUpdate(elapsedSeconds);
         m_framebuffer->Bind();
         Volt::CRenderCommand::Clear();
-        m_scene->OnUpdate(elapsedSeconds);
+        /*m_scene->OnUpdateRuntime(elapsedSeconds);*/
+        m_scene->OnUpdateEditor(m_editorCamera);
         m_framebuffer->Unbind();
     }
 }
@@ -159,5 +167,18 @@ void CEditorLayer::OnUIRender()
         ImGui::Image(reinterpret_cast<void*>(texID), viewportPanelSize, {0.f, 1.f}, {1.f, 0.f});
         ImGui::End();
         ImGui::PopStyleVar();
+
+        //ImGui::Begin("Editor camera");
+        //const glm::vec3 position = m_editorCamera->CalculatePosition();
+        //const glm::quat quatOrientation = m_editorCamera->GetOrientation();
+        //ImGui::Text("Position: %.2f, %.2f, %.2f", position.x, position.y, position.z);
+        //ImGui::Text("Orientation: %.2f, %.2f, %.2f, %.2f", quatOrientation.x, quatOrientation.y, quatOrientation.z, quatOrientation.w);
+        //ImGui::End();
     }
+}
+
+bool CEditorLayer::OnEvent(Volt::CEvent& e)
+{
+    m_editorCamera->OnEvent(e);
+    return false;
 }

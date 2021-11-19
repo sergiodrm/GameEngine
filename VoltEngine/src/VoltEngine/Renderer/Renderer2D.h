@@ -24,7 +24,7 @@ namespace Volt
         static void Init();
         static void Shutdown();
 
-        static void BeginScene(const class CCamera& camera, const glm::mat4& transform);
+        static void BeginScene(const glm::mat4& projection, const glm::mat4& view);
         static void EndScene();
         static const SRenderer2DStats& GetStats();
 

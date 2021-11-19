@@ -3,8 +3,11 @@
 #include "glm/vec2.hpp"
 #include "VoltEngine/Core/Core.h"
 
+#include <glm/glm.hpp>
+
 namespace Volt
 {
+    class CEditorCamera;
     class CEntity;
 
     class CScene
@@ -13,7 +16,8 @@ namespace Volt
         CEntity* CreateEntity(const std::string& name = "EmptyEntity");
         void RemoveEntity(CEntity& entity);
 
-        void OnUpdate(float elapsedSeconds);
+        void OnUpdateRuntime(float elapsedSeconds);
+        void OnUpdateEditor(const SharedPtr<CEditorCamera>& editorCamera);
         void OnViewportResize(uint32_t width, uint32_t height);
 
         CEntity* GetPrimaryCamera() const;
@@ -27,7 +31,7 @@ namespace Volt
 
     protected:
         void RunEntitiesScripts(float elapsedSeconds);
-        void RenderScene();
+        void RenderScene(const glm::mat4& projection, const glm::mat4& view);
 
     private:
         CEntitiesRegistry m_registry;

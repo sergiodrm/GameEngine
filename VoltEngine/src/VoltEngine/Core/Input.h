@@ -1,6 +1,9 @@
 #pragma once
 #include <cstdint>
 
+#include "KeyCodes.h"
+#include "MouseCodes.h"
+
 namespace Volt
 {
     class IInput

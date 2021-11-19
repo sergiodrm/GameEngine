@@ -10,6 +10,16 @@ namespace Volt
         RecalculateProjection();
     }
 
+    CCamera::CCamera(float fov, float aspectRatio, float nearClip, float farClip)
+        : m_projectionType(EProjectionType::Perspective), m_aspectRatio(aspectRatio), m_perspectiveFOV(fov), m_perspectiveNearClip(nearClip),
+          m_perspectiveFarClip(farClip)
+    {
+        RecalculateProjection();
+    }
+
+    CCamera::CCamera(const glm::mat4& projection)
+        : m_projection(projection) {}
+
     void CCamera::SetProjectionType(EProjectionType type)
     {
         m_projectionType = type;

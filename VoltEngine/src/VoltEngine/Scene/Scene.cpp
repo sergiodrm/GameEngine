@@ -7,6 +7,7 @@
 #include "Components/SpriteRenderComponent.h"
 #include "Components/TagComponent.h"
 #include "Components/TransformComponent.h"
+#include "VoltEngine/Renderer/EditorCamera.h"
 #include "VoltEngine/Renderer/Renderer.h"
 #include "VoltEngine/Renderer/Renderer2D.h"
 #include "VoltEngine/Renderer/Renderer3D.h"
@@ -37,10 +38,21 @@ namespace Volt
         return nullptr;
     }
 
-    void CScene::OnUpdate(float elapsedSeconds)
+    void CScene::OnUpdateRuntime(float elapsedSeconds)
     {
         RunEntitiesScripts(elapsedSeconds);
-        RenderScene();
+        CEntity* cameraEntity = GetPrimaryCamera();
+        if (cameraEntity)
+        {
+            const CCameraComponent* cameraComponent = cameraEntity->GetComponent<CCameraComponent>();
+            const CTransformComponent* transformComponent = cameraEntity->GetComponent<CTransformComponent>();
+            RenderScene(cameraComponent->GetCamera().GetProjection(), inverse(transformComponent->GetTransform()));
+        }
+    }
+
+    void CScene::OnUpdateEditor(const SharedPtr<CEditorCamera>& editorCamera)
+    {
+        RenderScene(editorCamera->GetProjection(), editorCamera->GetViewMatrix());
     }
 
     void CScene::OnViewportResize(uint32_t width, uint32_t height)
@@ -72,65 +84,56 @@ namespace Volt
         }
     }
 
-    void CScene::RenderScene()
+    void CScene::RenderScene(const glm::mat4& projection, const glm::mat4& view)
     {
-        // Get scene camera
-        const CEntity* cameraEntity = GetPrimaryCamera();
-        if (cameraEntity)
+        // -------------------------------------- Render 2D --------------------------------------
         {
-            const CCameraComponent* cameraComponent = cameraEntity->GetComponent<CCameraComponent>();
-            const CTransformComponent* transformComponent = cameraEntity->GetComponent<CTransformComponent>();
-            const glm::mat4 viewMatrix = transformComponent->GetTransform();
+            CRenderer2D::BeginScene(projection, view);
 
-            // -------------------------------------- Render 2D --------------------------------------
+            // Render entities
+            for (CEntitiesRegistry::SIterator it(m_registry); it; ++it)
             {
-                CRenderer2D::BeginScene(cameraComponent->GetCamera(), viewMatrix);
-
-                // Render entities
-                for (CEntitiesRegistry::SIterator it(m_registry); it; ++it)
+                CEntity* entity = *it;
+                const CTransformComponent* entityTransform = entity->GetComponent<CTransformComponent>();
+                const CSpriteRenderComponent* entitySpriteRenderComponent = entity->GetComponent<CSpriteRenderComponent>();
+                if (entityTransform && entitySpriteRenderComponent)
                 {
-                    CEntity* entity = *it;
-                    const CTransformComponent* entityTransform = entity->GetComponent<CTransformComponent>();
-                    const CSpriteRenderComponent* entitySpriteRenderComponent = entity->GetComponent<CSpriteRenderComponent>();
-                    if (entityTransform && entitySpriteRenderComponent)
+                    const SharedPtr<ITexture>& texture = entitySpriteRenderComponent->GetTexture();
+                    if (texture)
                     {
-                        const SharedPtr<ITexture>& texture = entitySpriteRenderComponent->GetTexture();
-                        if (texture)
-                        {
-                            CRenderer2D::DrawTexture(entityTransform->GetPosition(),
-                                                     entityTransform->GetRotation(),
-                                                     entityTransform->GetScale(),
-                                                     texture,
-                                                     entitySpriteRenderComponent->GetColor());
-                        }
-                        else
-                        {
-                            CRenderer2D::DrawQuad(entityTransform->GetTransform(), entitySpriteRenderComponent->GetColor());
-                        }
+                        CRenderer2D::DrawTexture(entityTransform->GetPosition(),
+                                                 entityTransform->GetRotation(),
+                                                 entityTransform->GetScale(),
+                                                 texture,
+                                                 entitySpriteRenderComponent->GetColor());
+                    }
+                    else
+                    {
+                        CRenderer2D::DrawQuad(entityTransform->GetTransform(), entitySpriteRenderComponent->GetColor());
                     }
                 }
-
-                CRenderer2D::EndScene();
             }
-            // -------------------------------------- Render 3D --------------------------------------
+
+            CRenderer2D::EndScene();
+        }
+        // -------------------------------------- Render 3D --------------------------------------
+        {
+            CRenderer3D::BeginScene(projection, view);
+            for (CEntitiesRegistry::SIterator it(m_registry); it; ++it)
             {
-                CRenderer3D::BeginScene(cameraComponent->GetCamera(), viewMatrix);
-                for (CEntitiesRegistry::SIterator it(m_registry); it; ++it)
+                CEntity* entity = *it;
+                const CTransformComponent* entityTransform = entity->GetComponent<CTransformComponent>();
+                const CMeshComponent* entityMeshComponent = entity->GetComponent<CMeshComponent>();
+                if (entityTransform && entityMeshComponent)
                 {
-                    CEntity* entity = *it;
-                    const CTransformComponent* entityTransform = entity->GetComponent<CTransformComponent>();
-                    const CMeshComponent* entityMeshComponent = entity->GetComponent<CMeshComponent>();
-                    if (entityTransform && entityMeshComponent)
+                    const SharedPtr<IMesh>& mesh = entityMeshComponent->GetMesh();
+                    if (mesh)
                     {
-                        const SharedPtr<IMesh>& mesh = entityMeshComponent->GetMesh();
-                        if (mesh)
-                        {
-                            CRenderer3D::DrawMesh(entityTransform->GetTransform(), mesh);
-                        }
+                        CRenderer3D::DrawMesh(entityTransform->GetTransform(), mesh);
                     }
                 }
-                CRenderer3D::EndScene();
             }
+            CRenderer3D::EndScene();
         }
     }
 }

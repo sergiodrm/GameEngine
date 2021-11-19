@@ -16,6 +16,8 @@ namespace Volt
 
     public:
         CCamera();
+        CCamera(float fov, float aspectRatio, float nearClip, float farClip);
+        CCamera(const glm::mat4& projection);
         virtual ~CCamera() = default;
 
         EProjectionType GetProjectionType() const { return m_projectionType; }

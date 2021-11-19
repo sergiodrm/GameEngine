@@ -33,5 +33,6 @@
 #include "Events/KeyEvent.h"
 
 #include "Utils/PlatformUtils.h"
+#include "Utils/Math.h"
 
 #include "glm/gtx/transform.hpp"

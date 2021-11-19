@@ -31,6 +31,8 @@ namespace Volt
         static void Shutdown();
 
         static void BeginScene(const CCamera& camera, const glm::mat4& transform);
+        static void BeginScene(const glm::mat4& projection, const glm::mat4& view);
+        static void BeginScene(const glm::mat4& viewProjection);
         static void EndScene();
 
         static void DrawMesh(const glm::mat4& transform, const SharedPtr<IMesh>& mesh);

@@ -131,9 +131,9 @@ namespace Volt
         delete RendererData;
     }
 
-    void CRenderer2D::BeginScene(const CCamera& camera, const glm::mat4& transform)
+    void CRenderer2D::BeginScene(const glm::mat4& projection, const glm::mat4& view)
     {
-        const glm::mat4 viewProjection = camera.GetProjection() * inverse(transform);
+        const glm::mat4 viewProjection = projection * view;
 
         RendererData->QuadShader->Bind();
         RendererData->QuadShader->SetMat4("u_ViewProjection", viewProjection);

@@ -52,7 +52,7 @@ void CGameLayer::OnUpdate(float elapsedSeconds)
 
         m_framebuffer->Bind();
         Volt::CRenderCommand::Clear();
-        m_scene->OnUpdate(elapsedSeconds);
+        m_scene->OnUpdateRuntime(elapsedSeconds);
         m_framebuffer->Unbind();
     }
 }
