@@ -18,6 +18,7 @@ IncludeDir["spdlog"] = "VoltEngine/lib/spdlog/include"
 IncludeDir["stb_image"] = "VoltEngine/lib/stb_image"
 IncludeDir["imgui"] = "VoltEngine/lib/imgui"
 IncludeDir["tinyobjloader"] = "VoltEngine/lib/tinyobjloader"
+IncludeDir["ImGuizmo"] = "VoltEngine/lib/ImGuizmo"
 
 group "Dependencies"
 	include "VoltEngine/lib/GLFW"
@@ -40,12 +41,14 @@ project "VoltEngine"
 
     files
 	{
-		"VoltEngine/src/**.h",
-		"VoltEngine/src/**.cpp",
-		"VoltEngine/lib/glm/glm/**.hpp",
-		"VoltEngine/lib/glm/glm/**.inl",
-        "VoltEngine/lib/stb_image/**.h",
-        "VoltEngine/lib/stb_image/**.cpp"
+		"%{prj.name}/src/**.h",
+		"%{prj.name}/src/**.cpp",
+		"%{prj.name}/lib/glm/glm/**.hpp",
+		"%{prj.name}/lib/glm/glm/**.inl",
+        "%{prj.name}/lib/stb_image/**.h",
+        "%{prj.name}/lib/stb_image/**.cpp",
+		"%{prj.name}/lib/ImGuizmo/ImGuizmo.h",
+		"%{prj.name}/lib/ImGuizmo/ImGuizmo.cpp",
 	}
 
 	includedirs
@@ -58,7 +61,8 @@ project "VoltEngine"
 		"%{IncludeDir.spdlog}",
         "%{IncludeDir.stb_image}",
         "%{IncludeDir.imgui}",
-        "%{IncludeDir.tinyobjloader}"
+        "%{IncludeDir.tinyobjloader}",
+        "%{IncludeDir.ImGuizmo}",
 	}
 
 	links
@@ -115,7 +119,8 @@ project "VoltEditor"
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.spdlog}",
         "%{IncludeDir.stb_image}",
-        "%{IncludeDir.imgui}"
+        "%{IncludeDir.imgui}",
+        "%{IncludeDir.ImGuizmo}",
 	}
 
 	links

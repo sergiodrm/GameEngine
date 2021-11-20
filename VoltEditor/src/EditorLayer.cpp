@@ -1,5 +1,6 @@
 #include "EditorLayer.h"
 
+#include "Gizmos.h"
 #include "imgui.h"
 #include "glm/detail/type_quat.hpp"
 #include "glm/gtx/quaternion.hpp"
@@ -121,6 +122,7 @@ void CEditorLayer::OnAttach()
     m_statsPanel = Volt::CreateSharedPtr<Volt::CStatsPanel>();
 
     m_editorCamera = Volt::CreateSharedPtr<Volt::CEditorCamera>(45.f, 1.3337f, 0.1f, 10000.f);
+    m_entityGizmo = Volt::CreateSharedPtr<Volt::CGizmo>(m_scene.get());
 
     Volt::CRenderCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1.f});
 }
@@ -136,7 +138,7 @@ void CEditorLayer::OnUpdate(float elapsedSeconds)
     {
         m_framebuffer->Resize(m_viewportSize);
         m_scene->OnViewportResize(spec.Width, spec.Height);
-        m_editorCamera->SetViewportSize(static_cast<uint32_t>(m_viewportSize.x), static_cast<uint32_t>(m_viewportSize.y));
+        m_editorCamera->SetViewportSize(m_viewportSize.x, m_viewportSize.y);
     }
     {
         //PROFILE_SCOPE(Render);
@@ -165,6 +167,10 @@ void CEditorLayer::OnUIRender()
 
         const uint32_t texID = m_framebuffer->GetColorAttachmentRendererID();
         ImGui::Image(reinterpret_cast<void*>(texID), viewportPanelSize, {0.f, 1.f}, {1.f, 0.f});
+
+        m_entityGizmo->SetEntityContext(m_sceneHierarchyPanel->GetSelection());
+        m_entityGizmo->OnUIRender(m_editorCamera->GetProjection(), m_editorCamera->GetViewMatrix());
+
         ImGui::End();
         ImGui::PopStyleVar();
 

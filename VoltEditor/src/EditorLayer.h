@@ -3,6 +3,7 @@
 
 namespace Volt
 {
+    class CGizmo;
     class CStatsPanel;
     class CSceneHierarchyPanel;
 }
@@ -19,6 +20,7 @@ private:
     Volt::SharedPtr<Volt::CScene> m_scene;
     Volt::SharedPtr<Volt::CSceneHierarchyPanel> m_sceneHierarchyPanel;
     Volt::SharedPtr<Volt::CStatsPanel> m_statsPanel;
+    Volt::SharedPtr<Volt::CGizmo> m_entityGizmo;
 
     Volt::CEntity* m_cameraEntity {nullptr};
     Volt::CEntity* m_squareEntity {nullptr};

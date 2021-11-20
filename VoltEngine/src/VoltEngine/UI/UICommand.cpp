@@ -4,6 +4,7 @@
 #include <examples/imgui_impl_opengl3.h>
 
 #include "imgui.h"
+#include "ImGuizmo.h"
 #include "GLFW/glfw3.h"
 #include "VoltEngine/Core/Application.h"
 #include "VoltEngine/Core/Log.h"
@@ -46,6 +47,7 @@ namespace Volt
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
+        ImGuizmo::BeginFrame();
 
         // Set dockspace
         static ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;

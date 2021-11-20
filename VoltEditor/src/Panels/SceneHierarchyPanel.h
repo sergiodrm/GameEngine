@@ -11,6 +11,8 @@ namespace Volt
 
         void OnUIRender();
 
+        CEntity* GetSelection() const { return m_selection; }
+
     protected:
         void DrawEntity(CEntity& entity);
         void DrawComponents(CEntity& entity);
