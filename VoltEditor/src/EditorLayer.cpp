@@ -75,7 +75,7 @@ static Volt::SharedPtr<Volt::IMesh> CreateCube()
                 20, 21, 22,
                 20, 22, 23
             };
-        mesh = Volt::IMesh::Create(vertices, indices);
+        //mesh = Volt::IMesh::Create(vertices, indices);
     }
     return mesh;
 }
@@ -112,7 +112,7 @@ void CEditorLayer::OnAttach()
     }
 #endif // 0
 
-    Volt::SharedPtr<Volt::IMesh> cubeMesh = Volt::IMesh::Create("assets/models/skull/12140_Skull_v3_L2.obj");
+    Volt::SharedPtr<Volt::IMesh> cubeMesh = Volt::CMeshManager::Get().Load("assets/models/skull/12140_Skull_v3_L2.obj");
 
     Volt::CEntity* cubeEntity = m_scene->CreateEntity("Skull");
     cubeEntity->AddComponent<Volt::CMeshComponent>(cubeMesh);

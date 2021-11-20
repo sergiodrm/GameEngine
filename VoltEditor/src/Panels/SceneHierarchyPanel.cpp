@@ -344,9 +344,24 @@ namespace Volt
 
             ImGui::Columns(1);
         });
-        DetailPanelUtils::DrawComponentHeader<CNativeScriptComponent>("Native Script Component", entity, [](CNativeScriptComponent& component)
+        DetailPanelUtils::DrawComponentHeader<CMeshComponent>("Mesh component", entity, [](CMeshComponent& component)
         {
-            ImGui::Text("WIP");
+            const std::string meshName = component.GetMesh()->GetName();
+            const float lineHeight = GImGui->Font->FontSize + GImGui->Style.FramePadding.y + 2.f;
+
+            ImGui::Columns(2);
+            ImGui::Text("Mesh");
+            ImGui::NextColumn();
+            ImGui::Text("%s", meshName.c_str());
+            ImGui::SameLine();
+            if (ImGui::Button("...", {lineHeight, lineHeight}))
+            {
+                const std::string newMeshPath = CFileDialogs::LoadFile("Mesh (*.obj)\0");
+                const SharedPtr<IMesh> newMesh = CMeshManager::Get().Load(newMeshPath);
+                component.SetMesh(newMesh);
+            }
+
+            ImGui::Columns(1);
         });
     }
 }
