@@ -2,6 +2,8 @@
 
 #include <glm/glm.hpp>
 
+#include "Buffer.h"
+
 namespace Volt
 {
     struct SVertexData

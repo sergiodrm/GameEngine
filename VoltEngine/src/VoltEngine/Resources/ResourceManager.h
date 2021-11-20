@@ -8,8 +8,11 @@ namespace Volt
     template <typename T>
     class IResourceManager
     {
-        using ResourcePtr = SharedPtr<T>;
     public:
+        using ResourcePtr = SharedPtr<T>;
+
+        virtual ~IResourceManager() = default;
+
         ResourcePtr Load(const std::string& filepath)
         {
             ResourcePtr resource = Find(filepath);

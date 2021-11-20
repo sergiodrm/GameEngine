@@ -15,9 +15,11 @@
 #include "Renderer/Buffer.h"
 #include "Renderer/Framebuffer.h"
 #include "Renderer/Texture.h"
+#include "Renderer/TextureManager.h"
 #include "Renderer/SubTexture.h"
 #include "Renderer/Camera.h"
 #include "Renderer/Mesh.h"
+#include "Renderer/MeshManager.h"
 
 #include "Scene/Entity.h"
 #include "Scene/Scene.h"

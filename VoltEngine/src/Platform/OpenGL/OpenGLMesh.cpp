@@ -10,7 +10,9 @@
 
 namespace Volt
 {
-    COpenGLMesh::COpenGLMesh(const std::string& filepath)
+    const SharedPtr<IVertexArray>& COpenGLMesh::GetVertexArray() const { return m_vertexArray; }
+
+    void COpenGLMesh::Load(const std::string& filepath)
     {
         tinyobj::attrib_t attrib;
         std::vector<tinyobj::shape_t> shapes;
@@ -18,7 +20,7 @@ namespace Volt
         std::string warn;
         std::string err;
 
-        const uint32_t baseDirEnd = filepath.find_last_of('/');
+        const uint32_t baseDirEnd = static_cast<uint32_t>(filepath.find_last_of('/'));
         const std::string baseDir = filepath.substr(0, baseDirEnd);
 
         if (!LoadObj(&attrib, &shapes, &materials, &warn, &err, filepath.c_str(), baseDir.c_str()))
@@ -84,20 +86,20 @@ namespace Volt
         CreateBuffers();
     }
 
-    COpenGLMesh::COpenGLMesh(const std::vector<SVertexData>& vertices, const std::vector<uint32_t>& indices)
-        : m_vertexData(vertices), m_indexData(indices)
+    void COpenGLMesh::Unload()
     {
-        CreateBuffers();
+        m_vertexArray.reset();
+        m_material.reset();
+        m_indexData.clear();
+        m_vertexData.clear();
     }
-
-    const SharedPtr<IVertexArray>& COpenGLMesh::GetVertexArray() const { return m_vertexArray; }
 
     void COpenGLMesh::CreateBuffers()
     {
         // Vertices
         const SVertexData* vertexDataPtr = m_vertexData.data();
         const float* verticesPtr = vertexDataPtr->GetData();
-        SharedPtr<IVertexBuffer> vertexBuffer = IVertexBuffer::Create(verticesPtr, m_vertexData.size() * sizeof(SVertexData));
+        SharedPtr<IVertexBuffer> vertexBuffer = IVertexBuffer::Create(verticesPtr, static_cast<uint32_t>(m_vertexData.size()) * sizeof(SVertexData));
         vertexBuffer->SetLayout(SVertexData::GetStaticBufferLayout());
 
         // Indices
