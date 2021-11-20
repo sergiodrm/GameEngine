@@ -114,15 +114,16 @@ void CEditorLayer::OnAttach()
 
     Volt::SharedPtr<Volt::IMesh> cubeMesh = Volt::IMesh::Create("assets/models/skull/12140_Skull_v3_L2.obj");
 
-    Volt::CEntity* cubeEntity = m_scene->CreateEntity("Cube");
+    Volt::CEntity* cubeEntity = m_scene->CreateEntity("Skull");
     cubeEntity->AddComponent<Volt::CMeshComponent>(cubeMesh);
     cubeEntity->AddComponent<Volt::CRotateScriptComponent>();
+    cubeEntity->GetComponent<Volt::CTransformComponent>()->SetRotation({-90.f, 0.f, 0.f});
 
     m_sceneHierarchyPanel = Volt::CreateSharedPtr<Volt::CSceneHierarchyPanel>(m_scene);
     m_statsPanel = Volt::CreateSharedPtr<Volt::CStatsPanel>();
 
     m_editorCamera = Volt::CreateSharedPtr<Volt::CEditorCamera>(45.f, 1.3337f, 0.1f, 10000.f);
-    m_entityGizmo = Volt::CreateSharedPtr<Volt::CGizmo>(m_scene.get());
+    m_gizmo = Volt::CreateSharedPtr<Volt::CGizmo>(m_scene.get());
 
     Volt::CRenderCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1.f});
 }
@@ -168,18 +169,13 @@ void CEditorLayer::OnUIRender()
         const uint32_t texID = m_framebuffer->GetColorAttachmentRendererID();
         ImGui::Image(reinterpret_cast<void*>(texID), viewportPanelSize, {0.f, 1.f}, {1.f, 0.f});
 
-        m_entityGizmo->SetEntityContext(m_sceneHierarchyPanel->GetSelection());
-        m_entityGizmo->OnUIRender(m_editorCamera->GetProjection(), m_editorCamera->GetViewMatrix());
+        //m_gizmo->DrawGridGizmo(glm::mat4(1.f), m_editorCamera->GetProjection(), m_editorCamera->GetViewMatrix());
+        m_gizmo->DrawEntityTransformGizmo(m_sceneHierarchyPanel->GetSelection(),
+                                          m_editorCamera->GetProjection(),
+                                          m_editorCamera->GetViewMatrix());
 
         ImGui::End();
         ImGui::PopStyleVar();
-
-        //ImGui::Begin("Editor camera");
-        //const glm::vec3 position = m_editorCamera->CalculatePosition();
-        //const glm::quat quatOrientation = m_editorCamera->GetOrientation();
-        //ImGui::Text("Position: %.2f, %.2f, %.2f", position.x, position.y, position.z);
-        //ImGui::Text("Orientation: %.2f, %.2f, %.2f, %.2f", quatOrientation.x, quatOrientation.y, quatOrientation.z, quatOrientation.w);
-        //ImGui::End();
     }
 }
 

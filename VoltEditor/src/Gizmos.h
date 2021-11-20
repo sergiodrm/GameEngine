@@ -12,11 +12,10 @@ namespace Volt
     public:
         CGizmo(CScene* sceneContext);
 
-        void SetEntityContext(CEntity* entity);
-        void OnUIRender(const glm::mat4& projection, const glm::mat4& view);
+        void DrawGridGizmo(const glm::mat4& transform, const glm::mat4& projection, const glm::mat4& view);
+        void DrawEntityTransformGizmo(CEntity* entity, const glm::mat4& projection, const glm::mat4& view);
     private:
         CScene* m_sceneContext;
-        CEntity* m_entityContext;
 
         int32_t m_gizmoOperationType {0};
     };

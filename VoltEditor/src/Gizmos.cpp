@@ -12,17 +12,26 @@
 namespace Volt
 {
     CGizmo::CGizmo(CScene* sceneContext)
-        : m_sceneContext(sceneContext), m_entityContext(nullptr), m_gizmoOperationType(ImGuizmo::OPERATION::TRANSLATE)
+        : m_sceneContext(sceneContext), m_gizmoOperationType(ImGuizmo::OPERATION::TRANSLATE)
     { }
 
-    void CGizmo::SetEntityContext(CEntity* entity)
+    void CGizmo::DrawGridGizmo(const glm::mat4& transform, const glm::mat4& projection, const glm::mat4& view)
     {
-        m_entityContext = entity;
+        ImGuizmo::SetOrthographic(false);
+        ImGuizmo::SetDrawlist();
+        const float windowWidth = static_cast<float>(ImGui::GetWindowWidth());
+        const float windowHeight = static_cast<float>(ImGui::GetWindowHeight());
+        ImGuizmo::SetRect(ImGui::GetWindowPos().x,
+                          ImGui::GetWindowPos().y,
+                          windowWidth,
+                          windowHeight);
+        ImGuizmo::DrawGrid(value_ptr(view), value_ptr(projection), value_ptr(transform), 100.f);
     }
 
-    void CGizmo::OnUIRender(const glm::mat4& projection, const glm::mat4& view)
+
+    void CGizmo::DrawEntityTransformGizmo(CEntity* entity, const glm::mat4& projection, const glm::mat4& view)
     {
-        if (m_entityContext)
+        if (entity)
         {
             if (IInput::IsKeyPressed(KeyCodes::W))
                 m_gizmoOperationType = ImGuizmo::OPERATION::TRANSLATE;
@@ -41,7 +50,7 @@ namespace Volt
                               windowWidth,
                               windowHeight);
 
-            CTransformComponent* transformComponent = m_entityContext->GetComponent<CTransformComponent>();
+            CTransformComponent* transformComponent = entity->GetComponent<CTransformComponent>();
             glm::mat4 transform = transformComponent->GetTransform();
 
             Manipulate(
