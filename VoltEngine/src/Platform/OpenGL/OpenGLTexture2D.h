@@ -27,7 +27,7 @@ namespace Volt
         /** End ITexture interface */
 
         /** Begin IResource interface */
-        virtual void Load(const std::string& filepath) override;
+        virtual void Load() override;
         virtual void Unload() override;
         /** End IResource interface */
 

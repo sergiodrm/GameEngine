@@ -13,18 +13,20 @@ namespace Volt
         virtual ~IResource()
         {
 #ifdef VOLT_DEBUG
-            VOLT_LOG(Trace, "Resource [{0}, {1}] destroyed.", m_id, m_name.c_str());
+            VOLT_LOG(Trace, "Resource [{0}, {1}] destroyed.", m_handle, m_name.c_str());
 #endif
         }
 
-        virtual void Load(const std::string& filepath) = 0;
+        virtual void Load() = 0;
         virtual void Unload() = 0;
 
         const std::string& GetName() const { return m_name; }
-        uint32_t GetId() const { return m_id; }
+        const std::string& GetFilepath() const { return m_filepath; }
+        uint32_t GetHandle() const { return m_handle; }
 
     private:
         std::string m_name;
-        uint32_t m_id;
+        std::string m_filepath;
+        uint32_t m_handle;
     };
 }

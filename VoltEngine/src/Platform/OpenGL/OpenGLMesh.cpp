@@ -12,8 +12,9 @@ namespace Volt
 {
     const SharedPtr<IVertexArray>& COpenGLMesh::GetVertexArray() const { return m_vertexArray; }
 
-    void COpenGLMesh::Load(const std::string& filepath)
+    void COpenGLMesh::Load()
     {
+        const std::string& filepath = GetFilepath();
         tinyobj::attrib_t attrib;
         std::vector<tinyobj::shape_t> shapes;
         std::vector<tinyobj::material_t> materials;

@@ -17,7 +17,7 @@ namespace Volt
         virtual uint32_t GetNumTriangles() const override { return static_cast<uint32_t>(m_indexData.size()) / 3; }
         virtual const SharedPtr<IMaterial>& GetMaterial() const override { return m_material; }
 
-        virtual void Load(const std::string& filepath) override;
+        virtual void Load() override;
         virtual void Unload() override;
 
     protected:

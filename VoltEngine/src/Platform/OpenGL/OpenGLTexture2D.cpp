@@ -32,7 +32,7 @@ namespace Volt
         return m_rendererID == other.GetRendererID();
     }
 
-    void COpenGLTexture2D::Load(const std::string& filepath)
+    void COpenGLTexture2D::Load()
     {
         LoadFromFile();
     }
@@ -48,7 +48,7 @@ namespace Volt
         int32_t height;
         int32_t channels;
         stbi_set_flip_vertically_on_load(1);
-        stbi_uc* data = stbi_load(GetName().c_str(), &width, &height, &channels, 0);
+        stbi_uc* data = stbi_load(GetFilepath().c_str(), &width, &height, &channels, 0);
         VOLT_ASSERT(data, "Couldn't load image from: {0}", GetName().c_str());
 
         m_width = static_cast<uint32_t>(width);

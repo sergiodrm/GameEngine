@@ -15,13 +15,23 @@ namespace Volt
 
         ResourcePtr Load(const std::string& filepath)
         {
+            const char folderToken = filepath.find('/') != std::string::npos ? '/' : '\\';
+            const size_t startNameIndex = filepath.find_last_of(folderToken);
+            const size_t endNameIndex = filepath.find_last_of('.');
+            const std::string name = filepath.substr(startNameIndex + 1, endNameIndex - (startNameIndex + 1));
+            return Load(name, filepath);
+        }
+
+        ResourcePtr Load(const std::string& name, const std::string& filepath)
+        {
             ResourcePtr resource = Find(filepath);
             if (!resource)
             {
                 resource = CreateResource();
-                resource->m_name = filepath;
-                resource->m_id = m_currentId;
-                resource->Load(filepath);
+                resource->m_name = name;
+                resource->m_filepath = filepath;
+                resource->m_handle = m_currentId;
+                resource->Load();
                 m_resources[m_currentId] = resource;
                 m_resourcesByName[filepath] = m_currentId;
                 NextId();
