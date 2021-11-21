@@ -356,7 +356,7 @@ namespace Volt
         });
         DetailPanelUtils::DrawComponentHeader<CMeshComponent>("Mesh component", entity, [](CMeshComponent& component)
         {
-            const std::string meshName = component.GetMesh()->GetName();
+            const std::string meshName = component.GetMesh() ? component.GetMesh()->GetName() : "Empty";
             const float lineHeight = GImGui->Font->FontSize + GImGui->Style.FramePadding.y + 2.f;
 
             ImGui::Columns(2);

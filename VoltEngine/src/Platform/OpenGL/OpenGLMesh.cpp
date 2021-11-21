@@ -21,7 +21,9 @@ namespace Volt
         std::string warn;
         std::string err;
 
-        const uint32_t baseDirEnd = static_cast<uint32_t>(filepath.find_last_of('/'));
+        uint32_t baseDirEnd = static_cast<uint32_t>(filepath.find_last_of('/'));
+        if (baseDirEnd >= filepath.length())
+            baseDirEnd = static_cast<uint32_t>(filepath.find_last_of('\\'));
         const std::string baseDir = filepath.substr(0, baseDirEnd);
 
         if (!LoadObj(&attrib, &shapes, &materials, &warn, &err, filepath.c_str(), baseDir.c_str()))
@@ -32,11 +34,11 @@ namespace Volt
 
         if (!warn.empty())
         {
-            VOLT_LOG(Warning, "tinyobjloader WARNING: %s", warn.c_str());
+            VOLT_LOG(Warning, "tinyobjloader WARNING: {0}", warn.c_str());
         }
         if (!err.empty())
         {
-            VOLT_LOG(Error, "tinyobjloader ERROR: %s", err.c_str());
+            VOLT_LOG(Error, "tinyobjloader ERROR: {0}", err.c_str());
         }
 
         for (const tinyobj::shape_t& shape : shapes)
@@ -52,9 +54,9 @@ namespace Volt
                 if (!attrib.normals.empty())
                 {
                     vertexData.Normal = {
-                            attrib.normals[3 * index.vertex_index + 0],
-                            attrib.normals[3 * index.vertex_index + 1],
-                            attrib.normals[3 * index.vertex_index + 2],
+                            attrib.normals[3 * index.normal_index + 0],
+                            attrib.normals[3 * index.normal_index + 1],
+                            attrib.normals[3 * index.normal_index + 2],
                         };
                 }
                 if (!attrib.colors.empty())
@@ -79,11 +81,13 @@ namespace Volt
         }
         if (!materials.empty())
         {
-            const std::string textureFilepath = baseDir + "/" + materials[0].ambient_texname;
+            const std::string textureName = materials[0].ambient_texname.empty() ? materials[0].diffuse_texname : materials[0].ambient_texname;
+            const std::string textureFilepath = textureName.empty() ? "" : baseDir + "/" + textureName;
             m_material = IMaterial::Create(
                                            {materials[0].ambient[0], materials[0].ambient[1], materials[0].ambient[2], 1.f},
                                            {materials[0].diffuse[0], materials[0].diffuse[1], materials[0].diffuse[2], 1.f},
                                            {materials[0].specular[0], materials[0].specular[1], materials[0].specular[2], 1.f},
+                                           materials[0].shininess,
                                            textureFilepath
                                           );
         }

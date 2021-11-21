@@ -72,13 +72,8 @@ namespace Volt
 
     void CRenderer3D::BeginScene(const glm::mat4& projection, const glm::mat4& view, const std::vector<SLight>& lights)
     {
-        BeginScene(projection * view, lights);
-    }
-
-    void CRenderer3D::BeginScene(const glm::mat4& viewProjection, const std::vector<SLight>& lights)
-    {
         Stats.Reset();
-        BatchData->ViewProjectionMatrix = viewProjection;
+        BatchData->ViewProjectionMatrix = projection * view;
         BatchData->Shader->Bind();
         BatchData->Shader->SetMat4("u_ViewProjection", BatchData->ViewProjectionMatrix);
         if (!lights.empty())
@@ -86,14 +81,15 @@ namespace Volt
             BatchData->Shader->SetFloat3("u_LightPos", lights[0].Position);
             BatchData->Shader->SetFloat3("u_LightColor", lights[0].Color);
             BatchData->Shader->SetInt("u_UseLight", 1);
+            BatchData->Shader->SetFloat3("u_ViewPos", view[3]);
         }
         else
         {
             BatchData->Shader->SetInt("u_UseLight", 0);
         }
-        BatchData->Shader->SetFloat("u_AmbientStrength", 0.3f);
         BatchData->Shader->SetFloat3("u_AmbientColor", {1.f, 1.f, 1.f});
     }
+
 
     void CRenderer3D::EndScene()
     {

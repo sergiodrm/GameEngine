@@ -33,7 +33,7 @@ namespace Volt
                 resource->m_handle = m_currentId;
                 resource->Load();
                 m_resources[m_currentId] = resource;
-                m_resourcesByName[filepath] = m_currentId;
+                m_resourcesByFilepath[filepath] = m_currentId;
                 NextId();
             }
             return resource;
@@ -41,7 +41,7 @@ namespace Volt
 
         ResourcePtr Find(const std::string& filepath)
         {
-            return m_resourcesByName.count(filepath) > 0 ? Find(filepath) : nullptr;
+            return m_resourcesByFilepath.count(filepath) > 0 ? Find(m_resourcesByFilepath[filepath]) : nullptr;
         }
 
         ResourcePtr Find(uint32_t id)
@@ -56,11 +56,11 @@ namespace Volt
 
         void UnloadResource(const std::string& filepath)
         {
-            if (m_resourcesByName.count(filepath) > 0)
+            if (m_resourcesByFilepath.count(filepath) > 0)
             {
-                m_resources[m_resourcesByName[filepath]]->Unload();
-                m_resources.erase(m_resourcesByName[filepath]);
-                m_resourcesByName.erase(filepath);
+                m_resources[m_resourcesByFilepath[filepath]]->Unload();
+                m_resources.erase(m_resourcesByFilepath[filepath]);
+                m_resourcesByFilepath.erase(filepath);
             }
         }
 
@@ -72,7 +72,7 @@ namespace Volt
 
     protected:
         std::unordered_map<uint32_t, SharedPtr<T>> m_resources;
-        std::unordered_map<std::string, uint32_t> m_resourcesByName;
+        std::unordered_map<std::string, uint32_t> m_resourcesByFilepath;
     private:
         uint32_t m_currentId {0};
     };
