@@ -2,6 +2,7 @@
 
 #include "Scene.h"
 #include "Components/CameraComponent.h"
+#include "Components/LightComponent.h"
 #include "Components/NativeScriptComponent.h"
 
 namespace Volt
@@ -40,6 +41,14 @@ namespace Volt
                 cameraComponent->GetCamera().SetViewportSize(m_sceneContext->GetViewportWidth(),
                                                              m_sceneContext->GetViewportHeight());
             }
+            else
+            {
+                CLightComponent* lightComponent = dynamic_cast<CLightComponent*>(component);
+                if (lightComponent)
+                {
+                    m_sceneContext->AddLight(this);
+                }
+            }
         }
 #ifdef VOLT_DEBUG
         VOLT_LOG(Trace, "Adding component {0} from entity {1}.", component->GetTypeName().c_str(), GetID());
@@ -52,6 +61,14 @@ namespace Volt
         if (nativeScript)
         {
             nativeScript->OnDestroy();
+        }
+        else
+        {
+            CLightComponent* lightComponent = dynamic_cast<CLightComponent*>(component);
+            if (lightComponent)
+            {
+                m_sceneContext->RemoveLight(this);
+            }
         }
 #ifdef VOLT_DEBUG
         VOLT_LOG(Trace, "Removing component {0} from entity {1}.", component->GetTypeName().c_str(), GetID());

@@ -7,6 +7,7 @@
 
 namespace Volt
 {
+    class CLightComponent;
     class CEditorCamera;
     class CEntity;
 
@@ -29,6 +30,9 @@ namespace Volt
         const CEntitiesRegistry& GetRegistry() const { return m_registry; }
         CEntitiesRegistry& GetRegistry() { return m_registry; }
 
+        void AddLight(CEntity* light);
+        void RemoveLight(CEntity* light);
+
     protected:
         void RunEntitiesScripts(float elapsedSeconds);
         void RenderScene(const glm::mat4& projection, const glm::mat4& view);
@@ -38,5 +42,7 @@ namespace Volt
 
         uint32_t m_width {0};
         uint32_t m_height {0};
+
+        std::vector<CEntity*> m_sceneLights;
     };
 }

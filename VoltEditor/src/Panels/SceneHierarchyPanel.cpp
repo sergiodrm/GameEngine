@@ -4,6 +4,7 @@
 #include "imgui_internal.h"
 #include "glm/gtc/type_ptr.hpp"
 #include "VoltEngine/Renderer/TextureManager.h"
+#include "VoltEngine/Scene/Components/LightComponent.h"
 #include "VoltEngine/Scene/Components/NativeScriptComponent.h"
 
 
@@ -190,9 +191,19 @@ namespace Volt
                 m_selection->AddComponent<CCameraComponent>();
                 ImGui::CloseCurrentPopup();
             }
-            if (ImGui::MenuItem("Renderer Component"))
+            if (ImGui::MenuItem("Sprite Component"))
             {
                 m_selection->AddComponent<CSpriteRenderComponent>();
+                ImGui::CloseCurrentPopup();
+            }
+            if (ImGui::MenuItem("Mesh Component"))
+            {
+                m_selection->AddComponent<CMeshComponent>();
+                ImGui::CloseCurrentPopup();
+            }
+            if (ImGui::MenuItem("Light Component"))
+            {
+                m_selection->AddComponent<CLightComponent>();
                 ImGui::CloseCurrentPopup();
             }
             ImGui::EndPopup();
@@ -215,7 +226,6 @@ namespace Volt
         DetailPanelUtils::DrawComponentHeader<CCameraComponent>("Camera Component", entity, [](CCameraComponent& component)
         {
             ImGui::Columns(2);
-
 
             bool primary = component.IsPrimary();
             ImGui::Text("Primary camera");
@@ -356,9 +366,47 @@ namespace Volt
             ImGui::SameLine();
             if (ImGui::Button("...", {lineHeight, lineHeight}))
             {
-                const std::string newMeshPath = CFileDialogs::LoadFile("Mesh (*.obj)\0");
-                const SharedPtr<IMesh> newMesh = CMeshManager::Get().Load(newMeshPath);
-                component.SetMesh(newMesh);
+                const std::string newMeshPath = CFileDialogs::LoadFile("Mesh (*.obj)\0*.obj\0");
+                if (!newMeshPath.empty())
+                {
+                    const SharedPtr<IMesh> newMesh = CMeshManager::Get().Load(newMeshPath);
+                    component.SetMesh(newMesh);
+                }
+            }
+
+            ImGui::Columns(1);
+        });
+        DetailPanelUtils::DrawComponentHeader<CLightComponent>("Light component", entity, [](CLightComponent& component)
+        {
+            ELightType type = component.GetType();
+            glm::vec4 color = component.GetColor();
+            ImGui::Columns(2);
+            ImGui::Text("Light color");
+            ImGui::NextColumn();
+            if (ImGui::ColorEdit4("##light color", value_ptr(color)))
+            {
+                component.SetColor(color);
+            }
+            ImGui::NextColumn();
+
+            ImGui::Text("Light type");
+            ImGui::NextColumn();
+            static const char* lightTypes[] = {"Point", "Directional"};
+            const char* currentType = lightTypes[static_cast<uint32_t>(type)];
+            if (ImGui::BeginCombo("##light type", currentType))
+            {
+                for (int32_t index = 0; index < static_cast<int32_t>(ELightType::Max); ++index)
+                {
+                    const bool isSelected = currentType == lightTypes[index];
+                    if (ImGui::Selectable(lightTypes[index], isSelected))
+                    {
+                        currentType = lightTypes[index];
+                        component.SetType(static_cast<ELightType>(index));
+                    }
+                    if (isSelected)
+                        ImGui::SetItemDefaultFocus();
+                }
+                ImGui::EndCombo();
             }
 
             ImGui::Columns(1);

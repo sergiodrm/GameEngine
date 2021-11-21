@@ -49,6 +49,14 @@ namespace Volt
                         attrib.vertices[3 * index.vertex_index + 1],
                         attrib.vertices[3 * index.vertex_index + 2],
                     };
+                if (!attrib.normals.empty())
+                {
+                    vertexData.Normal = {
+                            attrib.normals[3 * index.vertex_index + 0],
+                            attrib.normals[3 * index.vertex_index + 1],
+                            attrib.normals[3 * index.vertex_index + 2],
+                        };
+                }
                 if (!attrib.colors.empty())
                 {
                     vertexData.Color = {

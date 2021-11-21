@@ -11,7 +11,7 @@ namespace Volt
     {
     DECLARE_DERIVED_CLASS(CMeshComponent, CComponent);
     public:
-        CMeshComponent(const SharedPtr<IMesh>& mesh)
+        CMeshComponent(const SharedPtr<IMesh>& mesh = nullptr)
             : m_mesh(mesh) {}
 
         const SharedPtr<IMesh>& GetMesh() const { return m_mesh; }

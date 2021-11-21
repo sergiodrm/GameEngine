@@ -2,6 +2,7 @@
 
 #include "Entity.h"
 #include "Components/CameraComponent.h"
+#include "Components/LightComponent.h"
 #include "Components/MeshComponent.h"
 #include "Components/NativeScriptComponent.h"
 #include "Components/SpriteRenderComponent.h"
@@ -71,6 +72,20 @@ namespace Volt
     }
 
 
+    void CScene::AddLight(CEntity* light)
+    {
+        m_sceneLights.push_back(light);
+    }
+
+    void CScene::RemoveLight(CEntity* light)
+    {
+        const std::vector<CEntity*>::iterator it = std::find(m_sceneLights.begin(), m_sceneLights.end(), light);
+        if (it != m_sceneLights.end())
+        {
+            m_sceneLights.erase(it);
+        }
+    }
+
     void CScene::RunEntitiesScripts(float elapsedSeconds)
     {
         // Update scripts
@@ -118,7 +133,15 @@ namespace Volt
         }
         // -------------------------------------- Render 3D --------------------------------------
         {
-            CRenderer3D::BeginScene(projection, view);
+            std::vector<SLight> lights;
+            for (const CEntity* it : m_sceneLights)
+            {
+                const CLightComponent* lightComponent = it->GetComponent<CLightComponent>();
+                const CTransformComponent* transformComponent = it->GetComponent<CTransformComponent>();
+                SLight light {ELightType::Point, transformComponent->GetPosition(), lightComponent->GetColor()};
+                lights.push_back(light);
+            }
+            CRenderer3D::BeginScene(projection, view, lights);
             for (CEntitiesRegistry::SIterator it(m_registry); it; ++it)
             {
                 CEntity* entity = *it;

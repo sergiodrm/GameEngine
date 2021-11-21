@@ -4,12 +4,13 @@
 #include <glm/glm.hpp>
 
 #include "VoltEngine/Core/Core.h"
+#include "VoltEngine/Resources/Resource.h"
 
 namespace Volt
 {
     class IShader;
 
-    class IMaterial
+    class IMaterial : public IResource
     {
     public:
         static SharedPtr<IMaterial> Create(const glm::vec4& ambient = glm::vec4(1.f),

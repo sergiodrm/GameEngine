@@ -20,6 +20,10 @@ namespace Volt
         virtual void SetAmbient(const glm::vec4& ambient) override { m_ambient = ambient; }
         virtual void SetDiffuse(const glm::vec4& diffuse) override { m_diffuse = diffuse; }
         virtual void SetSpecular(const glm::vec4& specular) override { m_specular = specular; }
+
+        virtual void Load() override {}
+        virtual void Unload() override {}
+
     private:
         glm::vec4 m_ambient;
         glm::vec4 m_diffuse;
