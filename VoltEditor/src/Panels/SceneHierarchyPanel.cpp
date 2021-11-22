@@ -3,6 +3,7 @@
 #include "imgui.h"
 #include "imgui_internal.h"
 #include "glm/gtc/type_ptr.hpp"
+#include "VoltEngine/Renderer/Renderer3D.h"
 #include "VoltEngine/Renderer/TextureManager.h"
 #include "VoltEngine/Scene/Components/LightComponent.h"
 #include "VoltEngine/Scene/Components/NativeScriptComponent.h"
@@ -131,6 +132,25 @@ namespace Volt
             if (m_selection)
             {
                 DrawComponents(*m_selection);
+            }
+            ImGui::End();
+
+            // Scene globals
+            ImGui::Begin("Scene globals");
+            if (ImGui::TreeNodeEx("Global"))
+            {
+                ImGui::Columns(2);
+                ImGui::Text("Ambient color");
+                ImGui::NextColumn();
+                ImGui::ColorEdit3("##ambient color", value_ptr(CRenderer3D::AmbientColor));
+                ImGui::NextColumn();
+                ImGui::Text("Ambient strength");
+                ImGui::NextColumn();
+                ImGui::DragFloat("##ambient strength", &CRenderer3D::AmbientStrength, 0.001f, 0.f, 1.f);
+                ImGui::NextColumn();
+                ImGui::Columns(1);
+
+                ImGui::TreePop();
             }
             ImGui::End();
         }

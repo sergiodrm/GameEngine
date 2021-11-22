@@ -63,6 +63,7 @@ uniform vec3 u_LightPos;
 uniform vec3 u_LightColor;
 
 uniform vec3 u_AmbientColor;
+uniform float u_AmbientStrength;
 
 vec3 CalculateDiffuseLight();
 vec3 CalculateSpecularLight();
@@ -70,7 +71,7 @@ vec4 CalculateTexture();
 
 void main()
 {
-    vec3 ambient = u_AmbientColor * vec3(u_Material.Ambient);
+    vec3 ambient = u_AmbientColor * u_AmbientStrength * vec3(u_Material.Ambient);
     vec3 diffuse = CalculateDiffuseLight();
     vec3 specular = CalculateSpecularLight();
     vec4 textureColor = CalculateTexture();

@@ -39,6 +39,9 @@ namespace Volt
 
         static const SRenderStats& GetStats() { return Stats; }
 
+        static glm::vec3 AmbientColor;
+        static float AmbientStrength;
+
     protected:
         static void UpdateBatch();
         static void Flush();

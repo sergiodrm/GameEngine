@@ -13,6 +13,8 @@
 
 namespace Volt
 {
+    glm::vec3 CRenderer3D::AmbientColor {1.f};
+    float CRenderer3D::AmbientStrength {0.9f};
     SRenderStats CRenderer3D::Stats;
 
     constexpr const char* BasicShaderFilepath = "assets/shaders/Basic3D.glsl";
@@ -87,7 +89,8 @@ namespace Volt
         {
             BatchData->Shader->SetInt("u_UseLight", 0);
         }
-        BatchData->Shader->SetFloat3("u_AmbientColor", {1.f, 1.f, 1.f});
+        BatchData->Shader->SetFloat3("u_AmbientColor", AmbientColor);
+        BatchData->Shader->SetFloat("u_AmbientStrength", AmbientStrength);
     }
 
 
