@@ -435,7 +435,7 @@ namespace Volt
                     ImGui::NextColumn();
                     ImGui::Text("Shininess");
                     ImGui::NextColumn();
-                    if (ImGui::DragFloat("##shininess", &shininess))
+                    if (ImGui::DragFloat("##shininess", &shininess, 1.f, 0.f, std::numeric_limits<float>::max()))
                     {
                         material->SetShininess(shininess);
                     }
