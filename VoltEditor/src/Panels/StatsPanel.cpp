@@ -49,7 +49,7 @@ namespace Volt
             PrintTextValue("Frame time", ms, "%.4f ms");
             EndDoubleColumn();
 
-            if (ImGui::TreeNodeEx("Graph"))
+            if (ImGui::TreeNodeEx("Graph", ImGuiTreeNodeFlags_DefaultOpen))
             {
                 char overlay[32];
                 sprintf_s(overlay, "Average : %.4f ms", CalculateAverage());
@@ -63,9 +63,9 @@ namespace Volt
         }
 
 
-        if (ImGui::TreeNodeEx("Render", ImGuiTreeNodeFlags_DefaultOpen))
+        if (ImGui::TreeNodeEx("Render"))
         {
-            if (ImGui::TreeNodeEx("3D", ImGuiTreeNodeFlags_DefaultOpen))
+            if (ImGui::TreeNodeEx("3D"))
             {
                 const SRenderStats& stats = CRenderer3D::GetStats();
                 BeginDoubleColumn();
