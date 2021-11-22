@@ -3,6 +3,7 @@
 #include "imgui.h"
 #include "imgui_internal.h"
 #include "glm/gtc/type_ptr.hpp"
+#include "VoltEngine/Renderer/Material.h"
 #include "VoltEngine/Renderer/Renderer3D.h"
 #include "VoltEngine/Renderer/TextureManager.h"
 #include "VoltEngine/Scene/Components/LightComponent.h"
@@ -379,22 +380,70 @@ namespace Volt
             const std::string meshName = component.GetMesh() ? component.GetMesh()->GetName() : "Empty";
             const float lineHeight = GImGui->Font->FontSize + GImGui->Style.FramePadding.y + 2.f;
 
-            ImGui::Columns(2);
-            ImGui::Text("Mesh");
-            ImGui::NextColumn();
-            ImGui::Text("%s", meshName.c_str());
-            ImGui::SameLine();
-            if (ImGui::Button("...", {lineHeight, lineHeight}))
+            if (ImGui::TreeNodeEx("Mesh"))
             {
-                const std::string newMeshPath = CFileDialogs::LoadFile("Mesh (*.obj)\0*.obj\0");
-                if (!newMeshPath.empty())
+                ImGui::Columns(2);
+                ImGui::Text("Mesh");
+                ImGui::NextColumn();
+                ImGui::Text("%s", meshName.c_str());
+                ImGui::SameLine();
+                if (ImGui::Button("...", {lineHeight, lineHeight}))
                 {
-                    const SharedPtr<IMesh> newMesh = CMeshManager::Get().Load(newMeshPath);
-                    component.SetMesh(newMesh);
+                    const std::string newMeshPath = CFileDialogs::LoadFile("Mesh (*.obj)\0*.obj\0");
+                    if (!newMeshPath.empty())
+                    {
+                        const SharedPtr<IMesh> newMesh = CMeshManager::Get().Load(newMeshPath);
+                        component.SetMesh(newMesh);
+                    }
                 }
+
+                ImGui::Columns(1);
+                ImGui::TreePop();
             }
 
-            ImGui::Columns(1);
+            if (ImGui::TreeNodeEx("Material"))
+            {
+                SharedPtr<IMesh> mesh = component.GetMesh();
+                SharedPtr<IMaterial> material = mesh ? mesh->GetMaterial() : nullptr;
+                if (material)
+                {
+                    glm::vec3 ambient = material->GetAmbient();
+                    glm::vec3 diffuse = material->GetDiffuse();
+                    glm::vec3 specular = material->GetSpecular();
+                    float shininess = material->GetShininess();
+                    ImGui::Columns(2);
+                    ImGui::Text("Ambient");
+                    ImGui::NextColumn();
+                    if (ImGui::ColorEdit3("##ambient", value_ptr(ambient)))
+                    {
+                        material->SetAmbient({ambient.x, ambient.y, ambient.z, 1.f});
+                    }
+                    ImGui::NextColumn();
+                    ImGui::Text("Diffuse");
+                    ImGui::NextColumn();
+                    if (ImGui::ColorEdit3("##diffuse", value_ptr(diffuse)))
+                    {
+                        material->SetDiffuse({diffuse.x, diffuse.y, diffuse.z, 1.f});
+                    }
+                    ImGui::NextColumn();
+                    ImGui::Text("Specular");
+                    ImGui::NextColumn();
+                    if (ImGui::ColorEdit3("##specular", value_ptr(specular)))
+                    {
+                        material->SetSpecular({specular.x, specular.y, specular.z, 1.f});
+                    }
+                    ImGui::NextColumn();
+                    ImGui::Text("Shininess");
+                    ImGui::NextColumn();
+                    if (ImGui::DragFloat("##shininess", &shininess))
+                    {
+                        material->SetShininess(shininess);
+                    }
+                    ImGui::NextColumn();
+                    ImGui::Columns(1);
+                }
+                ImGui::TreePop();
+            }
         });
         DetailPanelUtils::DrawComponentHeader<CLightComponent>("Light component", entity, [](CLightComponent& component)
         {
