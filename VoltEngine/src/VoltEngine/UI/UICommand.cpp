@@ -104,16 +104,25 @@ namespace Volt
             if (ImGui::BeginMenu("Options"))
             {
                 if (showDemoWindow)
-                    showDemoWindow = ImGui::MenuItem("Hide imgui demo");
+                {
+                    if (ImGui::MenuItem("Hide imgui demo"))
+                        showDemoWindow = false;
+                }
                 else
-                    showDemoWindow = ImGui::MenuItem("Show imgui demo");
+                {
+                    if (ImGui::MenuItem("Show imgui demo"))
+                        showDemoWindow = true;
+                }
                 ImGui::EndMenu();
             }
 
             ImGui::EndMenuBar();
         }
 
-        ImGui::ShowDemoWindow(&showDemoWindow);
+        if (showDemoWindow)
+        {
+            ImGui::ShowDemoWindow();
+        }
     }
 
     void CUICommand::EndFrame()
