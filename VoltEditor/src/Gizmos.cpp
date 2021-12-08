@@ -5,6 +5,8 @@
 
 #include "glm/gtc/type_ptr.hpp"
 #include "VoltEngine/Core/Input.h"
+#include "VoltEngine/Events/Event.h"
+#include "VoltEngine/Events/KeyEvent.h"
 #include "VoltEngine/Scene/Entity.h"
 #include "VoltEngine/Scene/Components/TransformComponent.h"
 #include "VoltEngine/Utils/Math.h"
@@ -14,6 +16,36 @@ namespace Volt
     CGizmo::CGizmo(CScene* sceneContext)
         : m_sceneContext(sceneContext), m_gizmoOperationType(ImGuizmo::OPERATION::TRANSLATE)
     { }
+
+    void CGizmo::OnEvent(CEvent& e)
+    {
+        CEventDispatcher dispatcher(e);
+        dispatcher.Dispatch<CKeyPressedEvent>(BIND_FUNCTION(CGizmo::OnKeyPressed));
+    }
+
+    bool CGizmo::OnKeyPressed(CKeyPressedEvent& e)
+    {
+        switch (e.GetKey())
+        {
+            case KeyCodes::W:
+                {
+                    m_gizmoOperationType = ImGuizmo::OPERATION::TRANSLATE;
+                }
+                break;
+            case KeyCodes::E:
+                {
+                    m_gizmoOperationType = ImGuizmo::OPERATION::ROTATE;
+                }
+                break;
+            case KeyCodes::R:
+                {
+                    m_gizmoOperationType = ImGuizmo::OPERATION::SCALE;
+                }
+                break;
+        }
+        return false;
+    }
+
 
     void CGizmo::DrawGridGizmo(const glm::mat4& transform, const glm::mat4& projection, const glm::mat4& view)
     {
@@ -33,12 +65,12 @@ namespace Volt
     {
         if (entity)
         {
-            if (IInput::IsKeyPressed(KeyCodes::W))
-                m_gizmoOperationType = ImGuizmo::OPERATION::TRANSLATE;
-            if (IInput::IsKeyPressed(KeyCodes::E))
-                m_gizmoOperationType = ImGuizmo::OPERATION::ROTATE;
-            if (IInput::IsKeyPressed(KeyCodes::R))
-                m_gizmoOperationType = ImGuizmo::OPERATION::SCALE;
+            //if (IInput::IsKeyPressed(KeyCodes::W))
+            //    m_gizmoOperationType = ImGuizmo::OPERATION::TRANSLATE;
+            //if (IInput::IsKeyPressed(KeyCodes::E))
+            //    m_gizmoOperationType = ImGuizmo::OPERATION::ROTATE;
+            //if (IInput::IsKeyPressed(KeyCodes::R))
+            //    m_gizmoOperationType = ImGuizmo::OPERATION::SCALE;
 
 
             ImGuizmo::SetOrthographic(false);

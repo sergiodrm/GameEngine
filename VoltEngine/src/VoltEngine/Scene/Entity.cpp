@@ -3,7 +3,9 @@
 #include "Scene.h"
 #include "Components/CameraComponent.h"
 #include "Components/LightComponent.h"
+#include "Components/MeshComponent.h"
 #include "Components/NativeScriptComponent.h"
+#include "VoltEngine/Renderer/MeshManager.h"
 
 namespace Volt
 {
@@ -47,6 +49,10 @@ namespace Volt
                 if (lightComponent)
                 {
                     m_sceneContext->AddLight(this);
+
+                    //// Debug mesh
+                    //static SharedPtr<IMesh> cube = CMeshManager::Get().Load("assets/models/cube/basic_cube.obj");
+                    //AddComponent<CMeshComponent>(cube);
                 }
             }
         }

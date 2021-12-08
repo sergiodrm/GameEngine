@@ -27,7 +27,7 @@ namespace Volt
         s_instance = this;
 
         // Create window
-        SWindowData windowSpec;
+        SWindowData windowSpec {"Game Engine", 1920, 1080};
         windowSpec.EventFunction = BIND_FUNCTION(CApplication::OnEvent);
         m_window = IWindow::Create(windowSpec);
 
@@ -111,20 +111,19 @@ namespace Volt
 
     void CApplication::OnEvent(CEvent& e)
     {
+        //VOLT_LOG(Trace, "Event: {0}", e.ToString().c_str());
         CEventDispatcher dispatcher(e);
-        //VOLT_LOG(Info, "Event received! -> {0}", e.ToString());
-
-        if (!dispatcher.Dispatch<CWindowClosedEvent>(BIND_FUNCTION(CApplication::OnWindowClosed)))
+        dispatcher.Dispatch<CWindowClosedEvent>(BIND_FUNCTION(CApplication::OnWindowClosed));
+        dispatcher.Dispatch<CWindowResizedEvent>(BIND_FUNCTION(CApplication::OnWindowResized));
+        CUICommand::OnEvent(e);
+        if (!e.Handled)
         {
-            if (!dispatcher.Dispatch<CWindowResizedEvent>(BIND_FUNCTION(CApplication::OnWindowResized)))
+            // Send event to layers
+            for (CLayer* it : m_layerStack)
             {
-                // Send event to layers
-                for (CLayer* it : m_layerStack)
+                if (it->OnEvent(e))
                 {
-                    if (it->OnEvent(e))
-                    {
-                        break;
-                    }
+                    break;
                 }
             }
         }

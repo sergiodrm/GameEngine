@@ -1,6 +1,7 @@
 #include "OpenGLMaterial.h"
 
 #include "VoltEngine/Renderer/Shader.h"
+#include "VoltEngine/Renderer/ShaderUniforms.h"
 #include "VoltEngine/Renderer/Texture.h"
 #include "VoltEngine/Renderer/TextureManager.h"
 
@@ -21,18 +22,18 @@ namespace Volt
 
     void COpenGLMaterial::Prepare(const SharedPtr<IShader>& shader) const
     {
-        shader->SetFloat4("u_Material.Ambient", m_ambient);
-        shader->SetFloat4("u_Material.Diffuse", m_diffuse);
-        shader->SetFloat4("u_Material.Specular", m_specular);
-        shader->SetFloat("u_Material.Shininess", m_shininess);
-        if (m_texture)
+        shader->SetFloat4(ShaderUniforms::MaterialAmbientName, m_ambient);
+        shader->SetFloat4(ShaderUniforms::MaterialDiffuseName, m_diffuse);
+        shader->SetFloat4(ShaderUniforms::MaterialSpecularName, m_specular);
+        shader->SetFloat(ShaderUniforms::MaterialShininessName, m_shininess);
+        if (m_texture && m_useTexture)
         {
-            shader->SetInt("u_UseTexture", 1);
+            shader->SetInt(ShaderUniforms::TextureAvailableFlagName, EUniformFlag::True);
             m_texture->Bind();
         }
         else
         {
-            shader->SetInt("u_UseTexture", 0);
+            shader->SetInt(ShaderUniforms::TextureAvailableFlagName, EUniformFlag::False);
         }
     }
 }

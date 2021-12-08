@@ -11,6 +11,7 @@
 #include "VoltEngine/Scene/Components/NativeScriptComponent.h"
 
 #include "VoltEngine/Renderer/EditorCamera.h"
+#include "VoltEngine/UI/UICommand.h"
 
 #define TEST_TEXTURE_PATH "assets/textures/sample.png"
 
@@ -89,13 +90,7 @@ void CEditorLayer::OnAttach()
 
     m_scene = Volt::CreateSharedPtr<Volt::CScene>();
 
-    m_cameraEntity = m_scene->CreateEntity("CameraEntity");
-    Volt::CCameraComponent* cameraComponent = m_cameraEntity->AddComponent<Volt::CCameraComponent>(true);
-    Volt::CTransformComponent* transformComponent = m_cameraEntity->GetComponent<Volt::CTransformComponent>();
-    transformComponent->SetPosition({0.f, 15.f, 43.f});
-    transformComponent->SetRotation(radians(glm::vec3 {-18.3f, 0.f, 0.f}));
 #if 0
-
     Volt::SharedPtr<Volt::IMesh> cubeMesh = CreateCube();
 
     for (int32_t x = -10; x < 10; ++x)
@@ -112,12 +107,12 @@ void CEditorLayer::OnAttach()
     }
 #endif // 0
 
-    Volt::SharedPtr<Volt::IMesh> cubeMesh = Volt::CMeshManager::Get().Load("assets/models/skull/12140_Skull_v3_L2.obj");
+    //Volt::SharedPtr<Volt::IMesh> cubeMesh = Volt::CMeshManager::Get().Load("assets/models/skull/12140_Skull_v3_L2.obj");
 
-    Volt::CEntity* cubeEntity = m_scene->CreateEntity("Skull");
-    cubeEntity->AddComponent<Volt::CMeshComponent>(cubeMesh);
-    cubeEntity->AddComponent<Volt::CRotateScriptComponent>();
-    cubeEntity->GetComponent<Volt::CTransformComponent>()->SetRotation({-90.f, 0.f, 0.f});
+    //Volt::CEntity* cubeEntity = m_scene->CreateEntity("Skull");
+    //cubeEntity->AddComponent<Volt::CMeshComponent>(cubeMesh);
+    //cubeEntity->AddComponent<Volt::CRotateScriptComponent>();
+    //cubeEntity->GetComponent<Volt::CTransformComponent>()->SetRotation({-90.f, 0.f, 0.f});
 
     m_sceneHierarchyPanel = Volt::CreateSharedPtr<Volt::CSceneHierarchyPanel>(m_scene);
     m_statsPanel = Volt::CreateSharedPtr<Volt::CStatsPanel>();
@@ -141,13 +136,16 @@ void CEditorLayer::OnUpdate(float elapsedSeconds)
         m_scene->OnViewportResize(spec.Width, spec.Height);
         m_editorCamera->SetViewportSize(m_viewportSize.x, m_viewportSize.y);
     }
+    //if (m_viewportFocused)
     {
         //PROFILE_SCOPE(Render);
         m_editorCamera->OnUpdate(elapsedSeconds);
         m_framebuffer->Bind();
+
         Volt::CRenderCommand::Clear();
         /*m_scene->OnUpdateRuntime(elapsedSeconds);*/
         m_scene->OnUpdateEditor(m_editorCamera);
+
         m_framebuffer->Unbind();
     }
 }
@@ -159,6 +157,9 @@ void CEditorLayer::OnUIRender()
     {
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, {0.f, 0.f});
         ImGui::Begin("Viewport");
+        m_viewportFocused = ImGui::IsWindowFocused();
+        const bool viewportHovered = ImGui::IsWindowHovered();
+        Volt::CUICommand::BlockEvents(!m_viewportFocused/* && !viewportHovered*/);
 
         const ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
         if (glm::vec2(viewportPanelSize.x, viewportPanelSize.y) != m_viewportSize && viewportPanelSize.x > 0 && viewportPanelSize.y > 0)
@@ -182,5 +183,6 @@ void CEditorLayer::OnUIRender()
 bool CEditorLayer::OnEvent(Volt::CEvent& e)
 {
     m_editorCamera->OnEvent(e);
+    m_gizmo->OnEvent(e);
     return false;
 }

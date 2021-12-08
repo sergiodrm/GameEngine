@@ -10,6 +10,7 @@
 #include "VertexArray.h"
 #include "VertexData.h"
 #include "VoltEngine/Scene/Components/LightComponent.h"
+#include "ShaderUniforms.h"
 
 namespace Volt
 {
@@ -77,20 +78,20 @@ namespace Volt
         Stats.Reset();
         BatchData->ViewProjectionMatrix = projection * view;
         BatchData->Shader->Bind();
-        BatchData->Shader->SetMat4("u_ViewProjection", BatchData->ViewProjectionMatrix);
+        BatchData->Shader->SetMat4(ShaderUniforms::ViewProjectionMatrixName, BatchData->ViewProjectionMatrix);
         if (!lights.empty())
         {
-            BatchData->Shader->SetFloat3("u_LightPos", lights[0].Position);
-            BatchData->Shader->SetFloat3("u_LightColor", lights[0].Color);
-            BatchData->Shader->SetInt("u_UseLight", 1);
-            BatchData->Shader->SetFloat3("u_ViewPos", view[3]);
+            BatchData->Shader->SetFloat3(ShaderUniforms::LightPositionName, lights[0].Position);
+            BatchData->Shader->SetFloat3(ShaderUniforms::LightColorName, lights[0].Color);
+            BatchData->Shader->SetFloat3(ShaderUniforms::CameraPositionName, view[3]);
+            BatchData->Shader->SetInt(ShaderUniforms::LightAvailableFlagName, EUniformFlag::True);
         }
         else
         {
-            BatchData->Shader->SetInt("u_UseLight", 0);
+            BatchData->Shader->SetInt(ShaderUniforms::LightAvailableFlagName, EUniformFlag::False);
         }
-        BatchData->Shader->SetFloat3("u_AmbientColor", AmbientColor);
-        BatchData->Shader->SetFloat("u_AmbientStrength", AmbientStrength);
+        BatchData->Shader->SetFloat3(ShaderUniforms::AmbientColorName, AmbientColor);
+        BatchData->Shader->SetFloat(ShaderUniforms::AmbientStrengthName, AmbientStrength);
     }
 
 
@@ -105,8 +106,8 @@ namespace Volt
     {
 #if 1
         const glm::mat4 mvp = BatchData->ViewProjectionMatrix * transform;
-        BatchData->Shader->SetMat4("u_MVP", mvp);
-        BatchData->Shader->SetMat4("u_Model", transform);
+        BatchData->Shader->SetMat4(ShaderUniforms::MVPMatrixName, mvp);
+        BatchData->Shader->SetMat4(ShaderUniforms::ModelMatrixName, transform);
         mesh->GetMaterial()->Prepare(BatchData->Shader);
         const SharedPtr<IVertexArray>& vertexArray = mesh->GetVertexArray();
         CRenderCommand::DrawIndexed(vertexArray);

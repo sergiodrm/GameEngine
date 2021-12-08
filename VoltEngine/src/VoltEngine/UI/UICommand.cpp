@@ -9,9 +9,12 @@
 #include "VoltEngine/Core/Application.h"
 #include "VoltEngine/Core/Log.h"
 #include "VoltEngine/Core/Window.h"
+#include "VoltEngine/Events/Event.h"
 
 namespace Volt
 {
+    bool CUICommand::s_blockEvents = false;
+
     void CUICommand::Init()
     {
         IMGUI_CHECKVERSION();
@@ -144,6 +147,21 @@ namespace Volt
             ImGui::RenderPlatformWindowsDefault();
             glfwMakeContextCurrent(backupContext);
         }
+    }
+
+    void CUICommand::OnEvent(CEvent& e)
+    {
+        if (s_blockEvents)
+        {
+            ImGuiIO& io = ImGui::GetIO();
+            e.Handled |= e.IsInCategory(EventCategory_Keyboard) & io.WantCaptureKeyboard;
+            e.Handled |= e.IsInCategory(EventCategory_Mouse) & io.WantCaptureMouse;
+        }
+    }
+
+    void CUICommand::BlockEvents(bool block)
+    {
+        s_blockEvents = block;
     }
 
     void CUICommand::InitStyle()

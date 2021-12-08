@@ -17,13 +17,13 @@ public:
     virtual bool OnEvent(Volt::CEvent& e) override;
 
 private:
+    bool m_viewportFocused {true};
+
     Volt::SharedPtr<Volt::CScene> m_scene;
     Volt::SharedPtr<Volt::CSceneHierarchyPanel> m_sceneHierarchyPanel;
     Volt::SharedPtr<Volt::CStatsPanel> m_statsPanel;
     Volt::SharedPtr<Volt::CGizmo> m_gizmo;
 
-    Volt::CEntity* m_cameraEntity {nullptr};
-    Volt::CEntity* m_squareEntity {nullptr};
 
     Volt::SharedPtr<Volt::IFramebuffer> m_framebuffer;
     Volt::SharedPtr<Volt::CEditorCamera> m_editorCamera;

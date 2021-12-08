@@ -396,6 +396,11 @@ namespace Volt
                         component.SetMesh(newMesh);
                     }
                 }
+                ImGui::SameLine();
+                if (ImGui::Button("Clear"))
+                {
+                    component.SetMesh(nullptr);
+                }
 
                 ImGui::Columns(1);
                 ImGui::TreePop();
@@ -440,6 +445,11 @@ namespace Volt
                         material->SetShininess(shininess);
                     }
                     ImGui::NextColumn();
+                    ImGui::Text("Use texture");
+                    ImGui::NextColumn();
+                    bool useTexture = material->IsUsingTexture();
+                    if (ImGui::Checkbox("##use texture", &useTexture))
+                        material->UseTexture(useTexture);
                     ImGui::Columns(1);
                 }
                 ImGui::TreePop();

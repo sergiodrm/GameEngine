@@ -16,7 +16,7 @@ namespace Volt
 
         WindowEvent EventFunction;
 
-        SWindowData(const std::string& title = "Volt Engine", uint32_t width = 1200, uint32_t height = 720)
+        SWindowData(const std::string& title = "Game Engine", uint32_t width = 1920, uint32_t height = 1080)
             : Title(title), Width(width), Height(height) {}
     };
 

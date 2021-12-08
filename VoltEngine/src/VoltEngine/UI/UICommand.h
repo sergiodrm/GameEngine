@@ -2,6 +2,8 @@
 
 namespace Volt
 {
+    class CEvent;
+
     class CUICommand
     {
     public:
@@ -9,7 +11,11 @@ namespace Volt
         static void Shutdown();
         static void BeginFrame();
         static void EndFrame();
+        static void OnEvent(CEvent& e);
+        static void BlockEvents(bool block);
     private:
         static void InitStyle();
+
+        static bool s_blockEvents;
     };
 }

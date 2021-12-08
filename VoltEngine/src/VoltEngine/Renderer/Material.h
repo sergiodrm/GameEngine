@@ -25,10 +25,12 @@ namespace Volt
         virtual const glm::vec4& GetDiffuse() const = 0;
         virtual const glm::vec4& GetSpecular() const = 0;
         virtual float GetShininess() const = 0;
+        virtual bool IsUsingTexture() const = 0;
 
         virtual void SetAmbient(const glm::vec4& ambient) = 0;
         virtual void SetDiffuse(const glm::vec4& diffuse) = 0;
         virtual void SetSpecular(const glm::vec4& specular) = 0;
         virtual void SetShininess(float shininess) = 0;
+        virtual void UseTexture(bool use) = 0;
     };
 }
