@@ -76,7 +76,7 @@ namespace Volt
                         };
                 }
                 m_vertexData.push_back(vertexData);
-                m_indexData.push_back(m_indexData.size());
+                m_indexData.push_back(static_cast<uint32_t>(m_indexData.size()));
             }
         }
         if (!materials.empty())
@@ -116,7 +116,7 @@ namespace Volt
         vertexBuffer->SetLayout(SVertexData::GetStaticBufferLayout());
 
         // Indices
-        const SharedPtr<IIndexBuffer> indexBuffer = IIndexBuffer::Create(m_indexData.data(), m_indexData.size());
+        const SharedPtr<IIndexBuffer> indexBuffer = IIndexBuffer::Create(m_indexData.data(), static_cast<uint32_t>(m_indexData.size()));
 
         // Vertex Array
         m_vertexArray = IVertexArray::Create();
