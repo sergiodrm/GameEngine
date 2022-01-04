@@ -1,4 +1,6 @@
 #pragma once
+#include <vector>
+
 #include "Core.h"
 #include "spdlog/spdlog.h"
 
@@ -14,6 +16,12 @@ namespace Volt
             Fatal,
             Trace,
             Info
+        };
+
+        struct SLogRequest
+        {
+            EType LogType;
+            std::string Log;
         };
 
         static void Init();
@@ -33,9 +41,14 @@ namespace Volt
         template <typename ... Args>
         static void Log(EType type, const char* format, Args&& ... args);
 
+        static const std::vector<SLogRequest>& GetLogRegister() { return s_logRegister; }
+        static uint32_t GetLogRegisterMaxSize() { return s_logRegisterMaxSize; }
+
     private:
         static SharedPtr<spdlog::logger> s_coreLogger;
         static SharedPtr<spdlog::logger> s_clientLogger;
+        static std::vector<SLogRequest> s_logRegister;
+        static uint32_t s_logRegisterMaxSize;
     };
 
     template <typename ... Args>
@@ -55,6 +68,15 @@ namespace Volt
                 break;
             default: GetLogger()->error("Unknown log category");
         }
+
+        static const char* logTypeString[] = {"Warning", "Error", "Fatal", "Trace", "Info"};
+        char buffer[256];
+        sprintf_s(buffer, format, std::forward<Args>(args)...);
+        char log[256];
+        sprintf_s(log, "[%s] %s", logTypeString[static_cast<uint32_t>(type)], buffer);
+        if (s_logRegister.size() == s_logRegisterMaxSize)
+            s_logRegister.erase(s_logRegister.begin());
+        s_logRegister.push_back({type, log});
     }
 }
 

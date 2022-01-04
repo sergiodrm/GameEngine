@@ -6,6 +6,8 @@ namespace Volt
 {
     SharedPtr<spdlog::logger> CLog::s_coreLogger = nullptr;
     SharedPtr<spdlog::logger> CLog::s_clientLogger = nullptr;
+    std::vector<CLog::SLogRequest> CLog::s_logRegister;
+    uint32_t CLog::s_logRegisterMaxSize = 50;
 
     void CLog::Init()
     {

@@ -4,6 +4,7 @@
 #include "imgui.h"
 #include "glm/detail/type_quat.hpp"
 #include "glm/gtx/quaternion.hpp"
+#include "Panels/LogPanel.h"
 #include "Panels/SceneHierarchyPanel.h"
 #include "Panels/StatsPanel.h"
 #include "VoltEngine/Renderer/TextureManager.h"
@@ -116,6 +117,7 @@ void CEditorLayer::OnAttach()
 
     m_sceneHierarchyPanel = Volt::CreateSharedPtr<Volt::CSceneHierarchyPanel>(m_scene);
     m_statsPanel = Volt::CreateSharedPtr<Volt::CStatsPanel>();
+    m_logPanel = Volt::CreateSharedPtr<Volt::CLogPanel>();
 
     m_editorCamera = Volt::CreateSharedPtr<Volt::CEditorCamera>(45.f, 1.3337f, 0.1f, 10000.f);
     m_gizmo = Volt::CreateSharedPtr<Volt::CGizmo>(m_scene.get());
@@ -154,6 +156,7 @@ void CEditorLayer::OnUIRender()
 {
     m_sceneHierarchyPanel->OnUIRender();
     m_statsPanel->OnUIRender();
+    m_logPanel->OnUIRender();
     {
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, {0.f, 0.f});
         ImGui::Begin("Viewport");
