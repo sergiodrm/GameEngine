@@ -3,9 +3,23 @@
 
 #include "Core.h"
 #include "spdlog/spdlog.h"
+#include "spdlog/sinks/base_sink.h"
 
 namespace Volt
 {
+    class CCustomSpdlogSink : public spdlog::sinks::base_sink<std::mutex>
+    {
+    public:
+        static std::shared_ptr<spdlog::logger> Create(const std::string& loggerName)
+        {
+            return spdlog::create<CCustomSpdlogSink>(loggerName);
+        }
+
+    protected:
+        virtual void sink_it_(const spdlog::details::log_msg& msg) override;
+        virtual void flush_() override;
+    };
+
     class CLog
     {
     public:
@@ -18,6 +32,8 @@ namespace Volt
             Info
         };
 
+        static EType LevelToType(spdlog::level::level_enum level);
+
         struct SLogRequest
         {
             EType LogType;
@@ -27,26 +43,19 @@ namespace Volt
         static void Init();
 
         static SharedPtr<spdlog::logger>& GetCoreLogger() { return s_coreLogger; }
-        static SharedPtr<spdlog::logger>& GetClientLogger() { return s_clientLogger; }
-
-        static SharedPtr<spdlog::logger>& CLog::GetLogger()
-        {
-#if VOLT_ENGINE
-            return GetCoreLogger();
-#else
-            return GetClientLogger();
-#endif
-        }
+        static SharedPtr<spdlog::logger>& GetLogger() { return GetCoreLogger(); }
 
         template <typename ... Args>
         static void Log(EType type, const char* format, Args&& ... args);
+
+        static void SubmitLog(const spdlog::details::log_msg& msg, const std::string& formatted);
 
         static const std::vector<SLogRequest>& GetLogRegister() { return s_logRegister; }
         static uint32_t GetLogRegisterMaxSize() { return s_logRegisterMaxSize; }
 
     private:
         static SharedPtr<spdlog::logger> s_coreLogger;
-        static SharedPtr<spdlog::logger> s_clientLogger;
+        //static SharedPtr<spdlog::logger> s_clientLogger;
         static std::vector<SLogRequest> s_logRegister;
         static uint32_t s_logRegisterMaxSize;
     };
@@ -68,15 +77,6 @@ namespace Volt
                 break;
             default: GetLogger()->error("Unknown log category");
         }
-
-        static const char* logTypeString[] = {"Warning", "Error", "Fatal", "Trace", "Info"};
-        char buffer[256];
-        sprintf_s(buffer, format, std::forward<Args>(args)...);
-        char log[256];
-        sprintf_s(log, "[%s] %s", logTypeString[static_cast<uint32_t>(type)], buffer);
-        if (s_logRegister.size() == s_logRegisterMaxSize)
-            s_logRegister.erase(s_logRegister.begin());
-        s_logRegister.push_back({type, log});
     }
 }
 
