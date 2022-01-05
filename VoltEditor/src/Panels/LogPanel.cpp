@@ -12,17 +12,14 @@ namespace Volt
 
         ImGui::Begin("Logger", nullptr, ImGuiWindowFlags_HorizontalScrollbar);
         {
-            // Options menu
-            if (ImGui::BeginPopup("Options"))
-            {
-                if (ImGui::MenuItem("Clear"))
-                    ClearLog();
-                ImGui::EndPopup();
-            }
+            static bool autoScroll = true;
 
+            // Options menu
             ImGui::Columns(2);
-            if (ImGui::Button("Options"))
-                ImGui::OpenPopup("Options");
+            if (ImGui::Button("Clear"))
+                ClearLog();
+            ImGui::SameLine();
+            ImGui::Checkbox("Auto scroll", &autoScroll);
             ImGui::NextColumn();
             ImGui::Text("%d/%d", static_cast<uint32_t>(logs.size()), CLog::GetLogRegisterMaxSize());
             ImGui::NextColumn();
@@ -44,6 +41,9 @@ namespace Volt
                 {
                     ImGui::TextColored(colors[static_cast<uint32_t>(it.LogType)], "%s", it.Log.c_str());
                 }
+
+                if (autoScroll && ImGui::GetScrollY() / ImGui::GetScrollMaxY() < 0.95f)
+                    ImGui::SetScrollHereY(1.f);
             }
             ImGui::PopStyleVar();
             ImGui::EndChild();
@@ -52,5 +52,8 @@ namespace Volt
         ImGui::End();
     }
 
-    void CLogPanel::ClearLog() {}
+    void CLogPanel::ClearLog()
+    {
+        VOLT_LOG(Error, "Clearing log...");
+    }
 }
