@@ -43,7 +43,7 @@ namespace Volt
         // Log pattern:
         // %^ -> start color section
         // %$ -> end color section
-        spdlog::set_pattern("[%T][thread:%t]%^ %n: %v%$");
+        spdlog::set_pattern("[%T][thd:%t]%^ %l: %v%$");
         //s_coreLogger = spdlog::stdout_color_mt("Engine");
         s_coreLogger = CCustomSpdlogSink::Create("Engine");
         s_coreLogger->set_level(spdlog::level::trace);
