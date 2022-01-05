@@ -54,6 +54,6 @@ namespace Volt
 
     void CLogPanel::ClearLog()
     {
-        VOLT_LOG(Error, "Clearing log...");
+        CLog::ClearLogRegister();
     }
 }

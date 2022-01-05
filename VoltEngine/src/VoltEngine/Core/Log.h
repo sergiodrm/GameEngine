@@ -52,6 +52,7 @@ namespace Volt
 
         static const std::vector<SLogRequest>& GetLogRegister() { return s_logRegister; }
         static uint32_t GetLogRegisterMaxSize() { return s_logRegisterMaxSize; }
+        static void ClearLogRegister() { s_logRegister.clear(); }
 
     private:
         static SharedPtr<spdlog::logger> s_coreLogger;
