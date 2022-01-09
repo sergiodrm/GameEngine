@@ -16,10 +16,15 @@ namespace Volt
         T* Load(const std::string& filepath);
 
         void ProcessRequests();
+
+        /** Thread safe: called from IAssetLoaders in background thread to push them into the requests queue. */
+        void PushLoadRequest(IAssetLoader* assetLoader);
+
     private:
         std::queue<IAssetLoader*> m_loadRequests;
         std::vector<IAssetLoader*> m_assetLoaders;
         CAssetRegister m_assetRegister;
+        std::mutex m_loadRequestsMutex;
     };
 
     template <typename T>
