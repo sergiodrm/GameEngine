@@ -13,6 +13,9 @@ namespace Volt
     {
     public:
         template <typename T>
+        static T* LoadAsset(const std::string& filepath);
+
+        template <typename T>
         T* Load(const std::string& filepath);
 
         void ProcessRequests();
@@ -26,6 +29,12 @@ namespace Volt
         CAssetRegister m_assetRegister;
         std::mutex m_loadRequestsMutex;
     };
+
+    template <typename T>
+    T* CAssetManager::LoadAsset(const std::string& filepath)
+    {
+        return Get().Load<T>(filepath);
+    }
 
     template <typename T>
     T* CAssetManager::Load(const std::string& filepath)
