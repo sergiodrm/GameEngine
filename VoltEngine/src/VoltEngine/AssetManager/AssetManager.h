@@ -5,10 +5,11 @@
 #include "AssetRegister.h"
 #include "VoltEngine/Core/Log.h"
 #include "AssetLoader.h"
+#include "VoltEngine/Core/Singleton.h"
 
 namespace Volt
 {
-    class CAssetManager
+    class CAssetManager : public ISingleton<CAssetManager>
     {
     public:
         template <typename T>
