@@ -15,3 +15,5 @@
 **.xml
 *.txt
 *.ttf
+
+!/doc/**.png
