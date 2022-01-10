@@ -18,6 +18,7 @@ Please if you dive in the code and find out bugs or whatever that can be improve
 
 ## Next updates
 - A lot of bug fixing.
+- CMake to build the code.
 - Directional lights.
 - Asset Manager.
 - Content browser.
