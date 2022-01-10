@@ -3,6 +3,7 @@
 #include <future>
 #include <tiny_obj_loader.h>
 
+#include "OpenGLMesh.h"
 #include "VoltEngine/AssetManager/AssetManager.h"
 
 namespace Volt
@@ -16,7 +17,13 @@ namespace Volt
             std::async(std::launch::async, &COpenGLMeshLoader::AsyncLoad, this, filepath);
     }
 
-    void COpenGLMeshLoader::LoadDataInAsset() {}
+    void COpenGLMeshLoader::LoadDataInAsset()
+    {
+        if (COpenGLMesh* asset = dynamic_cast<COpenGLMesh*>(GetAsset()))
+        {
+            asset->LoadData(m_meshAssetData);
+        }
+    }
 
     void COpenGLMeshLoader::AsyncLoad(std::string filepath)
     {

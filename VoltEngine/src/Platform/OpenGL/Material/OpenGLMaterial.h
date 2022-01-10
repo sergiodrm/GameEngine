@@ -14,6 +14,13 @@ namespace Volt
                         const glm::vec4& specular = glm::vec4(1.f),
                         float shininess = 1.f,
                         const std::string& textureFilepath = {});
+
+        /** Begin IAsset methods */
+        virtual IAssetLoader* CreateLoader() override;
+        virtual bool IsLoaded() const override { return true; }
+        /** End IAsset methods */
+
+        /** Begin IMaterial methods */
         virtual void Prepare(const SharedPtr<IShader>& shader) const override;
         virtual const glm::vec4& GetAmbient() const override { return m_ambient; }
         virtual const glm::vec4& GetDiffuse() const override { return m_diffuse; }
@@ -25,9 +32,8 @@ namespace Volt
         virtual void SetSpecular(const glm::vec4& specular) override { m_specular = specular; }
         virtual void SetShininess(float shininess) override { m_shininess = shininess; }
         virtual void UseTexture(bool use) override { m_useTexture = use; }
+        /** End IMaterial methods */
 
-        virtual void Load() override {}
-        virtual void Unload() override {}
 
     private:
         glm::vec4 m_ambient;

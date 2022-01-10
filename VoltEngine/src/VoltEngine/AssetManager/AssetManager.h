@@ -48,7 +48,7 @@ namespace Volt
             }
             else
             {
-                asset = new T();
+                asset = T::Create();
                 m_assetRegister.AddAsset(filepath, asset);
 
                 IAssetLoader* assetLoader = asset->CreateLoader();

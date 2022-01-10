@@ -7,6 +7,7 @@
 #define TINYOBJLOADER_IMPLEMENTATION
 #include "OpenGLMeshLoader.h"
 #include "tiny_obj_loader.h"
+#include "VoltEngine/AssetManager/AssetManager.h"
 #include "VoltEngine/Renderer/Material.h"
 #include "VoltEngine/Renderer/VertexArray.h"
 

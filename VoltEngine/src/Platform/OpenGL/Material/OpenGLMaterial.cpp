@@ -1,5 +1,6 @@
 #include "OpenGLMaterial.h"
 
+#include "OpenGLMaterialLoader.h"
 #include "VoltEngine/Renderer/Shader.h"
 #include "VoltEngine/Renderer/ShaderUniforms.h"
 #include "VoltEngine/Renderer/Texture.h"
@@ -18,6 +19,11 @@ namespace Volt
         {
             m_texture = CTextureManager::Get().Load(textureFilepath);
         }
+    }
+
+    IAssetLoader* COpenGLMaterial::CreateLoader()
+    {
+        return new COpenGLMaterialLoader(this);
     }
 
     void COpenGLMaterial::Prepare(const SharedPtr<IShader>& shader) const
