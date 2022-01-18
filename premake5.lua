@@ -19,6 +19,7 @@ IncludeDir["stb_image"] = "VoltEngine/lib/stb_image"
 IncludeDir["imgui"] = "VoltEngine/lib/imgui"
 IncludeDir["tinyobjloader"] = "VoltEngine/lib/tinyobjloader"
 IncludeDir["ImGuizmo"] = "VoltEngine/lib/ImGuizmo"
+IncludeDir["lua"] = "VoltEngine/lib/lua/include"
 
 group "Dependencies"
 	include "VoltEngine/lib/GLFW"
@@ -49,6 +50,8 @@ project "VoltEngine"
         "%{prj.name}/lib/stb_image/**.cpp",
 		"%{prj.name}/lib/ImGuizmo/ImGuizmo.h",
 		"%{prj.name}/lib/ImGuizmo/ImGuizmo.cpp",
+		"%{prj.name}/lib/lua/**.h",
+		"%{prj.name}/lib/lua/**.cpp",
 	}
 
 	includedirs
@@ -63,6 +66,7 @@ project "VoltEngine"
         "%{IncludeDir.imgui}",
         "%{IncludeDir.tinyobjloader}",
         "%{IncludeDir.ImGuizmo}",
+        "%{IncludeDir.lua}",
 	}
 
 	links
