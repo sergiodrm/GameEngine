@@ -13,7 +13,8 @@
         const CType& type = GetDynamicType(); \
         return type.IsSubTypeOf<T>(); \
     } \
-    const std::string& GetTypeName() const { return GetDynamicType().GetName(); }\
+    inline static bool IsA(const CType& type) {return type.IsSubTypeOf(GetStaticType()); } \
+    const std::string& GetTypeName() const { return GetDynamicType().GetName(); } \
     private:
 
 #define DECLARE_DERIVED_CLASS(Class, BaseClass) \

@@ -9,6 +9,7 @@
 #include "Components/TagComponent.h"
 #include "Components/TransformComponent.h"
 #include "VoltEngine/Renderer/EditorCamera.h"
+#include "VoltEngine/Renderer/Mesh.h"
 #include "VoltEngine/Renderer/Renderer.h"
 #include "VoltEngine/Renderer/Renderer2D.h"
 #include "VoltEngine/Renderer/Renderer3D.h"
@@ -150,7 +151,7 @@ namespace Volt
                 if (entityTransform && entityMeshComponent)
                 {
                     const SharedPtr<IMesh>& mesh = entityMeshComponent->GetMesh();
-                    if (mesh)
+                    if (mesh && mesh->IsLoaded())
                     {
                         CRenderer3D::DrawMesh(entityTransform->GetTransform(), mesh);
                     }

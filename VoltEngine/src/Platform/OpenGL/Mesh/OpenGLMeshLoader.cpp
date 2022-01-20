@@ -1,20 +1,35 @@
+#include "OpenGLMeshLoader.h"
+
+#include <future>
+#include <tiny_obj_loader.h>
+
 #include "OpenGLMesh.h"
-
-#include "OpenGLVertexArray.h"
-#include "VoltEngine/Renderer/Buffer.h"
-#include "VoltEngine/Renderer/VertexData.h"
-
-#define TINYOBJLOADER_IMPLEMENTATION
-#include "tiny_obj_loader.h"
-#include "VoltEngine/Renderer/Material.h"
+#include "VoltEngine/AssetManager/AssetManager.h"
+#include "VoltEngine/Core/Time.h"
 
 namespace Volt
 {
-    const SharedPtr<IVertexArray>& COpenGLMesh::GetVertexArray() const { return m_vertexArray; }
+    COpenGLMeshLoader::COpenGLMeshLoader(IAsset* asset)
+        : IAssetLoader(asset), m_meshAssetData() {}
 
-    void COpenGLMesh::Load()
+    void COpenGLMeshLoader::StartAsyncLoad(const std::string& filepath)
     {
-        const std::string& filepath = GetFilepath();
+        std::future<void> future =
+            std::async(std::launch::async, &COpenGLMeshLoader::AsyncLoad, this, filepath);
+    }
+
+    void COpenGLMeshLoader::LoadDataInAsset()
+    {
+        if (COpenGLMesh* asset = dynamic_cast<COpenGLMesh*>(GetAsset()))
+        {
+            asset->LoadData(m_meshAssetData);
+        }
+    }
+
+    void COpenGLMeshLoader::AsyncLoad(std::string filepath)
+    {
+        PROFILE_SCOPE(MeshLoaderAsyncLoad);
+
         tinyobj::attrib_t attrib;
         std::vector<tinyobj::shape_t> shapes;
         std::vector<tinyobj::material_t> materials;
@@ -33,13 +48,10 @@ namespace Volt
         }
 
         if (!warn.empty())
-        {
             VOLT_LOG(Warning, "tinyobjloader WARNING: {0}", warn.c_str());
-        }
         if (!err.empty())
-        {
             VOLT_LOG(Error, "tinyobjloader ERROR: {0}", err.c_str());
-        }
+
 
         for (const tinyobj::shape_t& shape : shapes)
         {
@@ -75,52 +87,22 @@ namespace Volt
                             attrib.texcoords[2 * index.texcoord_index + 1]
                         };
                 }
-                m_vertexData.push_back(vertexData);
-                m_indexData.push_back(static_cast<uint32_t>(m_indexData.size()));
+                m_meshAssetData.Vertices.push_back(vertexData);
+                m_meshAssetData.Indices.push_back(static_cast<uint32_t>(m_meshAssetData.Indices.size()));
             }
         }
         if (!materials.empty())
         {
             const std::string textureName = materials[0].ambient_texname.empty() ? materials[0].diffuse_texname : materials[0].ambient_texname;
             const std::string textureFilepath = textureName.empty() ? "" : baseDir + "/" + textureName;
-            m_material = IMaterial::Create(
-                                           {materials[0].ambient[0], materials[0].ambient[1], materials[0].ambient[2], 1.f},
-                                           {materials[0].diffuse[0], materials[0].diffuse[1], materials[0].diffuse[2], 1.f},
-                                           {materials[0].specular[0], materials[0].specular[1], materials[0].specular[2], 1.f},
-                                           materials[0].shininess,
-                                           textureFilepath
-                                          );
-        }
-        else
-        {
-            m_material = IMaterial::Create();
+            m_meshAssetData.MaterialAssetData.MaterialName = materials[0].name;
+            m_meshAssetData.MaterialAssetData.TextureFilepath = textureFilepath;
+            m_meshAssetData.MaterialAssetData.Ambient = {materials[0].ambient[0], materials[0].ambient[1], materials[0].ambient[2], 1.f};
+            m_meshAssetData.MaterialAssetData.Diffuse = {materials[0].diffuse[0], materials[0].diffuse[1], materials[0].diffuse[2], 1.f};
+            m_meshAssetData.MaterialAssetData.Specular = {materials[0].specular[0], materials[0].specular[1], materials[0].specular[2], 1.f};
+            m_meshAssetData.MaterialAssetData.Shininess = materials[0].shininess;
         }
 
-        CreateBuffers();
-    }
-
-    void COpenGLMesh::Unload()
-    {
-        m_vertexArray.reset();
-        m_material.reset();
-        m_indexData.clear();
-        m_vertexData.clear();
-    }
-
-    void COpenGLMesh::CreateBuffers()
-    {
-        // Vertices
-        const SVertexData* vertexDataPtr = m_vertexData.data();
-        const float* verticesPtr = vertexDataPtr->GetData();
-        SharedPtr<IVertexBuffer> vertexBuffer = IVertexBuffer::Create(verticesPtr, static_cast<uint32_t>(m_vertexData.size()) * sizeof(SVertexData));
-        vertexBuffer->SetLayout(SVertexData::GetStaticBufferLayout());
-
-        // Indices
-        const SharedPtr<IIndexBuffer> indexBuffer = IIndexBuffer::Create(m_indexData.data(), static_cast<uint32_t>(m_indexData.size()));
-
-        // Vertex Array
-        m_vertexArray = IVertexArray::Create();
-        m_vertexArray->AddVertexBuffer(vertexBuffer);
-        m_vertexArray->SetIndexBuffer(indexBuffer);
+        CAssetManager::Get().PushLoadRequest(this);
     }
 }

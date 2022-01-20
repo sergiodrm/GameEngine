@@ -6,7 +6,6 @@
 #include "Mesh.h"
 #include "RenderCommand.h"
 #include "Shader.h"
-#include "TextureManager.h"
 #include "VertexArray.h"
 #include "VertexData.h"
 #include "VoltEngine/Scene/Components/LightComponent.h"

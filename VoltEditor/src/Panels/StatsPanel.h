@@ -13,7 +13,7 @@ namespace Volt
         void DisplaceSamples(uint32_t count);
         float CalculateAverage() const;
     private:
-        int32_t m_maxSamples {64};
+        int32_t m_maxSamples {512};
         std::vector<float> m_samples;
     };
 }

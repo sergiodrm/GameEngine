@@ -8,24 +8,28 @@ namespace Volt
 
     class COpenGLMesh : public IMesh
     {
+    DECLARE_DERIVED_CLASS(COpenGLMesh, IMesh);
     public:
         COpenGLMesh() = default;
+        virtual ~COpenGLMesh() override;
 
+        /** Begin IAsset methods */
+        virtual IAssetLoader* CreateLoader() override;
+        virtual bool IsLoaded() const override;
+        /** End IAsset methods */
+
+        /** Begin IMesh methods */
         virtual const SharedPtr<IVertexArray>& GetVertexArray() const override;
-        virtual const std::vector<SVertexData>& GetVertexData() const override { return m_vertexData; }
-        virtual const std::vector<uint32_t>& GetIndexData() const override { return m_indexData; }
-        virtual uint32_t GetNumTriangles() const override { return static_cast<uint32_t>(m_indexData.size()) / 3; }
+        virtual uint32_t GetNumTriangles() const override { return m_numOfTriangles; }
         virtual const SharedPtr<IMaterial>& GetMaterial() const override { return m_material; }
+        /** End IMesh methods */
 
-        virtual void Load() override;
-        virtual void Unload() override;
-
+        void LoadData(const struct SMeshAssetData& data);
     protected:
-        void CreateBuffers();
     private:
         SharedPtr<IVertexArray> m_vertexArray {nullptr};
-        std::vector<SVertexData> m_vertexData;
-        std::vector<uint32_t> m_indexData;
         SharedPtr<IMaterial> m_material {nullptr};
+        uint32_t m_numOfTriangles {0};
+        bool m_isLoaded {false};
     };
 }

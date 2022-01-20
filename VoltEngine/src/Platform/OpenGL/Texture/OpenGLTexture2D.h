@@ -5,10 +5,17 @@
 
 namespace Volt
 {
+    struct STexture2DAssetData;
+
     class COpenGLTexture2D : public ITexture
     {
     public:
         virtual ~COpenGLTexture2D() override;
+
+        //~ IAsset methods
+        virtual IAssetLoader* CreateLoader() override;
+        virtual bool IsLoaded() const override { return m_isLoaded; }
+        //~ IAsset methods
 
         /** Begin ITexture interface */
         virtual void Bind(uint32_t slot = 0) const override;
@@ -26,16 +33,10 @@ namespace Volt
         virtual bool operator==(const ITexture& other) const override;
         /** End ITexture interface */
 
-        /** Begin IResource interface */
-        virtual void Load() override;
-        virtual void Unload() override;
-        /** End IResource interface */
-
-    protected:
-        void LoadFromFile();
-        void LoadProceduralTexture();
+        void LoadData(const STexture2DAssetData& data);
 
     private:
+        bool m_isLoaded {false};
         uint32_t m_rendererID {0};
         uint32_t m_width {0};
         uint32_t m_height {0};
