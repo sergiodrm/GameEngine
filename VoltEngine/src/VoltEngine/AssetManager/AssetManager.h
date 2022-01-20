@@ -13,11 +13,18 @@ namespace Volt
     {
     public:
         template <typename T>
-        static T* LoadAsset(const std::string& filepath);
+        static SharedPtr<T> CreateEmptyAsset(const std::string& name);
 
         template <typename T>
-        T* Load(const std::string& filepath);
+        static SharedPtr<T> LoadAsset(const std::string& filepath);
 
+        template <typename T>
+        SharedPtr<T> CreateEmpty(const std::string& name);
+
+        template <typename T>
+        SharedPtr<T> Load(const std::string& filepath);
+
+        /** Thread safe: should be called in the main thread at the beginning of the frame to process remaining loads. */
         void ProcessRequests();
 
         /** Thread safe: called from IAssetLoaders in background thread to push them into the requests queue. */
@@ -31,13 +38,38 @@ namespace Volt
     };
 
     template <typename T>
-    T* CAssetManager::LoadAsset(const std::string& filepath)
+    SharedPtr<T> CAssetManager::CreateEmptyAsset(const std::string& name)
+    {
+        return Get().Load<T>(name);
+    }
+
+    template <typename T>
+    SharedPtr<T> CAssetManager::LoadAsset(const std::string& filepath)
     {
         return Get().Load<T>(filepath);
     }
 
     template <typename T>
-    T* CAssetManager::Load(const std::string& filepath)
+    SharedPtr<T> CAssetManager::CreateEmpty(const std::string& name)
+    {
+        T* asset = nullptr;
+        if (T::GetStaticType().template IsA<IAsset>())
+        {
+            if (m_assetRegister.HasAsset(name))
+            {
+                asset = dynamic_cast<T*>(m_assetRegister.GetAsset(name));
+            }
+            else
+            {
+                asset = T::Create();
+                m_assetRegister.AddAsset(name, asset);
+            }
+        }
+        return asset;
+    }
+
+    template <typename T>
+    SharedPtr<T> CAssetManager::Load(const std::string& filepath)
     {
         T* asset = nullptr;
         if (T::GetStaticType().template IsA<IAsset>())
@@ -60,7 +92,7 @@ namespace Volt
     }
 
     template <>
-    IAsset* CAssetManager::Load(const std::string& filepath)
+    inline SharedPtr<IAsset> CAssetManager::Load(const std::string& filepath)
     {
         VOLT_ASSERT(false, "CAssetManager::Load must received a specialization of IAsset!");
         return nullptr;
