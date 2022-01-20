@@ -5,6 +5,7 @@
 #include "OpenGLTexture2D.h"
 #include "stb_image.h"
 #include "VoltEngine/AssetManager/AssetManager.h"
+#include "VoltEngine/Core/Time.h"
 
 namespace Volt
 {
@@ -27,6 +28,7 @@ namespace Volt
 
     void COpenGLTexture2DLoader::AsyncLoad(std::string filepath)
     {
+        PROFILE_SCOPE(Texture2DLoaderAsyncLoad);
         stbi_set_flip_vertically_on_load(1);
         stbi_uc* data = stbi_load(filepath.c_str(), &m_textureAssetData.Width, &m_textureAssetData.Height, &m_textureAssetData.Channels, 0);
         m_textureAssetData.Data = data;

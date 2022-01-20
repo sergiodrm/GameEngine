@@ -5,6 +5,7 @@
 
 #include "OpenGLMesh.h"
 #include "VoltEngine/AssetManager/AssetManager.h"
+#include "VoltEngine/Core/Time.h"
 
 namespace Volt
 {
@@ -27,6 +28,8 @@ namespace Volt
 
     void COpenGLMeshLoader::AsyncLoad(std::string filepath)
     {
+        PROFILE_SCOPE(MeshLoaderAsyncLoad);
+
         tinyobj::attrib_t attrib;
         std::vector<tinyobj::shape_t> shapes;
         std::vector<tinyobj::material_t> materials;

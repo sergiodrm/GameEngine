@@ -7,6 +7,7 @@
 #include "OpenGLMeshLoader.h"
 #include "tiny_obj_loader.h"
 #include "VoltEngine/AssetManager/AssetManager.h"
+#include "VoltEngine/Core/Time.h"
 #include "VoltEngine/Renderer/Material.h"
 #include "VoltEngine/Renderer/VertexArray.h"
 
@@ -33,6 +34,7 @@ namespace Volt
 
     void COpenGLMesh::LoadData(const SMeshAssetData& data)
     {
+        PROFILE_SCOPE(MeshLoadData);
         // Vertices
         const SVertexData* vertexDataPtr = data.Vertices.data();
         const float* verticesPtr = vertexDataPtr->GetData();

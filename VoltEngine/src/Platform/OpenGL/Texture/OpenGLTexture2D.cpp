@@ -3,6 +3,7 @@
 #include "OpenGLTexture2DLoader.h"
 #include "stb_image.h"
 #include "glad/glad.h"
+#include "VoltEngine/Core/Time.h"
 
 namespace Volt
 {
@@ -40,6 +41,7 @@ namespace Volt
 
     void COpenGLTexture2D::LoadData(const STexture2DAssetData& data)
     {
+        PROFILE_SCOPE(Texture2DLoadData);
         m_width = static_cast<uint32_t>(data.Width);
         m_height = static_cast<uint32_t>(data.Height);
 
