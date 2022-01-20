@@ -58,5 +58,6 @@ namespace Volt
         glTextureParameteri(m_rendererID, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
         glTextureSubImage2D(m_rendererID, 0, 0, 0, m_width, m_height, m_dataFormat, GL_UNSIGNED_BYTE, data.Data);
+        m_isLoaded = true;
     }
 }

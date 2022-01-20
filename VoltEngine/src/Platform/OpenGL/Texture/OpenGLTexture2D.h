@@ -35,10 +35,6 @@ namespace Volt
 
         void LoadData(const STexture2DAssetData& data);
 
-    protected:
-        void LoadFromFile();
-        void LoadProceduralTexture();
-
     private:
         bool m_isLoaded {false};
         uint32_t m_rendererID {0};

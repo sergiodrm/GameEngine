@@ -7,10 +7,9 @@
 #include "Time.h"
 #include "Window.h"
 #include "VoltEngine/Events/ApplicationEvent.h"
-#include "VoltEngine/Renderer/MeshManager.h"
 #include "VoltEngine/Renderer/RenderCommand.h"
 #include "VoltEngine/Renderer/Renderer.h"
-#include "VoltEngine/Renderer/TextureManager.h"
+#include "VoltEngine/AssetManager/AssetManager.h"
 #include "VoltEngine/UI/UICommand.h"
 
 namespace Volt
@@ -32,8 +31,7 @@ namespace Volt
         m_window = IWindow::Create(windowSpec);
 
         // Create singletons
-        CTextureManager::Create();
-        CMeshManager::Create();
+        CAssetManager::Create();
 
         // Initialize systems
         CRenderer::Init();
@@ -48,8 +46,7 @@ namespace Volt
         delete m_timer;
         CUICommand::Shutdown();
         CRenderer::Shutdown();
-        CMeshManager::Destroy();
-        CTextureManager::Destroy();
+        CAssetManager::Destroy();
         s_instance = nullptr;
     }
 
@@ -60,6 +57,7 @@ namespace Volt
         while (IsRunning())
         {
             m_timer->Update();
+            CAssetManager::Get().ProcessRequests();
             if (!m_minimized)
             {
                 // Layers update

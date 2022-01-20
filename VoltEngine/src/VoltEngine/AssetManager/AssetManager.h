@@ -42,7 +42,7 @@ namespace Volt
     template <typename T>
     SharedPtr<T> CAssetManager::CreateEmptyAsset(const std::string& name)
     {
-        return Get().Load<T>(name);
+        return Get().CreateEmpty<T>(name);
     }
 
     template <typename T>
@@ -55,7 +55,7 @@ namespace Volt
     SharedPtr<T> CAssetManager::CreateEmpty(const std::string& name)
     {
         SharedPtr<T> asset = nullptr;
-        if (T::GetStaticType() == IAsset::GetStaticType())
+        if (T::IsA(IAsset::GetStaticType()))
         {
             if (m_assetRegister.HasAsset(name))
             {
@@ -79,8 +79,8 @@ namespace Volt
         const std::filesystem::path normalizedPath = absolutePath.lexically_normal();
         const std::string normPathStr = normalizedPath.string();
         const std::string filename = normalizedPath.filename().string();
-        VOLT_ASSERT(normPathStr.empty() | filename.empty(), "Invalid asset filepath");
-        if (T::GetStaticType() == IAsset::GetStaticType())
+        VOLT_ASSERT(!normPathStr.empty() & !filename.empty(), "Invalid asset filepath");
+        if (T::IsA(IAsset::GetStaticType()))
         {
             if (m_assetRegister.HasAsset(normPathStr))
             {

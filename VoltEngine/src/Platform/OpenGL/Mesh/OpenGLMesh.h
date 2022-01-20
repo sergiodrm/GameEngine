@@ -24,7 +24,7 @@ namespace Volt
         virtual const SharedPtr<IMaterial>& GetMaterial() const override { return m_material; }
         /** End IMesh methods */
 
-        void LoadData(const class SMeshAssetData& data);
+        void LoadData(const struct SMeshAssetData& data);
     protected:
     private:
         SharedPtr<IVertexArray> m_vertexArray {nullptr};

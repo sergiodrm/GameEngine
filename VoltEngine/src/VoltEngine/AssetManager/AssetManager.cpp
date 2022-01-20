@@ -4,11 +4,12 @@ namespace Volt
 {
     void CAssetManager::ProcessRequests()
     {
-        m_loadRequestsMutex.lock();
         while (!m_loadRequests.empty())
         {
+            m_loadRequestsMutex.lock();
             IAssetLoader* assetLoader = m_loadRequests.front();
             m_loadRequests.pop();
+            m_loadRequestsMutex.unlock();
             if (assetLoader)
             {
                 assetLoader->LoadDataInAsset();
@@ -21,7 +22,6 @@ namespace Volt
                 delete assetLoader;
             }
         }
-        m_loadRequestsMutex.unlock();
     }
 
     void CAssetManager::PushLoadRequest(IAssetLoader* assetLoader)

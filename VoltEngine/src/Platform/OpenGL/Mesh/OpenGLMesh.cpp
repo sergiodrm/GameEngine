@@ -55,5 +55,6 @@ namespace Volt
         m_material->SetDiffuse(materialData.Diffuse);
         m_material->SetShininess(materialData.Shininess);
         m_material->SetTexture(materialData.TextureFilepath);
+        m_isLoaded = true;
     }
 }
