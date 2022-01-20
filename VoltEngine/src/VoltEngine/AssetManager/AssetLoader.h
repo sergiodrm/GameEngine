@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-
+#include "VoltEngine/Core/Log.h"
 
 namespace Volt
 {
