@@ -1,6 +1,6 @@
 # GameEngine
 A basic engine which I use to practise C++, learn about some libraries (as OpenGL, Imgui...) and try several architecture designs. 
-If you dive in the code and find out bugs or whatever that can be improved, please let my know in the [Issues page](https://github.com/sergiodrm/GameEngine/issues).
+If you dive in the code and find out bugs or whatever that can be improved, please let me know in the [Issues page](https://github.com/sergiodrm/GameEngine/issues).
 
 ![GameEngine Screenshot](doc/GameEngine.png)
 
