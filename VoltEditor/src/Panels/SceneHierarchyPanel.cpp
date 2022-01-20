@@ -5,7 +5,6 @@
 #include "glm/gtc/type_ptr.hpp"
 #include "VoltEngine/Renderer/Material.h"
 #include "VoltEngine/Renderer/Renderer3D.h"
-#include "VoltEngine/Renderer/TextureManager.h"
 #include "VoltEngine/Scene/Components/LightComponent.h"
 #include "VoltEngine/Scene/Components/NativeScriptComponent.h"
 
@@ -366,7 +365,7 @@ namespace Volt
 
             if (!newTextureFilePath.empty())
             {
-                const SharedPtr<ITexture> newTexture = CTextureManager::Get().Load(newTextureFilePath);
+                const SharedPtr<ITexture> newTexture = CAssetManager::LoadAsset<ITexture>(newTextureFilePath);
                 if (newTexture)
                 {
                     component.SetTexture(newTexture);
@@ -392,7 +391,7 @@ namespace Volt
                     const std::string newMeshPath = CFileDialogs::LoadFile("Mesh (*.obj)\0*.obj\0");
                     if (!newMeshPath.empty())
                     {
-                        const SharedPtr<IMesh> newMesh = CMeshManager::Get().Load(newMeshPath);
+                        const SharedPtr<IMesh> newMesh = CAssetManager::LoadAsset<IMesh>(newMeshPath);
                         component.SetMesh(newMesh);
                     }
                 }

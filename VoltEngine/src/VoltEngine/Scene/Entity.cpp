@@ -5,7 +5,6 @@
 #include "Components/LightComponent.h"
 #include "Components/MeshComponent.h"
 #include "Components/NativeScriptComponent.h"
-#include "VoltEngine/Renderer/MeshManager.h"
 
 namespace Volt
 {

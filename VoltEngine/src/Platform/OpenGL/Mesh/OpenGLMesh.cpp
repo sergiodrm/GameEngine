@@ -1,6 +1,5 @@
 #include "OpenGLMesh.h"
 
-#include "OpenGLVertexArray.h"
 #include "VoltEngine/Renderer/Buffer.h"
 #include "VoltEngine/Renderer/VertexData.h"
 
