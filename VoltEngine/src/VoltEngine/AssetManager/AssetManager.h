@@ -1,7 +1,9 @@
 #pragma once
 #include <string>
 #include <queue>
+#include <filesystem>
 
+#include "Asset.h"
 #include "AssetRegister.h"
 #include "VoltEngine/Core/Log.h"
 #include "AssetLoader.h"
@@ -52,12 +54,12 @@ namespace Volt
     template <typename T>
     SharedPtr<T> CAssetManager::CreateEmpty(const std::string& name)
     {
-        T* asset = nullptr;
-        if (T::GetStaticType().template IsA<IAsset>())
+        SharedPtr<T> asset = nullptr;
+        if (T::GetStaticType() == IAsset::GetStaticType())
         {
             if (m_assetRegister.HasAsset(name))
             {
-                asset = dynamic_cast<T*>(m_assetRegister.GetAsset(name));
+                asset = std::dynamic_pointer_cast<T>(m_assetRegister.GetAsset(name));
             }
             else
             {
@@ -71,17 +73,24 @@ namespace Volt
     template <typename T>
     SharedPtr<T> CAssetManager::Load(const std::string& filepath)
     {
-        T* asset = nullptr;
-        if (T::GetStaticType().template IsA<IAsset>())
+        SharedPtr<T> asset = nullptr;
+
+        const std::filesystem::path absolutePath = std::filesystem::absolute(filepath);
+        const std::filesystem::path normalizedPath = absolutePath.lexically_normal();
+        const std::string normPathStr = normalizedPath.string();
+        const std::string filename = normalizedPath.filename().string();
+        VOLT_ASSERT(normPathStr.empty() | filename.empty(), "Invalid asset filepath");
+        if (T::GetStaticType() == IAsset::GetStaticType())
         {
-            if (m_assetRegister.HasAsset(filepath))
+            if (m_assetRegister.HasAsset(normPathStr))
             {
-                asset = dynamic_cast<T*>(m_assetRegister.GetAsset(filepath));
+                asset = std::dynamic_pointer_cast<T>(m_assetRegister.GetAsset(normPathStr));
             }
             else
             {
                 asset = T::Create();
-                m_assetRegister.AddAsset(filepath, asset);
+                asset->SetPath(normPathStr);
+                m_assetRegister.AddAsset(normPathStr, asset);
 
                 IAssetLoader* assetLoader = asset->CreateLoader();
                 m_assetLoaders.push_back(assetLoader);
