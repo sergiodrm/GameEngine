@@ -1,10 +1,10 @@
 #include "OpenGLMaterial.h"
 
 #include "OpenGLMaterialLoader.h"
+#include "VoltEngine/AssetManager/AssetManager.h"
 #include "VoltEngine/Renderer/Shader.h"
 #include "VoltEngine/Renderer/ShaderUniforms.h"
 #include "VoltEngine/Renderer/Texture.h"
-#include "VoltEngine/Renderer/TextureManager.h"
 
 namespace Volt
 {
@@ -14,12 +14,7 @@ namespace Volt
                                      float shininess,
                                      const std::string& textureFilepath)
         : m_ambient(ambient), m_diffuse(diffuse), m_specular(specular), m_shininess(shininess)
-    {
-        if (!textureFilepath.empty())
-        {
-            m_texture = CTextureManager::Get().Load(textureFilepath);
-        }
-    }
+    { }
 
     IAssetLoader* COpenGLMaterial::CreateLoader()
     {
@@ -32,7 +27,7 @@ namespace Volt
         shader->SetFloat4(ShaderUniforms::MaterialDiffuseName, m_diffuse);
         shader->SetFloat4(ShaderUniforms::MaterialSpecularName, m_specular);
         shader->SetFloat(ShaderUniforms::MaterialShininessName, m_shininess);
-        if (m_texture && m_useTexture)
+        if (m_texture && m_texture->IsLoaded() && m_useTexture)
         {
             shader->SetInt(ShaderUniforms::TextureAvailableFlagName, EUniformFlag::True);
             m_texture->Bind();
@@ -41,5 +36,15 @@ namespace Volt
         {
             shader->SetInt(ShaderUniforms::TextureAvailableFlagName, EUniformFlag::False);
         }
+    }
+
+    void COpenGLMaterial::SetTexture(const SharedPtr<ITexture>& texture)
+    {
+        m_texture = texture;
+    }
+
+    void COpenGLMaterial::SetTexture(const std::string& filepath)
+    {
+        m_texture = CAssetManager::LoadAsset<ITexture>(filepath);
     }
 }

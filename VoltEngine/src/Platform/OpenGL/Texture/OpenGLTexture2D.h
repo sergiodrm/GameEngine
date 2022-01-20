@@ -5,6 +5,8 @@
 
 namespace Volt
 {
+    struct STexture2DAssetData;
+
     class COpenGLTexture2D : public ITexture
     {
     public:
@@ -31,6 +33,7 @@ namespace Volt
         virtual bool operator==(const ITexture& other) const override;
         /** End ITexture interface */
 
+        void LoadData(const STexture2DAssetData& data);
 
     protected:
         void LoadFromFile();
