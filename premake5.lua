@@ -19,12 +19,14 @@ IncludeDir["stb_image"] = "VoltEngine/lib/stb_image"
 IncludeDir["imgui"] = "VoltEngine/lib/imgui"
 IncludeDir["tinyobjloader"] = "VoltEngine/lib/tinyobjloader"
 IncludeDir["ImGuizmo"] = "VoltEngine/lib/ImGuizmo"
+IncludeDir["yamlcpp"] = "VoltEngine/lib/yaml-cpp"
 
 group "Dependencies"
 	include "VoltEngine/lib/GLFW"
 	include "VoltEngine/lib/glad"
 	include "VoltEngine/lib/imgui"
 	include "VoltEngine/lib/tinyobjloader"
+	include "VoltEngine/lib/yaml-cpp"
 	
 
 group "Engine"
@@ -63,6 +65,7 @@ project "VoltEngine"
         "%{IncludeDir.imgui}",
         "%{IncludeDir.tinyobjloader}",
         "%{IncludeDir.ImGuizmo}",
+        "%{IncludeDir.yamlcpp}",
 	}
 
 	links
@@ -71,6 +74,7 @@ project "VoltEngine"
 		"Glad",
         "ImGui",
         "tinyobjloader",
+		"yaml-cpp",
 		"opengl32.lib"
 	}
 	
@@ -121,6 +125,7 @@ project "VoltEditor"
         "%{IncludeDir.stb_image}",
         "%{IncludeDir.imgui}",
         "%{IncludeDir.ImGuizmo}",
+        "%{IncludeDir.yamlcpp}",
 	}
 
 	links

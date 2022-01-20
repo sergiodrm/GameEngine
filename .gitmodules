@@ -4,3 +4,6 @@
 [submodule "VoltEngine/lib/ImGuizmo"]
 	path = VoltEngine/lib/ImGuizmo
 	url = https://github.com/sergiodrm/ImGuizmo.git
+[submodule "VoltEngine/lib/yaml-cpp"]
+	path = VoltEngine/lib/yaml-cpp
+	url = https://github.com/sergiodrm/yaml-cpp.git
