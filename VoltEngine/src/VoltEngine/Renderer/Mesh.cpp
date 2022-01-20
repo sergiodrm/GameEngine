@@ -1,7 +1,7 @@
 #include "Mesh.h"
 
 #include "RendererAPI.h"
-#include "Platform/OpenGL/OpenGLMesh.h"
+#include "Platform/OpenGL/Mesh/OpenGLMesh.h"
 #include "VoltEngine/Core/Log.h"
 
 namespace Volt

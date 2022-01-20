@@ -1,16 +1,10 @@
 #pragma once
 #include "VoltEngine/Core/Log.h"
-#include "VoltEngine/Resources/Resource.h"
+#include "VoltEngine/AssetManager/Asset.h"
 
 namespace Volt
 {
-    enum class ETextureLoadType
-    {
-        File,
-        Procedural
-    };
-
-    class ITexture : public IResource
+    class ITexture : public IAsset
     {
     public:
         static SharedPtr<ITexture> Create();
