@@ -1,5 +1,7 @@
 #include "StatsPanel.h"
 
+#include <algorithm>
+
 #include "imgui.h"
 #include "VoltEngine/Core/Application.h"
 #include "VoltEngine/Core/Time.h"
@@ -44,9 +46,13 @@ namespace Volt
             const float ms = timer.GetElapsedTimeMilliseconds();
             Add(ms);
 
+            auto [min, max] = std::minmax_element(m_samples.begin(), m_samples.end());
+
             BeginDoubleColumn();
             PrintTextValue("FPS", 1000.f / ms);
             PrintTextValue("Frame time", ms, "%.4f ms");
+            PrintTextValue("Min peak", *min, "%.4f ms");
+            PrintTextValue("Max peak", *max, "%.4f ms");
             EndDoubleColumn();
 
             if (ImGui::TreeNodeEx("Graph", ImGuiTreeNodeFlags_DefaultOpen))
