@@ -8,6 +8,7 @@
 
 namespace Volt
 {
+    class ITexture;
     class IShader;
 
     class IMaterial : public IAsset
@@ -27,6 +28,8 @@ namespace Volt
         virtual const glm::vec4& GetSpecular() const = 0;
         virtual float GetShininess() const = 0;
         virtual bool IsUsingTexture() const = 0;
+        virtual void SetTexture(const SharedPtr<ITexture>& texture) = 0;
+        virtual void SetTexture(const std::string& filepath) = 0;
 
         virtual void SetAmbient(const glm::vec4& ambient) = 0;
         virtual void SetDiffuse(const glm::vec4& diffuse) = 0;

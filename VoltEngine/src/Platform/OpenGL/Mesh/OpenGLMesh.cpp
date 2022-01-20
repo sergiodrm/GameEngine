@@ -48,6 +48,13 @@ namespace Volt
         m_vertexArray->AddVertexBuffer(vertexBuffer);
         m_vertexArray->SetIndexBuffer(indexBuffer);
 
-        // TODO: ask material asset to AssetManager and saved it in m_material.
+        // Cache material data
+        const SMaterialAssetData& materialData = data.MaterialAssetData;
+        m_material = CAssetManager::CreateEmptyAsset<IMaterial>(materialData.MaterialName);
+        m_material->SetAmbient(materialData.Ambient);
+        m_material->SetSpecular(materialData.Specular);
+        m_material->SetDiffuse(materialData.Diffuse);
+        m_material->SetShininess(materialData.Shininess);
+        m_material->SetTexture(materialData.TextureFilepath);
     }
 }

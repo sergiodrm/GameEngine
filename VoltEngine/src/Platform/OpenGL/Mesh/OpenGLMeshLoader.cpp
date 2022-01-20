@@ -92,6 +92,7 @@ namespace Volt
         {
             const std::string textureName = materials[0].ambient_texname.empty() ? materials[0].diffuse_texname : materials[0].ambient_texname;
             const std::string textureFilepath = textureName.empty() ? "" : baseDir + "/" + textureName;
+            m_meshAssetData.MaterialAssetData.MaterialName = materials[0].name;
             m_meshAssetData.MaterialAssetData.TextureFilepath = textureFilepath;
             m_meshAssetData.MaterialAssetData.Ambient = {materials[0].ambient[0], materials[0].ambient[1], materials[0].ambient[2], 1.f};
             m_meshAssetData.MaterialAssetData.Diffuse = {materials[0].diffuse[0], materials[0].diffuse[1], materials[0].diffuse[2], 1.f};

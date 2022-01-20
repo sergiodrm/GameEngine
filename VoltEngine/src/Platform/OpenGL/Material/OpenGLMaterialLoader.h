@@ -6,7 +6,8 @@ namespace Volt
 {
     struct SMaterialAssetData
     {
-        glm::vec4 Ambient;
+        std::string MaterialName {};
+        glm::vec4 Ambient {1.f};
         glm::vec4 Diffuse;
         glm::vec4 Specular;
         float Shininess {0.f};
