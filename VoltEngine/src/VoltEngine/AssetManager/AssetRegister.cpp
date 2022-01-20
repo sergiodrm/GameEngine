@@ -2,7 +2,7 @@
 
 namespace Volt
 {
-    void CAssetRegister::AddAsset(const std::string& filepath, IAsset* asset)
+    void CAssetRegister::AddAsset(const std::string& filepath, const SharedPtr<IAsset>& asset)
     {
         if (asset && !HasAsset(filepath))
         {
@@ -15,9 +15,9 @@ namespace Volt
         m_assets.erase(filepath);
     }
 
-    IAsset* CAssetRegister::GetAsset(const std::string& filepath) const
+    SharedPtr<IAsset> CAssetRegister::GetAsset(const std::string& filepath) const
     {
-        IAsset* asset = nullptr;
+        SharedPtr<IAsset> asset = nullptr;
         const auto assetIterator = m_assets.find(filepath);
         if (assetIterator != m_assets.end())
         {
