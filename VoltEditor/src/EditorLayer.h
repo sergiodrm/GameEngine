@@ -17,6 +17,11 @@ public:
     virtual void OnUIRender() override;
     virtual bool OnEvent(Volt::CEvent& e) override;
 
+protected:
+    void NewScene();
+    void SaveScene();
+    void LoadScene();
+
 private:
     bool m_viewportFocused {true};
 

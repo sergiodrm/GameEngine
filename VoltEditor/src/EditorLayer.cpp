@@ -11,6 +11,7 @@
 #include "VoltEngine/Scene/Components/NativeScriptComponent.h"
 
 #include "VoltEngine/Renderer/EditorCamera.h"
+#include "VoltEngine/Scene/SceneSerializer.h"
 #include "VoltEngine/UI/UICommand.h"
 
 #define TEST_TEXTURE_PATH "assets/textures/sample.png"
@@ -87,6 +88,48 @@ void CEditorLayer::OnUpdate(float elapsedSeconds)
 
 void CEditorLayer::OnUIRender()
 {
+    {
+        static bool showDemoWindow = false;
+        if (ImGui::BeginMenuBar())
+        {
+            if (ImGui::BeginMenu("File"))
+            {
+                if (ImGui::MenuItem("New scene", "Ctrl+N"))
+                    NewScene();
+                if (ImGui::MenuItem("Open file...", "Ctrl+O"))
+                    LoadScene();
+                if (ImGui::MenuItem("Save file as...", "Ctrl+S"))
+                    SaveScene();
+                if (ImGui::MenuItem("Exit"))
+                    Volt::CApplication::Get().Close();
+
+
+                ImGui::EndMenu();
+            }
+            if (ImGui::BeginMenu("Options"))
+            {
+                if (showDemoWindow)
+                {
+                    if (ImGui::MenuItem("Hide imgui demo"))
+                        showDemoWindow = false;
+                }
+                else
+                {
+                    if (ImGui::MenuItem("Show imgui demo"))
+                        showDemoWindow = true;
+                }
+                ImGui::EndMenu();
+            }
+
+            ImGui::EndMenuBar();
+        }
+
+        if (showDemoWindow)
+        {
+            ImGui::ShowDemoWindow();
+        }
+    }
+
     m_sceneHierarchyPanel->OnUIRender();
     m_statsPanel->OnUIRender();
     m_logPanel->OnUIRender();
@@ -121,4 +164,24 @@ bool CEditorLayer::OnEvent(Volt::CEvent& e)
     m_editorCamera->OnEvent(e);
     m_gizmo->OnEvent(e);
     return false;
+}
+
+void CEditorLayer::NewScene()
+{
+    m_scene.reset();
+    m_scene = Volt::CreateSharedPtr<Volt::CScene>();
+}
+
+void CEditorLayer::SaveScene()
+{
+    const std::string filepath = Volt::CFileDialogs::SaveFile("GameEngine Scene (*.scn)\0*.scn\0");
+    Volt::CSceneSerializer sceneSerializer(m_scene.get());
+    sceneSerializer.Serialize(filepath);
+}
+
+void CEditorLayer::LoadScene()
+{
+    const std::string filepath = Volt::CFileDialogs::LoadFile("GameEngine Scene (*.scn)\0*.scn\0");
+    Volt::CSceneSerializer sceneSerializer(m_scene.get());
+    sceneSerializer.Deserialize(filepath);
 }

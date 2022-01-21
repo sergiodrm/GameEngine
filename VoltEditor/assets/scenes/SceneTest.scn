@@ -1,0 +1,21 @@
+Scene: Untitled
+Entities:
+  - EntityHandle: 0
+    TagComponent:
+      Tag: Entity1
+    TransformComponent:
+      Translation: [15.1021175, 0, -5.8989315]
+      Rotation: [0, 0.411897719, 0]
+      Scale: [1, 1, 1]
+    LightComponent:
+      Type: 0
+      Color: [1, 0.662745118, 0.411764711, 1]
+  - EntityHandle: 1
+    TagComponent:
+      Tag: Entity2
+    TransformComponent:
+      Translation: [0, 0, 0]
+      Rotation: [-1.28470671, 0, 0]
+      Scale: [1, 1, 1]
+    MeshComponent:
+      Mesh: F:\Programacion\GameEngine\VoltEngine\VoltEditor\assets\models\skull\12140_Skull_v3_L2.obj

@@ -178,7 +178,7 @@ namespace Volt
     void CSceneSerializer::Serialize(const std::string& filepath)
     {
         const std::filesystem::path path = std::filesystem::absolute(filepath).lexically_normal();
-        VOLT_LOG(Info, "Serializing scene to file: {0}", path.c_str());
+        VOLT_LOG(Info, "Serializing scene to file: {0}", path.string().c_str());
 
         YAML::Emitter out;
         out << YAML::BeginMap; // Begin scene
@@ -195,7 +195,7 @@ namespace Volt
         out << YAML::EndMap; // End scene
 
         std::ofstream fileout(path.c_str());
-        VOLT_ASSERT(fileout.is_open(), "Couldn't write on file {0}", path.c_str());
+        VOLT_ASSERT(fileout.is_open(), "Couldn't write on file {0}", path.string().c_str());
         fileout << out.c_str();
         fileout.close();
     }
