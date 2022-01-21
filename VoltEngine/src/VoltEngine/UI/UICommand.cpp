@@ -79,7 +79,6 @@ namespace Volt
 
         ImGui::Begin("Dockspace", nullptr, window_flags);
         ImGui::PopStyleVar(2);
-
         // DockSpace
         ImGuiIO& io = ImGui::GetIO();
         ImGuiStyle& style = ImGui::GetStyle();
@@ -91,41 +90,6 @@ namespace Volt
             ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
         }
         style.WindowMinSize.x = minWinSizeX;
-
-        if (ImGui::BeginMenuBar())
-        {
-            if (ImGui::BeginMenu("File"))
-            {
-                if (ImGui::MenuItem("Exit"))
-                {
-                    // @todo remove from here
-                    CApplication::Get().Close();
-                }
-
-                ImGui::EndMenu();
-            }
-            if (ImGui::BeginMenu("Options"))
-            {
-                if (showDemoWindow)
-                {
-                    if (ImGui::MenuItem("Hide imgui demo"))
-                        showDemoWindow = false;
-                }
-                else
-                {
-                    if (ImGui::MenuItem("Show imgui demo"))
-                        showDemoWindow = true;
-                }
-                ImGui::EndMenu();
-            }
-
-            ImGui::EndMenuBar();
-        }
-
-        if (showDemoWindow)
-        {
-            ImGui::ShowDemoWindow();
-        }
     }
 
     void CUICommand::EndFrame()
