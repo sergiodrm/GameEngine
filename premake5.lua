@@ -19,7 +19,7 @@ IncludeDir["stb_image"] = "VoltEngine/lib/stb_image"
 IncludeDir["imgui"] = "VoltEngine/lib/imgui"
 IncludeDir["tinyobjloader"] = "VoltEngine/lib/tinyobjloader"
 IncludeDir["ImGuizmo"] = "VoltEngine/lib/ImGuizmo"
-IncludeDir["yamlcpp"] = "VoltEngine/lib/yaml-cpp"
+IncludeDir["yamlcpp"] = "VoltEngine/lib/yaml-cpp/include"
 
 group "Dependencies"
 	include "VoltEngine/lib/GLFW"
