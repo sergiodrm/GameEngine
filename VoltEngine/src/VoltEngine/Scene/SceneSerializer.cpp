@@ -12,6 +12,7 @@
 #include "Components/TransformComponent.h"
 #include "glm/glm.hpp"
 #include "VoltEngine/Core/Log.h"
+#include "VoltEngine/Renderer/Material.h"
 #include "VoltEngine/Renderer/Mesh.h"
 #include "VoltEngine/Renderer/Texture.h"
 #include "yaml-cpp/yaml.h"
@@ -131,12 +132,21 @@ namespace Volt
         }
         if (entity->HasComponent<CMeshComponent>())
         {
-            SharedPtr<IMesh> mesh = entity->GetComponent<CMeshComponent>()->GetMesh();
-            if (mesh)
+            const SharedPtr<IMesh> mesh = entity->GetComponent<CMeshComponent>()->GetMesh();
+            const SharedPtr<IMaterial> material = mesh->GetMaterial();
+            if (mesh && material)
             {
                 out << YAML::Key << "MeshComponent";
                 out << YAML::BeginMap; // Begin MeshComponent
                 out << YAML::Key << "Mesh" << YAML::Value << mesh->GetPath().c_str();
+                out << YAML::Key << "Material";
+                out << YAML::BeginMap; // Begin Material
+                out << YAML::Key << "Ambient" << YAML::Value << material->GetAmbient();
+                out << YAML::Key << "Diffuse" << YAML::Value << material->GetDiffuse();
+                out << YAML::Key << "Specular" << YAML::Value << material->GetSpecular();
+                out << YAML::Key << "Shininess" << YAML::Value << material->GetShininess();
+                out << YAML::Key << "IsUsingTexture" << YAML::Value << material->IsUsingTexture();
+                out << YAML::EndMap; // End Material
                 out << YAML::EndMap; // End MeshComponent 
             }
         }
