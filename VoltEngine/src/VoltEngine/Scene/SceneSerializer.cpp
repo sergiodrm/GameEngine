@@ -11,7 +11,9 @@
 #include "Components/SpriteRenderComponent.h"
 #include "Components/TransformComponent.h"
 #include "glm/glm.hpp"
+#include "VoltEngine/AssetManager/AssetManager.h"
 #include "VoltEngine/Core/Log.h"
+#include "VoltEngine/Core/Time.h"
 #include "VoltEngine/Renderer/Material.h"
 #include "VoltEngine/Renderer/Mesh.h"
 #include "VoltEngine/Renderer/Texture.h"
@@ -90,6 +92,7 @@ namespace Volt
 
     static void SerializeEntity(YAML::Emitter& out, CEntity* entity)
     {
+        PROFILE_SCOPE(EntitySerialization);
         out << YAML::BeginMap; // Begin entity
         out << YAML::Key << "EntityHandle" << YAML::Value << entity->GetID();
 
@@ -175,7 +178,64 @@ namespace Volt
             out << YAML::EndMap; // End NativeScriptComponent
         }
 
-        out << YAML::EndMap; // Begin entity
+        out << YAML::EndMap; // End entity
+    }
+
+    static void DeserializeEntity(CEntity* entity, const YAML::Node& entityNode)
+    {
+        PROFILE_SCOPE(EntityDeserialization);
+        const uint32_t handle = entityNode["EntityHandle"].as<uint32_t>();
+        const std::string name = entityNode["TagComponent"]["Tag"].as<std::string>();
+        VOLT_LOG(Info, "Deserializating {0}:{1}...", handle, name.c_str());
+        CTagComponent* tag = entity->GetComponent<CTagComponent>();
+        tag->SetTag(name);
+
+        const YAML::Node transformNode = entityNode["TransformComponent"];
+        CTransformComponent* transform = entity->GetComponent<CTransformComponent>();
+        transform->SetPosition(transformNode["Translation"].as<glm::vec3>());
+        transform->SetRotation(transformNode["Rotation"].as<glm::vec3>());
+        transform->SetScale(transformNode["Scale"].as<glm::vec3>());
+
+        if (const YAML::Node cameraNode = entityNode["CameraComponent"])
+        {
+            CCameraComponent* camera = entity->AddComponent<CCameraComponent>();
+            camera->SetPrimary(cameraNode["Primary"].as<bool>());
+        }
+        if (const YAML::Node lightNode = entityNode["LightComponent"])
+        {
+            CLightComponent* light = entity->AddComponent<CLightComponent>();
+            light->SetType(static_cast<ELightType>(lightNode["Type"].as<uint32_t>()));
+            light->SetColor(lightNode["Color"].as<glm::vec4>());
+        }
+        if (const YAML::Node meshNode = entityNode["MeshComponent"])
+        {
+            const YAML::Node materialNode = meshNode["Material"];
+
+            CMeshComponent* meshComponent = entity->AddComponent<CMeshComponent>();
+            SharedPtr<IMesh> mesh = CAssetManager::LoadAsset<IMesh>(meshNode["Mesh"].as<std::string>());
+            SharedPtr<IMaterial> material = mesh->GetMaterial();
+            VOLT_ASSERT(mesh && material, "Failed on load mesh while loading entity {0}", name.c_str());
+            material->SetAmbient(materialNode["Ambient"].as<glm::vec4>());
+            material->SetDiffuse(materialNode["Diffuse"].as<glm::vec4>());
+            material->SetSpecular(materialNode["Specular"].as<glm::vec4>());
+            material->SetShininess(materialNode["Ambient"].as<float>());
+            material->UseTexture(materialNode["IsUsingTexture"].as<bool>());
+            meshComponent->SetMesh(mesh);
+        }
+        if (const YAML::Node spriteNode = entityNode["SpriteRenderComponent"])
+        {
+            CSpriteRenderComponent* sprite = entity->AddComponent<CSpriteRenderComponent>();
+            sprite->SetColor(spriteNode["Color"].as<glm::vec4>());
+            const std::string texturePath = spriteNode["Texture"].as<std::string>();
+            if (texturePath != "Empty")
+            {
+                sprite->SetTexture(CAssetManager::LoadAsset<ITexture>(texturePath));
+            }
+        }
+        if (const YAML::Node scriptNode = entityNode["NativeScriptComponent"])
+        {
+            // TODO
+        }
     }
 
 
@@ -187,6 +247,7 @@ namespace Volt
 
     void CSceneSerializer::Serialize(const std::string& filepath)
     {
+        PROFILE_SCOPE(Serialization);
         const std::filesystem::path path = std::filesystem::absolute(filepath).lexically_normal();
         VOLT_LOG(Info, "Serializing scene to file: {0}", path.string().c_str());
 
@@ -210,6 +271,32 @@ namespace Volt
         fileout.close();
     }
 
-    void CSceneSerializer::Deserialize(const std::string& filepath)
-    { }
+    bool CSceneSerializer::Deserialize(const std::string& filepath)
+    {
+        PROFILE_SCOPE(Deserialization);
+        const std::filesystem::path path = std::filesystem::absolute(filepath);
+        VOLT_LOG(Info, "Deserializing scene from file {0}", path.string().c_str());
+
+        const std::ifstream stream(path.string().c_str());
+        std::stringstream buffer;
+        buffer << stream.rdbuf();
+
+        const YAML::Node root = YAML::Load(buffer.str());
+        const std::string sceneName = root["Scene"].as<std::string>();
+        VOLT_LOG(Info, "Loading {0} scene...", sceneName.c_str());
+
+        const YAML::Node entitiesRoot = root["Entities"];
+        if (!entitiesRoot.IsNull())
+        {
+            for (YAML::detail::iterator_value entityNode : entitiesRoot)
+            {
+                CEntity* entity = m_scene->CreateEntity();
+                DeserializeEntity(entity, entityNode);
+            }
+        }
+        else
+            VOLT_LOG(Error, "Invalid yaml format {0}", filepath.c_str());
+
+        return true;
+    }
 }
