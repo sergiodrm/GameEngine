@@ -1,16 +1,19 @@
 Scene: Untitled
+Render:
+  Ambient color: [1, 1, 1]
+  Ambient strength: 0.216000006
 Entities:
   - EntityHandle: 0
     TagComponent:
       Tag: Skull
     TransformComponent:
-      Translation: [-17.1402531, 0, 0]
-      Rotation: [-1.55785537, 0, 0]
-      Scale: [1, 0.999995649, 0.999995649]
+      Translation: [5.96046448e-08, 0, 0]
+      Rotation: [-1.54612935, 0, 0]
+      Scale: [1, 1, 1]
     MeshComponent:
       Mesh: F:\Programacion\GameEngine\VoltEngine\VoltEditor\assets\models\skull\12140_Skull_v3_L2.obj
       Material:
-        Ambient: [0.67088604, 0.407626987, 0.407626987, 1]
+        Ambient: [1, 1, 1, 1]
         Diffuse: [1, 1, 1, 1]
         Specular: [0.116999999, 0.116999999, 0.116999999, 1]
         Shininess: 24
@@ -19,9 +22,9 @@ Entities:
     TagComponent:
       Tag: Light
     TransformComponent:
-      Translation: [0, 0, 0]
+      Translation: [12.546051, 0, 0]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
     LightComponent:
       Type: 0
-      Color: [0.0862745121, 0.941176474, 0.670588255, 1]
+      Color: [1, 1, 1, 1]

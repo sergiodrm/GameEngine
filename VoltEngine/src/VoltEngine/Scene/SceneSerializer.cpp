@@ -255,11 +255,11 @@ namespace Volt
         YAML::Emitter out;
         out << YAML::BeginMap; // Begin scene
         out << YAML::Key << "Scene" << YAML::Value << "Untitled";
-        //out << YAML::Key << "Render";
-        //out << YAML::BeginMap; // Begin Render
-        //out << YAML::Key << "Ambient color" << YAML::Value << CRenderer3D::AmbientColor;
-        //out << YAML::Key << "Ambient strength" << YAML::Value << CRenderer3D::AmbientStrength;
-        //out << YAML::EndMap; // End Render
+        out << YAML::Key << "Render";
+        out << YAML::BeginMap; // Begin Render
+        out << YAML::Key << "Ambient color" << YAML::Value << CRenderer3D::AmbientColor;
+        out << YAML::Key << "Ambient strength" << YAML::Value << CRenderer3D::AmbientStrength;
+        out << YAML::EndMap; // End Render
         out << YAML::Key << "Entities" << YAML::Value << YAML::BeginSeq; // Begin Entities
         m_scene->GetRegistry().Each([&](CEntity* entity)
         {
@@ -291,7 +291,9 @@ namespace Volt
         const std::string sceneName = root["Scene"].as<std::string>();
         VOLT_LOG(Info, "Loading {0} scene...", sceneName.c_str());
 
-        //const YAML::Node render = root["Render"];
+        const YAML::Node render = root["Render"];
+        CRenderer3D::AmbientColor = render["Ambient color"].as<glm::vec3>();
+        CRenderer3D::AmbientStrength = render["Ambient strength"].as<float>();
 
         const YAML::Node entitiesRoot = root["Entities"];
         if (!entitiesRoot.IsNull())
