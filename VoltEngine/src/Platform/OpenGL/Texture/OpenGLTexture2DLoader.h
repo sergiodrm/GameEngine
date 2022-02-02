@@ -18,10 +18,9 @@ namespace Volt
         COpenGLTexture2DLoader(IAsset* asset);
 
         virtual void LoadDataInAsset() override;
-        virtual void StartAsyncLoad(const std::string& filepath) override;
 
     protected:
-        void AsyncLoad(std::string filepath);
+        virtual void Load(std::string filepath, bool async) override;
     private:
         STexture2DAssetData m_textureAssetData {};
     };

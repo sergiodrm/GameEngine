@@ -13,7 +13,7 @@ namespace Volt
         friend class CAssetManager;
     public:
         virtual ~IAsset() = default;
-        virtual class IAssetLoader* CreateLoader() = 0;
+        virtual UniquePtr<class IAssetLoader> CreateLoader() = 0;
         virtual bool IsLoaded() const = 0;
 
         virtual std::string GetName() const { return m_path.filename().string(); }

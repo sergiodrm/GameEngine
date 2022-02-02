@@ -21,12 +21,7 @@ namespace Volt
         }
     }
 
-    void COpenGLTexture2DLoader::StartAsyncLoad(const std::string& filepath)
-    {
-        std::future<void> future = std::async(std::launch::async, &COpenGLTexture2DLoader::AsyncLoad, this, filepath);
-    }
-
-    void COpenGLTexture2DLoader::AsyncLoad(std::string filepath)
+    void COpenGLTexture2DLoader::Load(std::string filepath, bool async)
     {
         PROFILE_SCOPE(Texture2DLoaderAsyncLoad);
         stbi_set_flip_vertically_on_load(1);
@@ -34,6 +29,10 @@ namespace Volt
         m_textureAssetData.Data = data;
         VOLT_ASSERT(data, "Couldn't load image from: {0}", filepath.c_str());
         m_textureAssetData.TextureName = filepath;
-        CAssetManager::Get().PushLoadRequest(this);
+
+        if (async)
+        {
+            CAssetManager::Get().PushLoadRequest(this);
+        }
     }
 }

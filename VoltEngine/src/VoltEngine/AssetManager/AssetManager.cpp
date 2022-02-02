@@ -13,13 +13,7 @@ namespace Volt
             if (assetLoader)
             {
                 assetLoader->LoadDataInAsset();
-
-                std::vector<IAssetLoader*>::iterator it = std::find(m_assetLoaders.begin(), m_assetLoaders.end(), assetLoader);
-                if (it != m_assetLoaders.end())
-                {
-                    m_assetLoaders.erase(it);
-                }
-                delete assetLoader;
+                RemoveLoader(assetLoader);
             }
         }
     }
@@ -31,6 +25,20 @@ namespace Volt
             m_loadRequestsMutex.lock();
             m_loadRequests.push(assetLoader);
             m_loadRequestsMutex.unlock();
+        }
+    }
+
+    void CAssetManager::RemoveLoader(IAssetLoader* loader)
+    {
+        const std::vector<UniquePtr<IAssetLoader>>::const_iterator it =
+            std::find_if(m_assetLoaders.begin(), m_assetLoaders.end(),
+                         [&](const UniquePtr<IAssetLoader>& other)
+                         {
+                             return loader == other.get();
+                         });
+        if (it != m_assetLoaders.end())
+        {
+            m_assetLoaders.erase(it);
         }
     }
 }

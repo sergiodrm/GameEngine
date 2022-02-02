@@ -16,6 +16,7 @@
 #include "VoltEngine/Core/Time.h"
 #include "VoltEngine/Renderer/Material.h"
 #include "VoltEngine/Renderer/Mesh.h"
+#include "VoltEngine/Renderer/Renderer3D.h"
 #include "VoltEngine/Renderer/Texture.h"
 #include "yaml-cpp/yaml.h"
 
@@ -218,7 +219,7 @@ namespace Volt
             material->SetAmbient(materialNode["Ambient"].as<glm::vec4>());
             material->SetDiffuse(materialNode["Diffuse"].as<glm::vec4>());
             material->SetSpecular(materialNode["Specular"].as<glm::vec4>());
-            material->SetShininess(materialNode["Ambient"].as<float>());
+            material->SetShininess(materialNode["Shininess"].as<float>());
             material->UseTexture(materialNode["IsUsingTexture"].as<bool>());
             meshComponent->SetMesh(mesh);
         }
@@ -254,6 +255,11 @@ namespace Volt
         YAML::Emitter out;
         out << YAML::BeginMap; // Begin scene
         out << YAML::Key << "Scene" << YAML::Value << "Untitled";
+        //out << YAML::Key << "Render";
+        //out << YAML::BeginMap; // Begin Render
+        //out << YAML::Key << "Ambient color" << YAML::Value << CRenderer3D::AmbientColor;
+        //out << YAML::Key << "Ambient strength" << YAML::Value << CRenderer3D::AmbientStrength;
+        //out << YAML::EndMap; // End Render
         out << YAML::Key << "Entities" << YAML::Value << YAML::BeginSeq; // Begin Entities
         m_scene->GetRegistry().Each([&](CEntity* entity)
         {
@@ -284,6 +290,8 @@ namespace Volt
         const YAML::Node root = YAML::Load(buffer.str());
         const std::string sceneName = root["Scene"].as<std::string>();
         VOLT_LOG(Info, "Loading {0} scene...", sceneName.c_str());
+
+        //const YAML::Node render = root["Render"];
 
         const YAML::Node entitiesRoot = root["Entities"];
         if (!entitiesRoot.IsNull())

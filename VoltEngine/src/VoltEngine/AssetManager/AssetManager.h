@@ -14,17 +14,28 @@ namespace Volt
     class CAssetManager : public ISingleton<CAssetManager>
     {
     public:
+        struct SLoadSpecs
+        {
+            enum ELoadType : uint8_t
+            {
+                Sync,
+                Async
+            };
+
+            ELoadType LoadType {Sync};
+        };
+
         template <typename T>
         static SharedPtr<T> CreateEmptyAsset(const std::string& name);
 
         template <typename T>
-        static SharedPtr<T> LoadAsset(const std::string& filepath);
+        static SharedPtr<T> LoadAsset(const std::string& filepath, const SLoadSpecs& loadSpecs = SLoadSpecs());
 
         template <typename T>
         SharedPtr<T> CreateEmpty(const std::string& name);
 
         template <typename T>
-        SharedPtr<T> Load(const std::string& filepath);
+        SharedPtr<T> Load(const std::string& filepath, const SLoadSpecs& loadSpecs);
 
         /** Thread safe: should be called in the main thread at the beginning of the frame to process remaining loads. */
         void ProcessRequests();
@@ -32,9 +43,12 @@ namespace Volt
         /** Thread safe: called from IAssetLoaders in background thread to push them into the requests queue. */
         void PushLoadRequest(IAssetLoader* assetLoader);
 
+    protected:
+        void RemoveLoader(IAssetLoader* loader);
+
     private:
         std::queue<IAssetLoader*> m_loadRequests;
-        std::vector<IAssetLoader*> m_assetLoaders;
+        std::vector<UniquePtr<IAssetLoader>> m_assetLoaders;
         CAssetRegister m_assetRegister;
         std::mutex m_loadRequestsMutex;
     };
@@ -46,9 +60,9 @@ namespace Volt
     }
 
     template <typename T>
-    SharedPtr<T> CAssetManager::LoadAsset(const std::string& filepath)
+    SharedPtr<T> CAssetManager::LoadAsset(const std::string& filepath, const SLoadSpecs& loadSpecs)
     {
-        return Get().Load<T>(filepath);
+        return Get().Load<T>(filepath, loadSpecs);
     }
 
     template <typename T>
@@ -71,7 +85,7 @@ namespace Volt
     }
 
     template <typename T>
-    SharedPtr<T> CAssetManager::Load(const std::string& filepath)
+    SharedPtr<T> CAssetManager::Load(const std::string& filepath, const SLoadSpecs& loadSpecs)
     {
         SharedPtr<T> asset = nullptr;
 
@@ -79,8 +93,7 @@ namespace Volt
         const std::filesystem::path normalizedPath = absolutePath.lexically_normal();
         const std::string normPathStr = normalizedPath.string();
         const std::string filename = normalizedPath.filename().string();
-        VOLT_ASSERT(!normPathStr.empty() & !filename.empty(), "Invalid asset filepath");
-        if (T::IsA(IAsset::GetStaticType()))
+        if (!normPathStr.empty() & !filename.empty() && T::IsA(IAsset::GetStaticType()))
         {
             if (m_assetRegister.HasAsset(normPathStr))
             {
@@ -92,18 +105,37 @@ namespace Volt
                 asset->SetPath(normPathStr);
                 m_assetRegister.AddAsset(normPathStr, asset);
 
-                IAssetLoader* assetLoader = asset->CreateLoader();
-                m_assetLoaders.push_back(assetLoader);
-                assetLoader->StartAsyncLoad(filepath);
+                UniquePtr<IAssetLoader> assetLoader = asset->CreateLoader();
+                switch (loadSpecs.LoadType)
+                {
+                    case SLoadSpecs::Sync:
+                        {
+                            assetLoader->LoadFromFile(filepath);
+                        }
+                        break;
+                    case SLoadSpecs::Async:
+                        {
+                            IAssetLoader* assetLoaderPtr = assetLoader.get();
+                            m_assetLoaders.push_back(std::move(assetLoader));
+                            assetLoaderPtr->AsyncLoadFromFile(filepath);
+                        }
+                        break;
+                    default:
+                        VOLT_ASSERT(false, "Invalid LoadSpecs info.");
+                }
             }
+        }
+        else
+        {
+            VOLT_LOG(Warning, "Couldn't find asset in {0} location.", filepath.c_str());
         }
         return asset;
     }
 
     template <>
-    inline SharedPtr<IAsset> CAssetManager::Load(const std::string& filepath)
+    inline SharedPtr<IAsset> CAssetManager::Load(const std::string& filepath, const SLoadSpecs& loadSpecs)
     {
-        VOLT_ASSERT(false, "CAssetManager::Load must received a specialization of IAsset!");
+        VOLT_ASSERT(false, "CAssetManager::Load Invalid IAsset type.");
         return nullptr;
     }
 }

@@ -12,9 +12,9 @@ namespace Volt
         glDeleteTextures(1, &m_rendererID);
     }
 
-    IAssetLoader* COpenGLTexture2D::CreateLoader()
+    UniquePtr<IAssetLoader> COpenGLTexture2D::CreateLoader()
     {
-        return new COpenGLTexture2DLoader(this);
+        return CreateUnique<COpenGLTexture2DLoader>(this);
     }
 
     void COpenGLTexture2D::Bind(uint32_t slot) const

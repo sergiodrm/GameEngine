@@ -16,7 +16,7 @@ namespace Volt
                         const std::string& textureFilepath = {});
 
         /** Begin IAsset methods */
-        virtual IAssetLoader* CreateLoader() override;
+        virtual UniquePtr<IAssetLoader> CreateLoader() override;
         virtual bool IsLoaded() const override { return true; }
         /** End IAsset methods */
 

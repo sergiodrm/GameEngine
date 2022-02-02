@@ -20,11 +20,10 @@ namespace Volt
     public:
         COpenGLMeshLoader(IAsset* asset);
 
-        virtual void StartAsyncLoad(const std::string& filepath) override;
         virtual void LoadDataInAsset() override;
 
     protected:
-        void AsyncLoad(std::string filepath);
+        virtual void Load(std::string filepath, bool async = false) override;
 
     private:
         SMeshAssetData m_meshAssetData;

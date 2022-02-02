@@ -14,7 +14,7 @@ namespace Volt
         virtual ~COpenGLMesh() override;
 
         /** Begin IAsset methods */
-        virtual IAssetLoader* CreateLoader() override;
+        virtual UniquePtr<IAssetLoader> CreateLoader() override;
         virtual bool IsLoaded() const override;
         /** End IAsset methods */
 

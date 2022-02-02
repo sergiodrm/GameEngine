@@ -12,11 +12,6 @@ namespace Volt
     COpenGLMeshLoader::COpenGLMeshLoader(IAsset* asset)
         : IAssetLoader(asset), m_meshAssetData() {}
 
-    void COpenGLMeshLoader::StartAsyncLoad(const std::string& filepath)
-    {
-        std::future<void> future =
-            std::async(std::launch::async, &COpenGLMeshLoader::AsyncLoad, this, filepath);
-    }
 
     void COpenGLMeshLoader::LoadDataInAsset()
     {
@@ -26,9 +21,9 @@ namespace Volt
         }
     }
 
-    void COpenGLMeshLoader::AsyncLoad(std::string filepath)
+    void COpenGLMeshLoader::Load(std::string filepath, bool async)
     {
-        PROFILE_SCOPE(MeshLoaderAsyncLoad);
+        PROFILE_SCOPE(MeshLoaderLoad);
 
         tinyobj::attrib_t attrib;
         std::vector<tinyobj::shape_t> shapes;
@@ -103,6 +98,9 @@ namespace Volt
             m_meshAssetData.MaterialAssetData.Shininess = materials[0].shininess;
         }
 
-        CAssetManager::Get().PushLoadRequest(this);
+        if (async)
+        {
+            CAssetManager::Get().PushLoadRequest(this);
+        }
     }
 }

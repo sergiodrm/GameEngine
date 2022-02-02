@@ -21,7 +21,15 @@ namespace Volt
         COpenGLMaterialLoader(IAsset* asset)
             : IAssetLoader(asset) {}
 
-        virtual void StartAsyncLoad(const std::string& filepath) override {}
-        virtual void LoadDataInAsset() override {}
+        virtual void LoadDataInAsset() override
+        {
+            /* Empty */
+        }
+
+    protected:
+        virtual void Load(std::string filepath, bool async) override
+        {
+            /* Empty */
+        }
     };
 }

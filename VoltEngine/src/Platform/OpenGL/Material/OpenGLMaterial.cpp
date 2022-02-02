@@ -16,9 +16,9 @@ namespace Volt
         : m_ambient(ambient), m_diffuse(diffuse), m_specular(specular), m_shininess(shininess)
     { }
 
-    IAssetLoader* COpenGLMaterial::CreateLoader()
+    UniquePtr<IAssetLoader> COpenGLMaterial::CreateLoader()
     {
-        return new COpenGLMaterialLoader(this);
+        return CreateUnique<COpenGLMaterialLoader>(this);
     }
 
     void COpenGLMaterial::Prepare(const SharedPtr<IShader>& shader) const

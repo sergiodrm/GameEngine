@@ -13,7 +13,7 @@ namespace Volt
         virtual ~COpenGLTexture2D() override;
 
         //~ IAsset methods
-        virtual IAssetLoader* CreateLoader() override;
+        virtual UniquePtr<IAssetLoader> CreateLoader() override;
         virtual bool IsLoaded() const override { return m_isLoaded; }
         //~ IAsset methods
 

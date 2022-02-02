@@ -19,10 +19,9 @@ namespace Volt
         m_material.reset();
     }
 
-    IAssetLoader* COpenGLMesh::CreateLoader()
+    UniquePtr<IAssetLoader> COpenGLMesh::CreateLoader()
     {
-        COpenGLMeshLoader* meshLoader = new COpenGLMeshLoader(this);
-        return meshLoader;
+        return CreateUnique<COpenGLMeshLoader>(this);
     }
 
     bool COpenGLMesh::IsLoaded() const
@@ -56,7 +55,9 @@ namespace Volt
         m_material->SetSpecular(materialData.Specular);
         m_material->SetDiffuse(materialData.Diffuse);
         m_material->SetShininess(materialData.Shininess);
-        m_material->SetTexture(materialData.TextureFilepath);
+        if (!materialData.MaterialName.empty())
+            m_material->SetTexture(materialData.TextureFilepath);
+
         m_isLoaded = true;
     }
 }
