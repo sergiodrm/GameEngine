@@ -18,6 +18,9 @@ namespace Volt
         static constexpr const char* MVPMatrixName = "u_MVP";
         static constexpr const char* ModelMatrixName = "u_Model";
 
+        // Entity
+        static constexpr const char* EntityIDName = "u_EntityID";
+
         // Camera
         static constexpr const char* CameraPositionName = "u_ViewPos";
 

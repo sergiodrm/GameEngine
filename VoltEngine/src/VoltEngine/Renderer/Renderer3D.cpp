@@ -101,12 +101,13 @@ namespace Volt
 #endif // 0
     }
 
-    void CRenderer3D::DrawMesh(const glm::mat4& transform, const SharedPtr<IMesh>& mesh)
+    void CRenderer3D::DrawMesh(const glm::mat4& transform, const SharedPtr<IMesh>& mesh, int32_t entityID)
     {
 #if 1
         const glm::mat4 mvp = BatchData->ViewProjectionMatrix * transform;
         BatchData->Shader->SetMat4(ShaderUniforms::MVPMatrixName, mvp);
         BatchData->Shader->SetMat4(ShaderUniforms::ModelMatrixName, transform);
+        BatchData->Shader->SetInt(ShaderUniforms::EntityIDName, entityID);
         mesh->GetMaterial()->Prepare(BatchData->Shader);
         const SharedPtr<IVertexArray>& vertexArray = mesh->GetVertexArray();
         CRenderCommand::DrawIndexed(vertexArray);

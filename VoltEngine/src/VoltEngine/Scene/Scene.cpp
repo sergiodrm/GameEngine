@@ -153,7 +153,7 @@ namespace Volt
                     const SharedPtr<IMesh>& mesh = entityMeshComponent->GetMesh();
                     if (mesh && mesh->IsLoaded())
                     {
-                        CRenderer3D::DrawMesh(entityTransform->GetTransform(), mesh);
+                        CRenderer3D::DrawMesh(entityTransform->GetTransform(), mesh, entity->GetID());
                     }
                 }
             }

@@ -44,13 +44,19 @@ struct SMaterial
 };
 
 layout (location = 0) out vec4 color;
+layout (location = 1) out int id;
 
 in vec4 v_Color;
 in vec2 v_TexCoords;
 in vec3 v_Normal;
 in vec3 v_FragPos;
 
+
+// Uniforms
+
 uniform vec3 u_ViewPos;
+
+uniform int u_EntityID;
 
 uniform int u_UseTexture;
 uniform int u_UseLight;
@@ -65,9 +71,13 @@ uniform vec3 u_LightColor;
 uniform vec3 u_AmbientColor;
 uniform float u_AmbientStrength;
 
+// Functions headers
+
 vec3 CalculateDiffuseLight();
 vec3 CalculateSpecularLight();
 vec4 CalculateTexture();
+
+// MAIN
 
 void main()
 {
@@ -76,8 +86,10 @@ void main()
     vec3 specular = CalculateSpecularLight();
     vec4 textureColor = CalculateTexture();
     color = textureColor * vec4(specular + diffuse + ambient, 1.0);
+    id = u_EntityID;
 }
 
+// Functions body
 
 vec3 CalculateDiffuseLight()
 {

@@ -35,4 +35,5 @@ private:
     Volt::SharedPtr<Volt::IFramebuffer> m_framebuffer;
     Volt::SharedPtr<Volt::CEditorCamera> m_editorCamera;
     glm::vec2 m_viewportSize {0.f};
+    glm::vec2 m_viewportBounds[2];
 };

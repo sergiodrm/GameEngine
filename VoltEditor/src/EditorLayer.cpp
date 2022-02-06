@@ -21,7 +21,15 @@ void CEditorLayer::OnAttach()
 {
     CLayer::OnAttach();
 
-    m_framebuffer = Volt::IFramebuffer::Create({1280, 720});
+    Volt::SFramebufferSpecification specification {
+            1280, 720, 1,
+            {
+                Volt::EFramebufferTextureFormat::RGBA8,
+                Volt::EFramebufferTextureFormat::RED_INTEGER,
+                Volt::EFramebufferTextureFormat::Depth
+            }
+        };
+    m_framebuffer = Volt::IFramebuffer::Create(specification);
 
     m_scene = Volt::CreateSharedPtr<Volt::CScene>();
 
@@ -64,6 +72,7 @@ void CEditorLayer::OnUpdate(float elapsedSeconds)
     CLayer::OnUpdate(elapsedSeconds);
     //PROFILE_SCOPE(GameLayer);
 
+
     const Volt::SFramebufferSpecification& spec = m_framebuffer->GetSpecification();
     if (m_viewportSize.x > 0.f && m_viewportSize.y > 0.f &&
         (spec.Width != static_cast<uint32_t>(m_viewportSize.x) || spec.Height != static_cast<uint32_t>(m_viewportSize.y)))
@@ -77,10 +86,24 @@ void CEditorLayer::OnUpdate(float elapsedSeconds)
         //PROFILE_SCOPE(Render);
         m_editorCamera->OnUpdate(elapsedSeconds);
         m_framebuffer->Bind();
-
+        m_framebuffer->ClearAttachment(1, -1);
         Volt::CRenderCommand::Clear();
         /*m_scene->OnUpdateRuntime(elapsedSeconds);*/
         m_scene->OnUpdateEditor(m_editorCamera);
+
+        ImVec2 mouse = ImGui::GetMousePos();
+        mouse.x -= m_viewportBounds[0].x;
+        mouse.y -= m_viewportBounds[0].y;
+        const glm::vec2 viewportSize = m_viewportBounds[1] - m_viewportBounds[0];
+        mouse.y = viewportSize.y - mouse.y;
+        const int32_t mouseX = static_cast<int32_t>(mouse.x);
+        const int32_t mouseY = static_cast<int32_t>(mouse.y);
+        VOLT_LOG(Info, "Mouse: {0}, {1}   {2}, {3}", mouseX, mouseY, viewportSize.x, viewportSize.y);
+        if (mouse.x >= 0.f && mouse.y >= 0.f && mouse.x < viewportSize.x && mouse.y < viewportSize.y)
+        {
+            const int32_t pixelData = m_framebuffer->ReadPixel(1, mouseX, mouseY);
+            VOLT_LOG(Info, "ReadPixel: {0}", pixelData);
+        }
 
         m_framebuffer->Unbind();
     }
@@ -145,6 +168,15 @@ void CEditorLayer::OnUIRender()
         {
             m_viewportSize = {viewportPanelSize.x, viewportPanelSize.y};
         }
+
+        const ImVec2 viewportOffset = ImGui::GetCursorPos();
+        const ImVec2 windowSize = ImGui::GetWindowSize();
+        ImVec2 minBound = ImGui::GetWindowPos();
+        minBound.x += viewportOffset.x;
+        minBound.y += viewportOffset.y;
+        const ImVec2 maxBound = {minBound.x + windowSize.x, minBound.y + windowSize.y};
+        m_viewportBounds[0] = {minBound.x, minBound.y};
+        m_viewportBounds[1] = {maxBound.x, maxBound.y};
 
         const uint32_t texID = m_framebuffer->GetColorAttachmentRendererID();
         ImGui::Image(reinterpret_cast<void*>(texID), viewportPanelSize, {0.f, 1.f}, {1.f, 0.f});

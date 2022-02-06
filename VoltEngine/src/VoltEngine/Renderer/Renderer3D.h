@@ -35,7 +35,7 @@ namespace Volt
         static void BeginScene(const glm::mat4& projection, const glm::mat4& view, const std::vector<SLight>& lights = {});
         static void EndScene();
 
-        static void DrawMesh(const glm::mat4& transform, const SharedPtr<IMesh>& mesh);
+        static void DrawMesh(const glm::mat4& transform, const SharedPtr<IMesh>& mesh, int32_t entityID = -1);
 
         static const SRenderStats& GetStats() { return Stats; }
 
