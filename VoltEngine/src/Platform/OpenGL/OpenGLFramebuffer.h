@@ -10,18 +10,30 @@ namespace Volt
         COpenGLFramebuffer(const SFramebufferSpecification& spec);
         virtual ~COpenGLFramebuffer() override;
 
-        virtual const SFramebufferSpecification& GetSpecification() const override { return m_specification; }
-        virtual uint32_t GetColorAttachmentRendererID() const override { return m_colorAttachment; }
+
         virtual void Bind() const override;
         virtual void Unbind() const override;
-        virtual void Resize(const glm::vec2& size) override;
 
+        virtual void Resize(const glm::vec2& size) override;
+        virtual void Resize(uint32_t width, uint32_t height) override;
+        virtual int32_t ReadPixel(uint32_t attachmentIndex, int32_t screenX, int32_t screenY) override;
+
+        virtual void ClearAttachment(uint32_t attachmentIndex, int32_t value) override;
+        virtual uint32_t GetColorAttachmentRendererID(uint32_t index = 0) const override;
+        virtual const SFramebufferSpecification& GetSpecification() const override { return m_specification; }
+
+    protected:
         void Invalidate();
+        void DeleteFramebuffers();
 
     private:
         uint32_t m_rendererID;
-        uint32_t m_colorAttachment;
-        uint32_t m_depthAttachment;
         SFramebufferSpecification m_specification;
+
+        std::vector<SFramebufferTextureSpecification> m_colorAttachmentSpecification;
+        SFramebufferTextureSpecification m_depthAttachmentSpecification;
+
+        std::vector<uint32_t> m_colorAttachments;
+        uint32_t m_depthAttachment {0};
     };
 }
