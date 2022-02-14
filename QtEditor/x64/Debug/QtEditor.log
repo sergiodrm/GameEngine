@@ -1,0 +1,283 @@
+﻿  Reading Qt configuration (C:/Qt/5.15.2/msvc2019_64/bin/qmake)
+VoltEngine.lib(Application.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MTd_StaticDebug' doesn't match value 'MDd_DynamicDebug' in QtEditor.obj
+VoltEngine.lib(Log.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MTd_StaticDebug' doesn't match value 'MDd_DynamicDebug' in QtEditor.obj
+VoltEngine.lib(LayerStack.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MTd_StaticDebug' doesn't match value 'MDd_DynamicDebug' in QtEditor.obj
+VoltEngine.lib(Time.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MTd_StaticDebug' doesn't match value 'MDd_DynamicDebug' in QtEditor.obj
+VoltEngine.lib(Window.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MTd_StaticDebug' doesn't match value 'MDd_DynamicDebug' in QtEditor.obj
+VoltEngine.lib(Renderer.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MTd_StaticDebug' doesn't match value 'MDd_DynamicDebug' in QtEditor.obj
+VoltEngine.lib(AssetManager.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MTd_StaticDebug' doesn't match value 'MDd_DynamicDebug' in QtEditor.obj
+VoltEngine.lib(PerfMon.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MTd_StaticDebug' doesn't match value 'MDd_DynamicDebug' in QtEditor.obj
+VoltEngine.lib(UICommand.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MTd_StaticDebug' doesn't match value 'MDd_DynamicDebug' in QtEditor.obj
+VoltEngine.lib(WindowsWindow.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MTd_StaticDebug' doesn't match value 'MDd_DynamicDebug' in QtEditor.obj
+VoltEngine.lib(Renderer2D.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MTd_StaticDebug' doesn't match value 'MDd_DynamicDebug' in QtEditor.obj
+VoltEngine.lib(RenderCommand.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MTd_StaticDebug' doesn't match value 'MDd_DynamicDebug' in QtEditor.obj
+VoltEngine.lib(Renderer3D.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MTd_StaticDebug' doesn't match value 'MDd_DynamicDebug' in QtEditor.obj
+VoltEngine.lib(GraphicsContext.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MTd_StaticDebug' doesn't match value 'MDd_DynamicDebug' in QtEditor.obj
+VoltEngine.lib(Buffer.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MTd_StaticDebug' doesn't match value 'MDd_DynamicDebug' in QtEditor.obj
+VoltEngine.lib(Shader.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MTd_StaticDebug' doesn't match value 'MDd_DynamicDebug' in QtEditor.obj
+VoltEngine.lib(VertexArray.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MTd_StaticDebug' doesn't match value 'MDd_DynamicDebug' in QtEditor.obj
+VoltEngine.lib(OpenGLRendererAPI.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MTd_StaticDebug' doesn't match value 'MDd_DynamicDebug' in QtEditor.obj
+VoltEngine.lib(Batch.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MTd_StaticDebug' doesn't match value 'MDd_DynamicDebug' in QtEditor.obj
+VoltEngine.lib(OpenGLGraphicsContext.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MTd_StaticDebug' doesn't match value 'MDd_DynamicDebug' in QtEditor.obj
+VoltEngine.lib(OpenGLBuffer.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MTd_StaticDebug' doesn't match value 'MDd_DynamicDebug' in QtEditor.obj
+VoltEngine.lib(OpenGLShader.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MTd_StaticDebug' doesn't match value 'MDd_DynamicDebug' in QtEditor.obj
+VoltEngine.lib(OpenGLVertexArray.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MTd_StaticDebug' doesn't match value 'MDd_DynamicDebug' in QtEditor.obj
+VoltEngine.lib(OpenGLBatch.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MTd_StaticDebug' doesn't match value 'MDd_DynamicDebug' in QtEditor.obj
+msvcprtd.lib(MSVCP140D.dll) : error LNK2005: "public: struct _Cvtvec __cdecl std::_Locinfo::_Getcvt(void)const " (?_Getcvt@_Locinfo@std@@QEBA?AU_Cvtvec@@XZ) already defined in VoltEngine.lib(Log.obj)
+libcpmtd.lib(locale0.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MTd_StaticDebug' doesn't match value 'MDd_DynamicDebug' in QtEditor.obj
+libcpmtd.lib(locale0.obj) : error LNK2005: "void __cdecl std::_Facet_Register(class std::_Facet_base *)" (?_Facet_Register@std@@YAXPEAV_Facet_base@1@@Z) already defined in msvcprtd.lib(locale0_implib.obj)
+libcpmtd.lib(locale0.obj) : error LNK2005: "private: static class std::locale::_Locimp * __cdecl std::locale::_Getgloballocale(void)" (?_Getgloballocale@locale@std@@CAPEAV_Locimp@12@XZ) already defined in msvcprtd.lib(MSVCP140D.dll)
+libcpmtd.lib(locale0.obj) : error LNK2005: "private: static class std::locale::_Locimp * __cdecl std::locale::_Init(bool)" (?_Init@locale@std@@CAPEAV_Locimp@12@_N@Z) already defined in msvcprtd.lib(MSVCP140D.dll)
+libcpmtd.lib(locale0.obj) : error LNK2005: "public: static void __cdecl std::_Locinfo::_Locinfo_ctor(class std::_Locinfo *,char const *)" (?_Locinfo_ctor@_Locinfo@std@@SAXPEAV12@PEBD@Z) already defined in msvcprtd.lib(MSVCP140D.dll)
+libcpmtd.lib(locale0.obj) : error LNK2005: "public: static void __cdecl std::_Locinfo::_Locinfo_dtor(class std::_Locinfo *)" (?_Locinfo_dtor@_Locinfo@std@@SAXPEAV12@@Z) already defined in msvcprtd.lib(MSVCP140D.dll)
+libcpmtd.lib(cout.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MTd_StaticDebug' doesn't match value 'MDd_DynamicDebug' in QtEditor.obj
+libcpmtd.lib(locale.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MTd_StaticDebug' doesn't match value 'MDd_DynamicDebug' in QtEditor.obj
+libcpmtd.lib(iosptrs.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MTd_StaticDebug' doesn't match value 'MDd_DynamicDebug' in QtEditor.obj
+libcpmtd.lib(xlock.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MTd_StaticDebug' doesn't match value 'MDd_DynamicDebug' in QtEditor.obj
+libcpmtd.lib(xlock.obj) : error LNK2005: "public: __cdecl std::_Lockit::_Lockit(int)" (??0_Lockit@std@@QEAA@H@Z) already defined in msvcprtd.lib(MSVCP140D.dll)
+libcpmtd.lib(xlock.obj) : error LNK2005: "public: __cdecl std::_Lockit::~_Lockit(void)" (??1_Lockit@std@@QEAA@XZ) already defined in msvcprtd.lib(MSVCP140D.dll)
+libcpmtd.lib(wlocale.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MTd_StaticDebug' doesn't match value 'MDd_DynamicDebug' in QtEditor.obj
+libcpmtd.lib(wlocale.obj) : error LNK2005: "public: char const * __cdecl std::_Locinfo::_Getdays(void)const " (?_Getdays@_Locinfo@std@@QEBAPEBDXZ) already defined in msvcprtd.lib(MSVCP140D.dll)
+libcpmtd.lib(wlocale.obj) : error LNK2005: "public: char const * __cdecl std::_Locinfo::_Getmonths(void)const " (?_Getmonths@_Locinfo@std@@QEBAPEBDXZ) already defined in msvcprtd.lib(MSVCP140D.dll)
+libcpmtd.lib(wlocale.obj) : error LNK2005: "public: unsigned short const * __cdecl std::_Locinfo::_W_Getdays(void)const " (?_W_Getdays@_Locinfo@std@@QEBAPEBGXZ) already defined in msvcprtd.lib(MSVCP140D.dll)
+libcpmtd.lib(wlocale.obj) : error LNK2005: "public: unsigned short const * __cdecl std::_Locinfo::_W_Getmonths(void)const " (?_W_Getmonths@_Locinfo@std@@QEBAPEBGXZ) already defined in msvcprtd.lib(MSVCP140D.dll)
+libcpmtd.lib(xlocale.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MTd_StaticDebug' doesn't match value 'MDd_DynamicDebug' in QtEditor.obj
+libcpmtd.lib(xlocale.obj) : error LNK2005: "public: char const * __cdecl std::_Locinfo::_Getdays(void)const " (?_Getdays@_Locinfo@std@@QEBAPEBDXZ) already defined in msvcprtd.lib(MSVCP140D.dll)
+libcpmtd.lib(xlocale.obj) : error LNK2005: "public: char const * __cdecl std::_Locinfo::_Getmonths(void)const " (?_Getmonths@_Locinfo@std@@QEBAPEBDXZ) already defined in msvcprtd.lib(MSVCP140D.dll)
+libcpmtd.lib(xlocale.obj) : error LNK2005: "public: unsigned short const * __cdecl std::_Locinfo::_W_Getdays(void)const " (?_W_Getdays@_Locinfo@std@@QEBAPEBGXZ) already defined in msvcprtd.lib(MSVCP140D.dll)
+libcpmtd.lib(xlocale.obj) : error LNK2005: "public: unsigned short const * __cdecl std::_Locinfo::_W_Getmonths(void)const " (?_W_Getmonths@_Locinfo@std@@QEBAPEBGXZ) already defined in msvcprtd.lib(MSVCP140D.dll)
+libcpmtd.lib(xstol.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MTd_StaticDebug' doesn't match value 'MDd_DynamicDebug' in QtEditor.obj
+libcpmtd.lib(xstoul.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MTd_StaticDebug' doesn't match value 'MDd_DynamicDebug' in QtEditor.obj
+libcpmtd.lib(xstoll.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MTd_StaticDebug' doesn't match value 'MDd_DynamicDebug' in QtEditor.obj
+libcpmtd.lib(xstoull.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MTd_StaticDebug' doesn't match value 'MDd_DynamicDebug' in QtEditor.obj
+libcpmtd.lib(xmtx.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MTd_StaticDebug' doesn't match value 'MDd_DynamicDebug' in QtEditor.obj
+libcpmtd.lib(xstrcoll.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MTd_StaticDebug' doesn't match value 'MDd_DynamicDebug' in QtEditor.obj
+libcpmtd.lib(xdateord.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MTd_StaticDebug' doesn't match value 'MDd_DynamicDebug' in QtEditor.obj
+libcpmtd.lib(xwctomb.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MTd_StaticDebug' doesn't match value 'MDd_DynamicDebug' in QtEditor.obj
+libcpmtd.lib(xwctomb.obj) : error LNK2005: _Getcvt already defined in msvcprtd.lib(MSVCP140D.dll)
+libcpmtd.lib(xwcscoll.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MTd_StaticDebug' doesn't match value 'MDd_DynamicDebug' in QtEditor.obj
+libcpmtd.lib(xwcsxfrm.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MTd_StaticDebug' doesn't match value 'MDd_DynamicDebug' in QtEditor.obj
+libcpmtd.lib(xgetwctype.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MTd_StaticDebug' doesn't match value 'MDd_DynamicDebug' in QtEditor.obj
+libcpmtd.lib(xtowlower.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MTd_StaticDebug' doesn't match value 'MDd_DynamicDebug' in QtEditor.obj
+libcpmtd.lib(xtowupper.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MTd_StaticDebug' doesn't match value 'MDd_DynamicDebug' in QtEditor.obj
+libcpmtd.lib(xstrxfrm.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MTd_StaticDebug' doesn't match value 'MDd_DynamicDebug' in QtEditor.obj
+libcpmtd.lib(StlCompareStringA.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MTd_StaticDebug' doesn't match value 'MDd_DynamicDebug' in QtEditor.obj
+libcpmtd.lib(StlCompareStringW.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MTd_StaticDebug' doesn't match value 'MDd_DynamicDebug' in QtEditor.obj
+libcpmtd.lib(StlLCMapStringW.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MTd_StaticDebug' doesn't match value 'MDd_DynamicDebug' in QtEditor.obj
+libcpmtd.lib(StlLCMapStringA.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MTd_StaticDebug' doesn't match value 'MDd_DynamicDebug' in QtEditor.obj
+VoltEngine.lib(EntryPoint.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MTd_StaticDebug' doesn't match value 'MDd_DynamicDebug' in QtEditor.obj
+LINK : warning LNK4098: defaultlib 'LIBCMTD' conflicts with use of other libs; use /NODEFAULTLIB:library
+VoltEngine.lib(UICommand.obj) : error LNK2019: unresolved external symbol "struct ImGuiContext * __cdecl ImGui::CreateContext(struct ImFontAtlas *)" (?CreateContext@ImGui@@YAPEAUImGuiContext@@PEAUImFontAtlas@@@Z) referenced in function "public: static void __cdecl Volt::CUICommand::Init(void)" (?Init@CUICommand@Volt@@SAXXZ)
+VoltEngine.lib(UICommand.obj) : error LNK2019: unresolved external symbol "void __cdecl ImGui::DestroyContext(struct ImGuiContext *)" (?DestroyContext@ImGui@@YAXPEAUImGuiContext@@@Z) referenced in function "public: static void __cdecl Volt::CUICommand::Shutdown(void)" (?Shutdown@CUICommand@Volt@@SAXXZ)
+VoltEngine.lib(UICommand.obj) : error LNK2019: unresolved external symbol "struct ImGuiIO & __cdecl ImGui::GetIO(void)" (?GetIO@ImGui@@YAAEAUImGuiIO@@XZ) referenced in function "public: static void __cdecl Volt::CUICommand::BeginFrame(void)" (?BeginFrame@CUICommand@Volt@@SAXXZ)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol "struct ImGuiIO & __cdecl ImGui::GetIO(void)" (?GetIO@ImGui@@YAAEAUImGuiIO@@XZ)
+VoltEngine.lib(ImGuizmo.obj) : error LNK2001: unresolved external symbol "struct ImGuiIO & __cdecl ImGui::GetIO(void)" (?GetIO@ImGui@@YAAEAUImGuiIO@@XZ)
+VoltEngine.lib(UICommand.obj) : error LNK2019: unresolved external symbol "struct ImGuiStyle & __cdecl ImGui::GetStyle(void)" (?GetStyle@ImGui@@YAAEAUImGuiStyle@@XZ) referenced in function "public: static void __cdecl Volt::CUICommand::BeginFrame(void)" (?BeginFrame@CUICommand@Volt@@SAXXZ)
+VoltEngine.lib(UICommand.obj) : error LNK2019: unresolved external symbol "void __cdecl ImGui::NewFrame(void)" (?NewFrame@ImGui@@YAXXZ) referenced in function "public: static void __cdecl Volt::CUICommand::BeginFrame(void)" (?BeginFrame@CUICommand@Volt@@SAXXZ)
+VoltEngine.lib(UICommand.obj) : error LNK2019: unresolved external symbol "void __cdecl ImGui::Render(void)" (?Render@ImGui@@YAXXZ) referenced in function "public: static void __cdecl Volt::CUICommand::EndFrame(void)" (?EndFrame@CUICommand@Volt@@SAXXZ)
+VoltEngine.lib(UICommand.obj) : error LNK2019: unresolved external symbol "struct ImDrawData * __cdecl ImGui::GetDrawData(void)" (?GetDrawData@ImGui@@YAPEAUImDrawData@@XZ) referenced in function "public: static void __cdecl Volt::CUICommand::EndFrame(void)" (?EndFrame@CUICommand@Volt@@SAXXZ)
+VoltEngine.lib(UICommand.obj) : error LNK2019: unresolved external symbol "bool __cdecl ImGui::Begin(char const *,bool *,int)" (?Begin@ImGui@@YA_NPEBDPEA_NH@Z) referenced in function "public: static void __cdecl Volt::CUICommand::BeginFrame(void)" (?BeginFrame@CUICommand@Volt@@SAXXZ)
+VoltEngine.lib(ImGuizmo.obj) : error LNK2001: unresolved external symbol "bool __cdecl ImGui::Begin(char const *,bool *,int)" (?Begin@ImGui@@YA_NPEBDPEA_NH@Z)
+VoltEngine.lib(UICommand.obj) : error LNK2019: unresolved external symbol "void __cdecl ImGui::End(void)" (?End@ImGui@@YAXXZ) referenced in function "public: static void __cdecl Volt::CUICommand::EndFrame(void)" (?EndFrame@CUICommand@Volt@@SAXXZ)
+VoltEngine.lib(ImGuizmo.obj) : error LNK2001: unresolved external symbol "void __cdecl ImGui::End(void)" (?End@ImGui@@YAXXZ)
+VoltEngine.lib(UICommand.obj) : error LNK2019: unresolved external symbol "void __cdecl ImGui::SetNextWindowPos(struct ImVec2 const &,int,struct ImVec2 const &)" (?SetNextWindowPos@ImGui@@YAXAEBUImVec2@@H0@Z) referenced in function "public: static void __cdecl Volt::CUICommand::BeginFrame(void)" (?BeginFrame@CUICommand@Volt@@SAXXZ)
+VoltEngine.lib(ImGuizmo.obj) : error LNK2001: unresolved external symbol "void __cdecl ImGui::SetNextWindowPos(struct ImVec2 const &,int,struct ImVec2 const &)" (?SetNextWindowPos@ImGui@@YAXAEBUImVec2@@H0@Z)
+VoltEngine.lib(UICommand.obj) : error LNK2019: unresolved external symbol "void __cdecl ImGui::SetNextWindowSize(struct ImVec2 const &,int)" (?SetNextWindowSize@ImGui@@YAXAEBUImVec2@@H@Z) referenced in function "public: static void __cdecl Volt::CUICommand::BeginFrame(void)" (?BeginFrame@CUICommand@Volt@@SAXXZ)
+VoltEngine.lib(ImGuizmo.obj) : error LNK2001: unresolved external symbol "void __cdecl ImGui::SetNextWindowSize(struct ImVec2 const &,int)" (?SetNextWindowSize@ImGui@@YAXAEBUImVec2@@H@Z)
+VoltEngine.lib(UICommand.obj) : error LNK2019: unresolved external symbol "void __cdecl ImGui::SetNextWindowViewport(unsigned int)" (?SetNextWindowViewport@ImGui@@YAXI@Z) referenced in function "public: static void __cdecl Volt::CUICommand::BeginFrame(void)" (?BeginFrame@CUICommand@Volt@@SAXXZ)
+VoltEngine.lib(UICommand.obj) : error LNK2019: unresolved external symbol "void __cdecl ImGui::PushStyleVar(int,float)" (?PushStyleVar@ImGui@@YAXHM@Z) referenced in function "public: static void __cdecl Volt::CUICommand::BeginFrame(void)" (?BeginFrame@CUICommand@Volt@@SAXXZ)
+VoltEngine.lib(ImGuizmo.obj) : error LNK2001: unresolved external symbol "void __cdecl ImGui::PushStyleVar(int,float)" (?PushStyleVar@ImGui@@YAXHM@Z)
+VoltEngine.lib(UICommand.obj) : error LNK2019: unresolved external symbol "void __cdecl ImGui::PopStyleVar(int)" (?PopStyleVar@ImGui@@YAXH@Z) referenced in function "public: static void __cdecl Volt::CUICommand::BeginFrame(void)" (?BeginFrame@CUICommand@Volt@@SAXXZ)
+VoltEngine.lib(ImGuizmo.obj) : error LNK2001: unresolved external symbol "void __cdecl ImGui::PopStyleVar(int)" (?PopStyleVar@ImGui@@YAXH@Z)
+VoltEngine.lib(UICommand.obj) : error LNK2019: unresolved external symbol "unsigned int __cdecl ImGui::GetID(char const *)" (?GetID@ImGui@@YAIPEBD@Z) referenced in function "public: static void __cdecl Volt::CUICommand::BeginFrame(void)" (?BeginFrame@CUICommand@Volt@@SAXXZ)
+VoltEngine.lib(UICommand.obj) : error LNK2019: unresolved external symbol "void __cdecl ImGui::DockSpace(unsigned int,struct ImVec2 const &,int,struct ImGuiWindowClass const *)" (?DockSpace@ImGui@@YAXIAEBUImVec2@@HPEBUImGuiWindowClass@@@Z) referenced in function "public: static void __cdecl Volt::CUICommand::BeginFrame(void)" (?BeginFrame@CUICommand@Volt@@SAXXZ)
+VoltEngine.lib(UICommand.obj) : error LNK2019: unresolved external symbol "bool __cdecl ImGui::DebugCheckVersionAndDataLayout(char const *,unsigned __int64,unsigned __int64,unsigned __int64,unsigned __int64,unsigned __int64,unsigned __int64)" (?DebugCheckVersionAndDataLayout@ImGui@@YA_NPEBD_K11111@Z) referenced in function "public: static void __cdecl Volt::CUICommand::Init(void)" (?Init@CUICommand@Volt@@SAXXZ)
+VoltEngine.lib(UICommand.obj) : error LNK2019: unresolved external symbol "struct ImGuiViewport * __cdecl ImGui::GetMainViewport(void)" (?GetMainViewport@ImGui@@YAPEAUImGuiViewport@@XZ) referenced in function "public: static void __cdecl Volt::CUICommand::BeginFrame(void)" (?BeginFrame@CUICommand@Volt@@SAXXZ)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol "struct ImGuiViewport * __cdecl ImGui::GetMainViewport(void)" (?GetMainViewport@ImGui@@YAPEAUImGuiViewport@@XZ)
+VoltEngine.lib(ImGuizmo.obj) : error LNK2001: unresolved external symbol "struct ImGuiViewport * __cdecl ImGui::GetMainViewport(void)" (?GetMainViewport@ImGui@@YAPEAUImGuiViewport@@XZ)
+VoltEngine.lib(UICommand.obj) : error LNK2019: unresolved external symbol "void __cdecl ImGui::UpdatePlatformWindows(void)" (?UpdatePlatformWindows@ImGui@@YAXXZ) referenced in function "public: static void __cdecl Volt::CUICommand::EndFrame(void)" (?EndFrame@CUICommand@Volt@@SAXXZ)
+VoltEngine.lib(UICommand.obj) : error LNK2019: unresolved external symbol "void __cdecl ImGui::RenderPlatformWindowsDefault(void *,void *)" (?RenderPlatformWindowsDefault@ImGui@@YAXPEAX0@Z) referenced in function "public: static void __cdecl Volt::CUICommand::EndFrame(void)" (?EndFrame@CUICommand@Volt@@SAXXZ)
+VoltEngine.lib(UICommand.obj) : error LNK2019: unresolved external symbol "public: struct ImFont * __cdecl ImFontAtlas::AddFontFromFileTTF(char const *,float,struct ImFontConfig const *,unsigned short const *)" (?AddFontFromFileTTF@ImFontAtlas@@QEAAPEAUImFont@@PEBDMPEBUImFontConfig@@PEBG@Z) referenced in function "public: static void __cdecl Volt::CUICommand::Init(void)" (?Init@CUICommand@Volt@@SAXXZ)
+VoltEngine.lib(UICommand.obj) : error LNK2019: unresolved external symbol glfwMakeContextCurrent referenced in function "public: static void __cdecl Volt::CUICommand::EndFrame(void)" (?EndFrame@CUICommand@Volt@@SAXXZ)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glfwMakeContextCurrent
+VoltEngine.lib(OpenGLGraphicsContext.obj) : error LNK2001: unresolved external symbol glfwMakeContextCurrent
+VoltEngine.lib(UICommand.obj) : error LNK2019: unresolved external symbol glfwGetCurrentContext referenced in function "public: static void __cdecl Volt::CUICommand::EndFrame(void)" (?EndFrame@CUICommand@Volt@@SAXXZ)
+VoltEngine.lib(WindowsWindow.obj) : error LNK2019: unresolved external symbol glfwInit referenced in function "protected: void __cdecl Volt::CWindowsWindow::Init(void)" (?Init@CWindowsWindow@Volt@@IEAAXXZ)
+VoltEngine.lib(WindowsWindow.obj) : error LNK2019: unresolved external symbol glfwTerminate referenced in function "protected: void __cdecl Volt::CWindowsWindow::Shutdown(void)" (?Shutdown@CWindowsWindow@Volt@@IEAAXXZ)
+VoltEngine.lib(WindowsWindow.obj) : error LNK2019: unresolved external symbol glfwSetErrorCallback referenced in function "protected: void __cdecl Volt::CWindowsWindow::Init(void)" (?Init@CWindowsWindow@Volt@@IEAAXXZ)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glfwSetErrorCallback
+VoltEngine.lib(WindowsWindow.obj) : error LNK2019: unresolved external symbol glfwCreateWindow referenced in function "protected: void __cdecl Volt::CWindowsWindow::Init(void)" (?Init@CWindowsWindow@Volt@@IEAAXXZ)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glfwCreateWindow
+VoltEngine.lib(WindowsWindow.obj) : error LNK2019: unresolved external symbol glfwDestroyWindow referenced in function "protected: void __cdecl Volt::CWindowsWindow::Shutdown(void)" (?Shutdown@CWindowsWindow@Volt@@IEAAXXZ)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glfwDestroyWindow
+VoltEngine.lib(WindowsWindow.obj) : error LNK2019: unresolved external symbol glfwSetWindowUserPointer referenced in function "protected: void __cdecl Volt::CWindowsWindow::Init(void)" (?Init@CWindowsWindow@Volt@@IEAAXXZ)
+VoltEngine.lib(WindowsWindow.obj) : error LNK2019: unresolved external symbol glfwGetWindowUserPointer referenced in function "public: __cdecl <lambda_10e74b1871802952e418ce4c80856149>::operator()(struct GLFWwindow *)const " (??R<lambda_10e74b1871802952e418ce4c80856149>@@QEBA@PEAUGLFWwindow@@@Z)
+VoltEngine.lib(WindowsWindow.obj) : error LNK2019: unresolved external symbol glfwSetWindowSizeCallback referenced in function "protected: void __cdecl Volt::CWindowsWindow::Init(void)" (?Init@CWindowsWindow@Volt@@IEAAXXZ)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glfwSetWindowSizeCallback
+VoltEngine.lib(WindowsWindow.obj) : error LNK2019: unresolved external symbol glfwSetWindowCloseCallback referenced in function "protected: void __cdecl Volt::CWindowsWindow::Init(void)" (?Init@CWindowsWindow@Volt@@IEAAXXZ)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glfwSetWindowCloseCallback
+VoltEngine.lib(WindowsWindow.obj) : error LNK2019: unresolved external symbol glfwPollEvents referenced in function "public: virtual void __cdecl Volt::CWindowsWindow::OnUpdate(void)" (?OnUpdate@CWindowsWindow@Volt@@UEAAXXZ)
+VoltEngine.lib(WindowsWindow.obj) : error LNK2019: unresolved external symbol glfwSetKeyCallback referenced in function "protected: void __cdecl Volt::CWindowsWindow::Init(void)" (?Init@CWindowsWindow@Volt@@IEAAXXZ)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glfwSetKeyCallback
+VoltEngine.lib(WindowsWindow.obj) : error LNK2019: unresolved external symbol glfwSetMouseButtonCallback referenced in function "protected: void __cdecl Volt::CWindowsWindow::Init(void)" (?Init@CWindowsWindow@Volt@@IEAAXXZ)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glfwSetMouseButtonCallback
+VoltEngine.lib(WindowsWindow.obj) : error LNK2019: unresolved external symbol glfwSetCursorPosCallback referenced in function "protected: void __cdecl Volt::CWindowsWindow::Init(void)" (?Init@CWindowsWindow@Volt@@IEAAXXZ)
+VoltEngine.lib(WindowsWindow.obj) : error LNK2019: unresolved external symbol glfwSetScrollCallback referenced in function "protected: void __cdecl Volt::CWindowsWindow::Init(void)" (?Init@CWindowsWindow@Volt@@IEAAXXZ)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glfwSetScrollCallback
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2019: unresolved external symbol "int __cdecl ImGui::GetFrameCount(void)" (?GetFrameCount@ImGui@@YAHXZ) referenced in function "void __cdecl ImGui_ImplGlfw_SetWindowPos(struct ImGuiViewport *,struct ImVec2)" (?ImGui_ImplGlfw_SetWindowPos@@YAXPEAUImGuiViewport@@UImVec2@@@Z)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2019: unresolved external symbol "int __cdecl ImGui::GetMouseCursor(void)" (?GetMouseCursor@ImGui@@YAHXZ) referenced in function "void __cdecl ImGui_ImplGlfw_UpdateMouseCursor(void)" (?ImGui_ImplGlfw_UpdateMouseCursor@@YAXXZ)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2019: unresolved external symbol "void * __cdecl ImGui::MemAlloc(unsigned __int64)" (?MemAlloc@ImGui@@YAPEAX_K@Z) referenced in function "void __cdecl ImGui_ImplGlfw_CreateWindow(struct ImGuiViewport *)" (?ImGui_ImplGlfw_CreateWindow@@YAXPEAUImGuiViewport@@@Z)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2019: unresolved external symbol "void __cdecl ImGui::MemFree(void *)" (?MemFree@ImGui@@YAXPEAX@Z) referenced in function "void __cdecl IM_DELETE<struct ImGuiViewportDataGlfw>(struct ImGuiViewportDataGlfw *)" (??$IM_DELETE@UImGuiViewportDataGlfw@@@@YAXPEAUImGuiViewportDataGlfw@@@Z)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2019: unresolved external symbol "struct ImGuiPlatformIO & __cdecl ImGui::GetPlatformIO(void)" (?GetPlatformIO@ImGui@@YAAEAUImGuiPlatformIO@@XZ) referenced in function "void __cdecl ImGui_ImplGlfw_InitPlatformInterface(void)" (?ImGui_ImplGlfw_InitPlatformInterface@@YAXXZ)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2019: unresolved external symbol "void __cdecl ImGui::DestroyPlatformWindows(void)" (?DestroyPlatformWindows@ImGui@@YAXXZ) referenced in function "void __cdecl ImGui_ImplOpenGL3_ShutdownPlatformInterface(void)" (?ImGui_ImplOpenGL3_ShutdownPlatformInterface@@YAXXZ)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2019: unresolved external symbol "struct ImGuiViewport * __cdecl ImGui::FindViewportByPlatformHandle(void *)" (?FindViewportByPlatformHandle@ImGui@@YAPEAUImGuiViewport@@PEAX@Z) referenced in function "void __cdecl ImGui_ImplGlfw_WindowCloseCallback(struct GLFWwindow *)" (?ImGui_ImplGlfw_WindowCloseCallback@@YAXPEAUGLFWwindow@@@Z)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2019: unresolved external symbol "public: void __cdecl ImGuiIO::AddInputCharacter(unsigned int)" (?AddInputCharacter@ImGuiIO@@QEAAXI@Z) referenced in function "void __cdecl ImGui_ImplGlfw_CharCallback(struct GLFWwindow *,unsigned int)" (?ImGui_ImplGlfw_CharCallback@@YAXPEAUGLFWwindow@@I@Z)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2019: unresolved external symbol "public: void __cdecl ImFontAtlas::GetTexDataAsRGBA32(unsigned char * *,int *,int *,int *)" (?GetTexDataAsRGBA32@ImFontAtlas@@QEAAXPEAPEAEPEAH11@Z) referenced in function "bool __cdecl ImGui_ImplOpenGL3_CreateFontsTexture(void)" (?ImGui_ImplOpenGL3_CreateFontsTexture@@YA_NXZ)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2019: unresolved external symbol glfwGetMonitors referenced in function "void __cdecl ImGui_ImplGlfw_UpdateMonitors(void)" (?ImGui_ImplGlfw_UpdateMonitors@@YAXXZ)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2019: unresolved external symbol glfwGetMonitorPos referenced in function "void __cdecl ImGui_ImplGlfw_UpdateMonitors(void)" (?ImGui_ImplGlfw_UpdateMonitors@@YAXXZ)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2019: unresolved external symbol glfwGetMonitorWorkarea referenced in function "void __cdecl ImGui_ImplGlfw_UpdateMonitors(void)" (?ImGui_ImplGlfw_UpdateMonitors@@YAXXZ)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2019: unresolved external symbol glfwGetMonitorContentScale referenced in function "void __cdecl ImGui_ImplGlfw_UpdateMonitors(void)" (?ImGui_ImplGlfw_UpdateMonitors@@YAXXZ)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2019: unresolved external symbol glfwSetMonitorCallback referenced in function "bool __cdecl ImGui_ImplGlfw_Init(struct GLFWwindow *,bool,enum GlfwClientApi)" (?ImGui_ImplGlfw_Init@@YA_NPEAUGLFWwindow@@_NW4GlfwClientApi@@@Z)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2019: unresolved external symbol glfwGetVideoMode referenced in function "void __cdecl ImGui_ImplGlfw_UpdateMonitors(void)" (?ImGui_ImplGlfw_UpdateMonitors@@YAXXZ)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2019: unresolved external symbol glfwWindowHint referenced in function "void __cdecl ImGui_ImplGlfw_CreateWindow(struct ImGuiViewport *)" (?ImGui_ImplGlfw_CreateWindow@@YAXPEAUImGuiViewport@@@Z)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2019: unresolved external symbol glfwSetWindowTitle referenced in function "void __cdecl ImGui_ImplGlfw_SetWindowTitle(struct ImGuiViewport *,char const *)" (?ImGui_ImplGlfw_SetWindowTitle@@YAXPEAUImGuiViewport@@PEBD@Z)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2019: unresolved external symbol glfwGetWindowPos referenced in function "struct ImVec2 __cdecl ImGui_ImplGlfw_GetWindowPos(struct ImGuiViewport *)" (?ImGui_ImplGlfw_GetWindowPos@@YA?AUImVec2@@PEAUImGuiViewport@@@Z)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2019: unresolved external symbol glfwSetWindowPos referenced in function "void __cdecl ImGui_ImplGlfw_CreateWindow(struct ImGuiViewport *)" (?ImGui_ImplGlfw_CreateWindow@@YAXPEAUImGuiViewport@@@Z)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2019: unresolved external symbol glfwGetWindowSize referenced in function "struct ImVec2 __cdecl ImGui_ImplGlfw_GetWindowSize(struct ImGuiViewport *)" (?ImGui_ImplGlfw_GetWindowSize@@YA?AUImVec2@@PEAUImGuiViewport@@@Z)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2019: unresolved external symbol glfwSetWindowSize referenced in function "void __cdecl ImGui_ImplGlfw_SetWindowSize(struct ImGuiViewport *,struct ImVec2)" (?ImGui_ImplGlfw_SetWindowSize@@YAXPEAUImGuiViewport@@UImVec2@@@Z)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2019: unresolved external symbol glfwGetFramebufferSize referenced in function "void __cdecl ImGui_ImplGlfw_NewFrame(void)" (?ImGui_ImplGlfw_NewFrame@@YAXXZ)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2019: unresolved external symbol glfwSetWindowOpacity referenced in function "void __cdecl ImGui_ImplGlfw_SetWindowAlpha(struct ImGuiViewport *,float)" (?ImGui_ImplGlfw_SetWindowAlpha@@YAXPEAUImGuiViewport@@M@Z)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2019: unresolved external symbol glfwShowWindow referenced in function "void __cdecl ImGui_ImplGlfw_ShowWindow(struct ImGuiViewport *)" (?ImGui_ImplGlfw_ShowWindow@@YAXPEAUImGuiViewport@@@Z)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2019: unresolved external symbol glfwFocusWindow referenced in function "void __cdecl ImGui_ImplGlfw_SetWindowFocus(struct ImGuiViewport *)" (?ImGui_ImplGlfw_SetWindowFocus@@YAXPEAUImGuiViewport@@@Z)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2019: unresolved external symbol glfwGetWindowAttrib referenced in function "bool __cdecl ImGui_ImplGlfw_GetWindowFocus(struct ImGuiViewport *)" (?ImGui_ImplGlfw_GetWindowFocus@@YA_NPEAUImGuiViewport@@@Z)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2019: unresolved external symbol glfwSetWindowPosCallback referenced in function "void __cdecl ImGui_ImplGlfw_CreateWindow(struct ImGuiViewport *)" (?ImGui_ImplGlfw_CreateWindow@@YAXPEAUImGuiViewport@@@Z)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2019: unresolved external symbol glfwGetInputMode referenced in function "void __cdecl ImGui_ImplGlfw_UpdateMouseCursor(void)" (?ImGui_ImplGlfw_UpdateMouseCursor@@YAXXZ)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2019: unresolved external symbol glfwSetInputMode referenced in function "void __cdecl ImGui_ImplGlfw_UpdateMouseCursor(void)" (?ImGui_ImplGlfw_UpdateMouseCursor@@YAXXZ)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2019: unresolved external symbol glfwGetMouseButton referenced in function "void __cdecl ImGui_ImplGlfw_UpdateMousePosAndButtons(void)" (?ImGui_ImplGlfw_UpdateMousePosAndButtons@@YAXXZ)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2019: unresolved external symbol glfwGetCursorPos referenced in function "void __cdecl ImGui_ImplGlfw_UpdateMousePosAndButtons(void)" (?ImGui_ImplGlfw_UpdateMousePosAndButtons@@YAXXZ)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2019: unresolved external symbol glfwSetCursorPos referenced in function "void __cdecl ImGui_ImplGlfw_UpdateMousePosAndButtons(void)" (?ImGui_ImplGlfw_UpdateMousePosAndButtons@@YAXXZ)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2019: unresolved external symbol glfwCreateStandardCursor referenced in function "bool __cdecl ImGui_ImplGlfw_Init(struct GLFWwindow *,bool,enum GlfwClientApi)" (?ImGui_ImplGlfw_Init@@YA_NPEAUGLFWwindow@@_NW4GlfwClientApi@@@Z)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2019: unresolved external symbol glfwDestroyCursor referenced in function "void __cdecl ImGui_ImplGlfw_Shutdown(void)" (?ImGui_ImplGlfw_Shutdown@@YAXXZ)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2019: unresolved external symbol glfwSetCursor referenced in function "void __cdecl ImGui_ImplGlfw_UpdateMouseCursor(void)" (?ImGui_ImplGlfw_UpdateMouseCursor@@YAXXZ)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2019: unresolved external symbol glfwSetCharCallback referenced in function "void __cdecl ImGui_ImplGlfw_CreateWindow(struct ImGuiViewport *)" (?ImGui_ImplGlfw_CreateWindow@@YAXPEAUImGuiViewport@@@Z)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2019: unresolved external symbol glfwGetJoystickAxes referenced in function "void __cdecl ImGui_ImplGlfw_UpdateGamepads(void)" (?ImGui_ImplGlfw_UpdateGamepads@@YAXXZ)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2019: unresolved external symbol glfwGetJoystickButtons referenced in function "void __cdecl ImGui_ImplGlfw_UpdateGamepads(void)" (?ImGui_ImplGlfw_UpdateGamepads@@YAXXZ)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2019: unresolved external symbol glfwSetClipboardString referenced in function "void __cdecl ImGui_ImplGlfw_SetClipboardText(void *,char const *)" (?ImGui_ImplGlfw_SetClipboardText@@YAXPEAXPEBD@Z)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2019: unresolved external symbol glfwGetClipboardString referenced in function "char const * __cdecl ImGui_ImplGlfw_GetClipboardText(void *)" (?ImGui_ImplGlfw_GetClipboardText@@YAPEBDPEAX@Z)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2019: unresolved external symbol glfwGetTime referenced in function "void __cdecl ImGui_ImplGlfw_NewFrame(void)" (?ImGui_ImplGlfw_NewFrame@@YAXXZ)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2019: unresolved external symbol glfwSwapBuffers referenced in function "void __cdecl ImGui_ImplGlfw_SwapBuffers(struct ImGuiViewport *,void *)" (?ImGui_ImplGlfw_SwapBuffers@@YAXPEAUImGuiViewport@@PEAX@Z)
+VoltEngine.lib(OpenGLGraphicsContext.obj) : error LNK2001: unresolved external symbol glfwSwapBuffers
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2019: unresolved external symbol glfwSwapInterval referenced in function "void __cdecl ImGui_ImplGlfw_CreateWindow(struct ImGuiViewport *)" (?ImGui_ImplGlfw_CreateWindow@@YAXPEAUImGuiViewport@@@Z)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2019: unresolved external symbol glfwGetWin32Window referenced in function "void __cdecl ImGui_ImplGlfw_CreateWindow(struct ImGuiViewport *)" (?ImGui_ImplGlfw_CreateWindow@@YAXPEAUImGuiViewport@@@Z)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2019: unresolved external symbol glfwCreateWindowSurface referenced in function "int __cdecl ImGui_ImplGlfw_CreateVkSurface(struct ImGuiViewport *,unsigned __int64,void const *,unsigned __int64 *)" (?ImGui_ImplGlfw_CreateVkSurface@@YAHPEAUImGuiViewport@@_KPEBXPEA_K@Z)
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glad_glPolygonMode
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glad_glScissor
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glad_glTexParameteri
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glad_glTexImage2D
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glad_glClear
+VoltEngine.lib(OpenGLRendererAPI.obj) : error LNK2001: unresolved external symbol glad_glClear
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glad_glClearColor
+VoltEngine.lib(OpenGLRendererAPI.obj) : error LNK2001: unresolved external symbol glad_glClearColor
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glad_glDisable
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glad_glEnable
+VoltEngine.lib(OpenGLRendererAPI.obj) : error LNK2001: unresolved external symbol glad_glEnable
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glad_glBlendFunc
+VoltEngine.lib(OpenGLRendererAPI.obj) : error LNK2001: unresolved external symbol glad_glBlendFunc
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glad_glPixelStorei
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glad_glGetIntegerv
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glad_glIsEnabled
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glad_glViewport
+VoltEngine.lib(OpenGLRendererAPI.obj) : error LNK2001: unresolved external symbol glad_glViewport
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glad_glDrawElements
+VoltEngine.lib(OpenGLRendererAPI.obj) : error LNK2001: unresolved external symbol glad_glDrawElements
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glad_glBindTexture
+VoltEngine.lib(OpenGLRendererAPI.obj) : error LNK2001: unresolved external symbol glad_glBindTexture
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glad_glDeleteTextures
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glad_glGenTextures
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glad_glActiveTexture
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glad_glBlendFuncSeparate
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glad_glBlendEquation
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glad_glBindBuffer
+VoltEngine.lib(OpenGLBuffer.obj) : error LNK2001: unresolved external symbol glad_glBindBuffer
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glad_glDeleteBuffers
+VoltEngine.lib(OpenGLBuffer.obj) : error LNK2001: unresolved external symbol glad_glDeleteBuffers
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glad_glGenBuffers
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glad_glBufferData
+VoltEngine.lib(OpenGLBuffer.obj) : error LNK2001: unresolved external symbol glad_glBufferData
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glad_glBlendEquationSeparate
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glad_glAttachShader
+VoltEngine.lib(OpenGLShader.obj) : error LNK2001: unresolved external symbol glad_glAttachShader
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glad_glCompileShader
+VoltEngine.lib(OpenGLShader.obj) : error LNK2001: unresolved external symbol glad_glCompileShader
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glad_glCreateProgram
+VoltEngine.lib(OpenGLShader.obj) : error LNK2001: unresolved external symbol glad_glCreateProgram
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glad_glCreateShader
+VoltEngine.lib(OpenGLShader.obj) : error LNK2001: unresolved external symbol glad_glCreateShader
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glad_glDeleteProgram
+VoltEngine.lib(OpenGLShader.obj) : error LNK2001: unresolved external symbol glad_glDeleteProgram
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glad_glDeleteShader
+VoltEngine.lib(OpenGLShader.obj) : error LNK2001: unresolved external symbol glad_glDeleteShader
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glad_glDetachShader
+VoltEngine.lib(OpenGLShader.obj) : error LNK2001: unresolved external symbol glad_glDetachShader
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glad_glEnableVertexAttribArray
+VoltEngine.lib(OpenGLVertexArray.obj) : error LNK2001: unresolved external symbol glad_glEnableVertexAttribArray
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glad_glGetAttribLocation
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glad_glGetProgramiv
+VoltEngine.lib(OpenGLShader.obj) : error LNK2001: unresolved external symbol glad_glGetProgramiv
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glad_glGetProgramInfoLog
+VoltEngine.lib(OpenGLShader.obj) : error LNK2001: unresolved external symbol glad_glGetProgramInfoLog
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glad_glGetShaderiv
+VoltEngine.lib(OpenGLShader.obj) : error LNK2001: unresolved external symbol glad_glGetShaderiv
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glad_glGetShaderInfoLog
+VoltEngine.lib(OpenGLShader.obj) : error LNK2001: unresolved external symbol glad_glGetShaderInfoLog
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glad_glGetUniformLocation
+VoltEngine.lib(OpenGLShader.obj) : error LNK2001: unresolved external symbol glad_glGetUniformLocation
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glad_glLinkProgram
+VoltEngine.lib(OpenGLShader.obj) : error LNK2001: unresolved external symbol glad_glLinkProgram
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glad_glShaderSource
+VoltEngine.lib(OpenGLShader.obj) : error LNK2001: unresolved external symbol glad_glShaderSource
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glad_glUseProgram
+VoltEngine.lib(OpenGLShader.obj) : error LNK2001: unresolved external symbol glad_glUseProgram
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glad_glUniform1i
+VoltEngine.lib(OpenGLShader.obj) : error LNK2001: unresolved external symbol glad_glUniform1i
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glad_glUniformMatrix4fv
+VoltEngine.lib(OpenGLShader.obj) : error LNK2001: unresolved external symbol glad_glUniformMatrix4fv
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glad_glVertexAttribPointer
+VoltEngine.lib(OpenGLVertexArray.obj) : error LNK2001: unresolved external symbol glad_glVertexAttribPointer
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glad_glBindVertexArray
+VoltEngine.lib(OpenGLVertexArray.obj) : error LNK2001: unresolved external symbol glad_glBindVertexArray
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glad_glDeleteVertexArrays
+VoltEngine.lib(OpenGLVertexArray.obj) : error LNK2001: unresolved external symbol glad_glDeleteVertexArrays
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glad_glGenVertexArrays
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glad_glDrawElementsBaseVertex
+VoltEngine.lib(ImGuiBuild.obj) : error LNK2001: unresolved external symbol glad_glBindSampler
+VoltEngine.lib(ImGuizmo.obj) : error LNK2019: unresolved external symbol "struct ImDrawList * __cdecl ImGui::GetWindowDrawList(void)" (?GetWindowDrawList@ImGui@@YAPEAUImDrawList@@XZ) referenced in function "void __cdecl ImGuizmo::BeginFrame(void)" (?BeginFrame@ImGuizmo@@YAXXZ)
+VoltEngine.lib(ImGuizmo.obj) : error LNK2019: unresolved external symbol "void __cdecl ImGui::PushStyleColor(int,unsigned int)" (?PushStyleColor@ImGui@@YAXHI@Z) referenced in function "void __cdecl ImGuizmo::BeginFrame(void)" (?BeginFrame@ImGuizmo@@YAXXZ)
+VoltEngine.lib(ImGuizmo.obj) : error LNK2019: unresolved external symbol "void __cdecl ImGui::PopStyleColor(int)" (?PopStyleColor@ImGui@@YAXH@Z) referenced in function "void __cdecl ImGuizmo::BeginFrame(void)" (?BeginFrame@ImGuizmo@@YAXXZ)
+VoltEngine.lib(ImGuizmo.obj) : error LNK2019: unresolved external symbol "bool __cdecl ImGui::IsAnyItemHovered(void)" (?IsAnyItemHovered@ImGui@@YA_NXZ) referenced in function "bool __cdecl ImGuizmo::CanActivate(void)" (?CanActivate@ImGuizmo@@YA_NXZ)
+VoltEngine.lib(ImGuizmo.obj) : error LNK2019: unresolved external symbol "bool __cdecl ImGui::IsAnyItemActive(void)" (?IsAnyItemActive@ImGui@@YA_NXZ) referenced in function "bool __cdecl ImGuizmo::CanActivate(void)" (?CanActivate@ImGuizmo@@YA_NXZ)
+VoltEngine.lib(ImGuizmo.obj) : error LNK2019: unresolved external symbol "bool __cdecl ImGui::IsMouseClicked(int,bool)" (?IsMouseClicked@ImGui@@YA_NH_N@Z) referenced in function "bool __cdecl ImGuizmo::CanActivate(void)" (?CanActivate@ImGuizmo@@YA_NXZ)
+VoltEngine.lib(ImGuizmo.obj) : error LNK2019: unresolved external symbol "void __cdecl ImGui::CaptureMouseFromApp(bool)" (?CaptureMouseFromApp@ImGui@@YAX_N@Z) referenced in function "bool __cdecl ImGuizmo::HandleRotation(float *,float *,int &,float *)" (?HandleRotation@ImGuizmo@@YA_NPEAM0AEAH0@Z)
+VoltEngine.lib(ImGuizmo.obj) : error LNK2019: unresolved external symbol "public: void __cdecl ImDrawList::AddLine(struct ImVec2 const &,struct ImVec2 const &,unsigned int,float)" (?AddLine@ImDrawList@@QEAAXAEBUImVec2@@0IM@Z) referenced in function "void __cdecl ImGuizmo::DrawGrid(float const *,float const *,float const *,float)" (?DrawGrid@ImGuizmo@@YAXPEBM00M@Z)
+VoltEngine.lib(ImGuizmo.obj) : error LNK2019: unresolved external symbol "public: void __cdecl ImDrawList::AddRectFilled(struct ImVec2 const &,struct ImVec2 const &,unsigned int,float,int)" (?AddRectFilled@ImDrawList@@QEAAXAEBUImVec2@@0IMH@Z) referenced in function "void __cdecl ImGuizmo::ViewManipulate(float *,float,struct ImVec2,struct ImVec2,unsigned int)" (?ViewManipulate@ImGuizmo@@YAXPEAMMUImVec2@@1I@Z)
+VoltEngine.lib(ImGuizmo.obj) : error LNK2019: unresolved external symbol "public: void __cdecl ImDrawList::AddTriangleFilled(struct ImVec2 const &,struct ImVec2 const &,struct ImVec2 const &,unsigned int)" (?AddTriangleFilled@ImDrawList@@QEAAXAEBUImVec2@@00I@Z) referenced in function "void __cdecl ImGuizmo::DrawTranslationGizmo(int)" (?DrawTranslationGizmo@ImGuizmo@@YAXH@Z)
+VoltEngine.lib(ImGuizmo.obj) : error LNK2019: unresolved external symbol "public: void __cdecl ImDrawList::AddCircle(struct ImVec2 const &,float,unsigned int,int,float)" (?AddCircle@ImDrawList@@QEAAXAEBUImVec2@@MIHM@Z) referenced in function "void __cdecl ImGuizmo::DrawRotationGizmo(int)" (?DrawRotationGizmo@ImGuizmo@@YAXH@Z)
+VoltEngine.lib(ImGuizmo.obj) : error LNK2019: unresolved external symbol "public: void __cdecl ImDrawList::AddCircleFilled(struct ImVec2 const &,float,unsigned int,int)" (?AddCircleFilled@ImDrawList@@QEAAXAEBUImVec2@@MIH@Z) referenced in function "void __cdecl ImGuizmo::DrawScaleGizmo(int)" (?DrawScaleGizmo@ImGuizmo@@YAXH@Z)
+VoltEngine.lib(ImGuizmo.obj) : error LNK2019: unresolved external symbol "public: void __cdecl ImDrawList::AddText(struct ImVec2 const &,unsigned int,char const *,char const *)" (?AddText@ImDrawList@@QEAAXAEBUImVec2@@IPEBD1@Z) referenced in function "void __cdecl ImGuizmo::DrawRotationGizmo(int)" (?DrawRotationGizmo@ImGuizmo@@YAXH@Z)
+VoltEngine.lib(ImGuizmo.obj) : error LNK2019: unresolved external symbol "public: void __cdecl ImDrawList::AddPolyline(struct ImVec2 const *,int,unsigned int,bool,float)" (?AddPolyline@ImDrawList@@QEAAXPEBUImVec2@@HI_NM@Z) referenced in function "void __cdecl ImGuizmo::DrawRotationGizmo(int)" (?DrawRotationGizmo@ImGuizmo@@YAXH@Z)
+VoltEngine.lib(ImGuizmo.obj) : error LNK2019: unresolved external symbol "public: void __cdecl ImDrawList::AddConvexPolyFilled(struct ImVec2 const *,int,unsigned int)" (?AddConvexPolyFilled@ImDrawList@@QEAAXPEBUImVec2@@HI@Z) referenced in function "void __cdecl ImGuizmo::DrawCubes(float const *,float const *,float const *,int)" (?DrawCubes@ImGuizmo@@YAXPEBM00H@Z)
+VoltEngine.lib(ImGuizmo.obj) : error LNK2019: unresolved external symbol "int __cdecl ImFormatString(char *,unsigned __int64,char const *,...)" (?ImFormatString@@YAHPEAD_KPEBDZZ) referenced in function "void __cdecl ImGuizmo::DrawRotationGizmo(int)" (?DrawRotationGizmo@ImGuizmo@@YAXH@Z)
+VoltEngine.lib(OpenGLRendererAPI.obj) : error LNK2001: unresolved external symbol glad_glDebugMessageCallback
+VoltEngine.lib(OpenGLGraphicsContext.obj) : error LNK2019: unresolved external symbol glfwGetProcAddress referenced in function "public: virtual void __cdecl Volt::COpenGLGraphicsContext::Init(void *)" (?Init@COpenGLGraphicsContext@Volt@@UEAAXPEAX@Z)
+VoltEngine.lib(OpenGLGraphicsContext.obj) : error LNK2019: unresolved external symbol gladLoadGLLoader referenced in function "public: virtual void __cdecl Volt::COpenGLGraphicsContext::Init(void *)" (?Init@COpenGLGraphicsContext@Volt@@UEAAXPEAX@Z)
+VoltEngine.lib(OpenGLGraphicsContext.obj) : error LNK2001: unresolved external symbol glad_glGetString
+VoltEngine.lib(OpenGLBuffer.obj) : error LNK2001: unresolved external symbol glad_glBufferSubData
+VoltEngine.lib(OpenGLBuffer.obj) : error LNK2001: unresolved external symbol glad_glCreateBuffers
+VoltEngine.lib(OpenGLShader.obj) : error LNK2001: unresolved external symbol glad_glUniform1f
+VoltEngine.lib(OpenGLShader.obj) : error LNK2001: unresolved external symbol glad_glUniform2f
+VoltEngine.lib(OpenGLShader.obj) : error LNK2001: unresolved external symbol glad_glUniform3f
+VoltEngine.lib(OpenGLShader.obj) : error LNK2001: unresolved external symbol glad_glUniform4f
+VoltEngine.lib(OpenGLShader.obj) : error LNK2001: unresolved external symbol glad_glUniform1iv
+VoltEngine.lib(OpenGLShader.obj) : error LNK2001: unresolved external symbol glad_glUniformMatrix3fv
+VoltEngine.lib(OpenGLVertexArray.obj) : error LNK2001: unresolved external symbol glad_glCreateVertexArrays
+F:\Programacion\GameEngine\VoltEngine\x64\Debug\QtEditor.exe : fatal error LNK1120: 161 unresolved externals

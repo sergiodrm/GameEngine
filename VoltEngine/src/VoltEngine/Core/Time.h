@@ -32,12 +32,39 @@ namespace Volt
         Duration m_elapsedTime;
     };
 
-    class CScopeTimer
+    class CElapseTimer
     {
+    protected:
         using Clock = std::chrono::high_resolution_clock;
         using TimePoint = Clock::time_point;
         using Duration = std::chrono::duration<double, std::milli>;
+    public:
+        CElapseTimer() = default;
+        CElapseTimer(const CElapseTimer&) = delete;
+        CElapseTimer(const CElapseTimer&&) = delete;
+        void operator=(const CElapseTimer&) = delete;
 
+        void Start();
+        void Stop();
+
+        template <typename T = float>
+        T GetMilliseconds() const { return static_cast<T>(m_duration.count()); }
+
+        template <typename T = float>
+        T GetSeconds() const { return static_cast<T>(m_duration.count()) * 0.001f; }
+
+        uint64_t GetStartStamp() const { return m_startTimePoint.time_since_epoch().count(); }
+        uint64_t GetEndStamp() const { return m_endTimePoint.time_since_epoch().count(); }
+
+    private:
+        TimePoint m_startTimePoint {};
+        TimePoint m_endTimePoint {};
+        Duration m_duration {};
+    };
+
+
+    class CScopeTimer : CElapseTimer
+    {
     public:
         CScopeTimer(const std::string& scopeName);
         ~CScopeTimer();
@@ -47,11 +74,8 @@ namespace Volt
         void operator=(const CScopeTimer&) = delete;
 
     protected:
-        void Start();
-        void Stop();
+        void PrintResult() const;
     private:
-        TimePoint m_startTimePoint;
-        Duration m_duration;
-        std::string m_scopeName;
+        std::string m_name;
     };
 }

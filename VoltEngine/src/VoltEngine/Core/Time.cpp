@@ -19,8 +19,19 @@ namespace Volt
         m_lastTimePoint = now;
     }
 
+    void CElapseTimer::Start()
+    {
+        m_startTimePoint = Clock::now();
+    }
+
+    void CElapseTimer::Stop()
+    {
+        m_endTimePoint = Clock::now();
+        m_duration = m_endTimePoint - m_startTimePoint;
+    }
+
     CScopeTimer::CScopeTimer(const std::string& scopeName)
-        : m_duration(0.0), m_scopeName(scopeName)
+        : m_name(scopeName)
     {
         Start();
     }
@@ -28,17 +39,11 @@ namespace Volt
     CScopeTimer::~CScopeTimer()
     {
         Stop();
-        VOLT_LOG(Trace, "Timer: \"{0}\" elapsed time {1} ms.", m_scopeName.c_str(), m_duration.count());
+        PrintResult();
     }
 
-    void CScopeTimer::Start()
+    void CScopeTimer::PrintResult() const
     {
-        m_startTimePoint = Clock::now();
-    }
-
-    void CScopeTimer::Stop()
-    {
-        const TimePoint end = Clock::now();
-        m_duration = end - m_startTimePoint;
+        VOLT_LOG(Trace, "Timer: \"{0}\" elapsed time {1} ms.", m_name.c_str(), GetMilliseconds());
     }
 }

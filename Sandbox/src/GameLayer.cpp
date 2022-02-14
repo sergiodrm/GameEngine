@@ -26,10 +26,10 @@ void CGameLayer::OnAttach()
 
     m_scene = Volt::CreateSharedPtr<Volt::CScene>();
 
-    m_cameraEntity = m_scene->CreateEntity("CameraEntity");
+    //m_cameraEntity = m_scene->CreateEntity("CameraEntity");
     m_cameraEntity->AddComponent<Volt::CCameraComponent>(true);
 
-    m_squareEntity = m_scene->CreateEntity("SquareEntity");
+    //m_squareEntity = m_scene->CreateEntity("SquareEntity");
     m_squareEntity->AddComponent<Volt::CSpriteRenderComponent>(TEXTURE_SAMPLE_FILEPATH);
     m_squareEntity->AddComponent<Volt::CMovementScriptComponent>();
 

@@ -98,11 +98,9 @@ void CEditorLayer::OnUpdate(float elapsedSeconds)
         mouse.y = viewportSize.y - mouse.y;
         const int32_t mouseX = static_cast<int32_t>(mouse.x);
         const int32_t mouseY = static_cast<int32_t>(mouse.y);
-        VOLT_LOG(Info, "Mouse: {0}, {1}   {2}, {3}", mouseX, mouseY, viewportSize.x, viewportSize.y);
         if (mouse.x >= 0.f && mouse.y >= 0.f && mouse.x < viewportSize.x && mouse.y < viewportSize.y)
         {
             const int32_t pixelData = m_framebuffer->ReadPixel(1, mouseX, mouseY);
-            VOLT_LOG(Info, "ReadPixel: {0}", pixelData);
         }
 
         m_framebuffer->Unbind();

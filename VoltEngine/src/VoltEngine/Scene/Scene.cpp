@@ -8,6 +8,7 @@
 #include "Components/SpriteRenderComponent.h"
 #include "Components/TagComponent.h"
 #include "Components/TransformComponent.h"
+#include "VoltEngine/Debug/PerfMon.h"
 #include "VoltEngine/Renderer/EditorCamera.h"
 #include "VoltEngine/Renderer/Mesh.h"
 #include "VoltEngine/Renderer/Renderer.h"
@@ -134,6 +135,7 @@ namespace Volt
         }
         // -------------------------------------- Render 3D --------------------------------------
         {
+            SCOPE_PERF_MON(Render3D);
             std::vector<SLight> lights;
             for (const CEntity* it : m_sceneLights)
             {
