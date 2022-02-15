@@ -5,6 +5,7 @@
 namespace Volt
 {
     class CKeyPressedEvent;
+    class CMouseButtonPressedEvent;
     class CEvent;
     class CEntity;
     class CScene;

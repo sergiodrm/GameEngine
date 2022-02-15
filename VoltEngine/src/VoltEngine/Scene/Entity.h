@@ -20,6 +20,11 @@ namespace Volt
     {
         friend class CEntitiesRegistry;
     public:
+        enum : int32_t
+        {
+            INVALID_ENTITY_HANDLE = -1
+        };
+
         CEntity(CScene* scene);
         ~CEntity();
 

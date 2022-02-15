@@ -7,6 +7,7 @@
 #include "VoltEngine/Core/Input.h"
 #include "VoltEngine/Events/Event.h"
 #include "VoltEngine/Events/KeyEvent.h"
+#include "VoltEngine/Events/MouseEvent.h"
 #include "VoltEngine/Scene/Entity.h"
 #include "VoltEngine/Scene/Components/TransformComponent.h"
 #include "VoltEngine/Utils/Math.h"

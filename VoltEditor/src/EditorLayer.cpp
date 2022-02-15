@@ -100,7 +100,7 @@ void CEditorLayer::OnUpdate(float elapsedSeconds)
         const int32_t mouseY = static_cast<int32_t>(mouse.y);
         if (mouse.x >= 0.f && mouse.y >= 0.f && mouse.x < viewportSize.x && mouse.y < viewportSize.y)
         {
-            const int32_t pixelData = m_framebuffer->ReadPixel(1, mouseX, mouseY);
+            m_selectedEntityHandle = m_framebuffer->ReadPixel(1, mouseX, mouseY);
         }
 
         m_framebuffer->Unbind();
@@ -193,6 +193,9 @@ bool CEditorLayer::OnEvent(Volt::CEvent& e)
 {
     m_editorCamera->OnEvent(e);
     m_gizmo->OnEvent(e);
+
+    Volt::CEventDispatcher dispatcher(e);
+    dispatcher.Dispatch<Volt::CMouseButtonPressedEvent>(BIND_FUNCTION(CEditorLayer::OnPressMouseButton));
     return false;
 }
 
@@ -214,4 +217,17 @@ void CEditorLayer::LoadScene()
     const std::string filepath = Volt::CFileDialogs::LoadFile("GameEngine Scene (*.scn)\0*.scn\0");
     Volt::CSceneSerializer sceneSerializer(m_scene.get());
     sceneSerializer.Deserialize(filepath);
+}
+
+bool CEditorLayer::OnPressMouseButton(Volt::CMouseButtonPressedEvent& e)
+{
+    if (e.GetButton() == Volt::Mouse::ButtonLeft)
+    {
+        if (m_selectedEntityHandle != Volt::CEntity::INVALID_ENTITY_HANDLE)
+        {
+            // TODO
+            VOLT_LOG(Info, "Click! Entity #{0}", m_selectedEntityHandle);
+        }
+    }
+    return false;
 }

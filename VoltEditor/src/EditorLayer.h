@@ -22,6 +22,8 @@ protected:
     void SaveScene();
     void LoadScene();
 
+    bool OnPressMouseButton(Volt::CMouseButtonPressedEvent& e);
+
 private:
     bool m_viewportFocused {true};
 
@@ -36,4 +38,5 @@ private:
     Volt::SharedPtr<Volt::CEditorCamera> m_editorCamera;
     glm::vec2 m_viewportSize {0.f};
     glm::vec2 m_viewportBounds[2];
+    int32_t m_selectedEntityHandle {-1};
 };
