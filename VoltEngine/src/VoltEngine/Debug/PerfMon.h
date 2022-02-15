@@ -4,6 +4,8 @@
 #include "VoltEngine/Core/Application.h"
 #include "VoltEngine/Core/Time.h"
 
+#define PERFORMANCE_MONITORING 0
+#if PERFORMANCE_MONITORING
 #define INIT_PERF_MON()         ::Volt::CPerfMon::Init(::Volt::CApplication::GetAppName());
 #define SHUTDOWN_PERF_MON()     ::Volt::CPerfMon::Shutdown(::Volt::CApplication::GetAppName());
 
@@ -13,6 +15,14 @@
 #define END_PERF_MON(name)      perfMon##name.Stop();
 
 #define SCOPE_PERF_MON(name)    ::Volt::CScopePerfMon scopePerfMon##name(::Volt::CApplication::GetAppName(), #name);
+#else
+#define INIT_PERF_MON()         
+#define SHUTDOWN_PERF_MON()     
+#define BEGIN_PERF_MON(name)    
+#define END_PERF_MON(name)      
+#define SCOPE_PERF_MON(name)    
+#endif // PERFORMANCE_MONITORING
+
 
 namespace Volt
 {
